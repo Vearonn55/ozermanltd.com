@@ -1,0 +1,79 @@
+/* Ozerman Ltd — Custom Styles */
+
+[x-cloak] { display: none !important; }
+
+html { scroll-behavior: smooth; }
+
+/* Hero slider */
+.hero-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+/* Prose for article content */
+.prose-ozerman h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: #102a43;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+.prose-ozerman p {
+    color: #486581;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+}
+.prose-ozerman ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    color: #486581;
+    margin-bottom: 1rem;
+}
+.prose-ozerman ul li {
+    margin-bottom: 0.25rem;
+}
+
+/* Card hover effect */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(16, 42, 67, 0.15);
+}
+
+/* Gold accent line */
+.accent-line::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #c9a227, #d4af37);
+    margin-top: 1rem;
+}
+
+/* Status badges */
+.badge-ongoing { background: #dbeafe; color: #1e40af; }
+.badge-completed { background: #d1fae5; color: #065f46; }
+.badge-planning { background: #fef3c7; color: #92400e; }
+
+/* RTL support */
+[dir="rtl"] .accent-line::after {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+/* Section divider */
+.section-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23102a43' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Lazy load fade-in */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+img[loading="lazy"].loaded,
+img:not([loading="lazy"]) {
+    opacity: 1;
+}
