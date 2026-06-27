@@ -1,0 +1,18 @@
+{
+    "38302608-c69e-48b3-bbfd-17e276ceff6f": {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "first_seen_at": "2026-06-25T09:39:03+00:00",
+        "policy_version": "1.0",
+        "essential": true,
+        "analytics": true,
+        "marketing": false,
+        "source": "banner",
+        "locale": "en",
+        "ip_hash": "23dedf60da20cfb4ac2644703462a4c0a54fef68a5e087189b88ae871fca6774",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "marketing_opt_in": false,
+        "analytics_opt_in": 1,
+        "essential_opt_in": true,
+        "last_seen_at": "2026-06-25T11:46:51+00:00"
+    }
+}

@@ -1,0 +1,1466 @@
+[
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "title": "Home | Ozerman Ltd",
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T09:39:03.722Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "1ec4a3ee-d15b-4dec-9975-5a0abc0b4e24",
+        "created_at": "2026-06-25T09:39:03.722Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 25
+        },
+        "timestamp": "2026-06-25T09:39:06.191Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "b7d728fa-543a-4427-9992-07cd71d329c9",
+        "created_at": "2026-06-25T09:39:06.191Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 50
+        },
+        "timestamp": "2026-06-25T09:39:07.059Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "2656cc71-a662-42da-8b92-7a43a9e9e2f8",
+        "created_at": "2026-06-25T09:39:07.059Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 75
+        },
+        "timestamp": "2026-06-25T09:39:07.443Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a55be9a7-d591-4f0b-8ee7-16f20643f1b1",
+        "created_at": "2026-06-25T09:39:07.443Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "About Us",
+            "href": "/en/about-us",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:11.171Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "3ef44bca-5917-42b1-b6f7-85b952f078ea",
+        "created_at": "2026-06-25T09:39:11.171Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T09:39:11.172Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a4c96007-206f-44b2-a90c-e146246735ef",
+        "created_at": "2026-06-25T09:39:11.172Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/about-us",
+        "page_url": "http://localhost:8080/en/about-us",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "title": "About Us | Ozerman Ltd",
+            "path": "/en/about-us"
+        },
+        "timestamp": "2026-06-25T09:39:11.275Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "758b557a-66bb-430a-9421-932b50215568",
+        "created_at": "2026-06-25T09:39:11.275Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/about-us",
+        "page_url": "http://localhost:8080/en/about-us",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "Sectors",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:12.106Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "03e81ce7-a90e-49f9-8aae-a34706ba4f7c",
+        "created_at": "2026-06-25T09:39:12.106Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/about-us",
+        "page_url": "http://localhost:8080/en/about-us",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "path": "/en/about-us"
+        },
+        "timestamp": "2026-06-25T09:39:12.106Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "4511e2d8-21cc-49eb-9763-32d1e281ad11",
+        "created_at": "2026-06-25T09:39:12.106Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/about-us",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T09:39:12.188Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "41a92139-8f3c-4a7c-a0d6-99be90f06418",
+        "created_at": "2026-06-25T09:39:12.188Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/about-us",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "Sectors",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-900 bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:12.605Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "9eb8d690-c05f-46c7-9c11-72605514ba4c",
+        "created_at": "2026-06-25T09:39:12.605Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/about-us",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T09:39:12.606Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "b7d6de7a-cb8a-4270-96ad-2bc8ee2a5e19",
+        "created_at": "2026-06-25T09:39:12.606Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T09:39:12.717Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "26458e46-d0fa-4f46-84b8-ebe2c7c65dbb",
+        "created_at": "2026-06-25T09:39:12.717Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "Projects",
+            "href": "/en/projects",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:13.455Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "2239e757-7dd9-4b29-90ab-f7fd2ae13d40",
+        "created_at": "2026-06-25T09:39:13.455Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T09:39:13.456Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a6bfcb34-079a-4b20-b834-3e536702321a",
+        "created_at": "2026-06-25T09:39:13.456Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/projects",
+        "page_url": "http://localhost:8080/en/projects",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "en",
+        "properties": {
+            "title": "Projects | Ozerman Ltd",
+            "path": "/en/projects"
+        },
+        "timestamp": "2026-06-25T09:39:13.542Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "afd3c4c8-b2e0-4f00-92bc-c20221db79e4",
+        "created_at": "2026-06-25T09:39:13.542Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/projects",
+        "page_url": "http://localhost:8080/en/projects",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "News",
+            "href": "/en/news",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:14.455Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "c01d26aa-15f4-459f-8681-b0e6bdbeb853",
+        "created_at": "2026-06-25T09:39:14.455Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/projects",
+        "page_url": "http://localhost:8080/en/projects",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "en",
+        "properties": {
+            "path": "/en/projects"
+        },
+        "timestamp": "2026-06-25T09:39:14.455Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "c74dc7f5-4a01-4f78-8a66-fa65f777ea88",
+        "created_at": "2026-06-25T09:39:14.455Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/en/projects",
+        "locale": "en",
+        "properties": {
+            "title": "News & Announcements | Ozerman Ltd",
+            "path": "/en/news"
+        },
+        "timestamp": "2026-06-25T09:39:14.543Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "001f99c7-ba87-416b-aac9-fcf62e51bcbc",
+        "created_at": "2026-06-25T09:39:14.543Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/en/projects",
+        "locale": "en",
+        "properties": {
+            "depth": 25
+        },
+        "timestamp": "2026-06-25T09:39:15.142Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "e2858dec-1b9c-4e31-9c55-4d945d02812f",
+        "created_at": "2026-06-25T09:39:15.142Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/en/projects",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "AR",
+            "href": "/ar/news",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T09:39:37.477Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "9b0b4307-50f3-4a95-b727-1960ae364724",
+        "created_at": "2026-06-25T09:39:37.477Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/en/projects",
+        "locale": "en",
+        "properties": {
+            "path": "/en/news"
+        },
+        "timestamp": "2026-06-25T09:39:37.478Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "b5947f74-715e-4c83-ae13-79846082271a",
+        "created_at": "2026-06-25T09:39:37.478Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/ar/news",
+        "page_url": "http://localhost:8080/ar/news",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "ar",
+        "properties": {
+            "title": "الأخبار والإعلانات | Ozerman Ltd",
+            "path": "/ar/news"
+        },
+        "timestamp": "2026-06-25T09:39:37.702Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "6a6861a1-593c-49e2-a649-a61a0f5499cb",
+        "created_at": "2026-06-25T09:39:37.702Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/ar/news",
+        "page_url": "http://localhost:8080/ar/news",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "ar",
+        "properties": {
+            "tag": "a",
+            "text": "EN",
+            "href": "/en/news",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T09:39:44.655Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "0d62dbc2-2c6e-4999-a964-b89a85d6e619",
+        "created_at": "2026-06-25T09:39:44.655Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/ar/news",
+        "page_url": "http://localhost:8080/ar/news",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "ar",
+        "properties": {
+            "path": "/ar/news"
+        },
+        "timestamp": "2026-06-25T09:39:44.655Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "9af9d86f-15ec-4632-b452-f3c7967bfdbe",
+        "created_at": "2026-06-25T09:39:44.655Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "title": "News & Announcements | Ozerman Ltd",
+            "path": "/en/news"
+        },
+        "timestamp": "2026-06-25T09:39:44.792Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "783ea57b-bc0f-4cbc-907b-60a3d4ed38d2",
+        "created_at": "2026-06-25T09:39:44.792Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "depth": 25
+        },
+        "timestamp": "2026-06-25T09:39:45.741Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "2d2912f5-98a5-4038-8a98-6222da4ad6ca",
+        "created_at": "2026-06-25T09:39:45.741Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "depth": 50
+        },
+        "timestamp": "2026-06-25T09:39:45.974Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "542e7798-ff3f-46f9-b521-29b0a2ac89c2",
+        "created_at": "2026-06-25T09:39:45.974Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "depth": 75
+        },
+        "timestamp": "2026-06-25T09:39:46.092Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "cbe8a2fa-14e0-4639-bba6-72ad98569745",
+        "created_at": "2026-06-25T09:39:46.092Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "depth": 100
+        },
+        "timestamp": "2026-06-25T09:39:46.342Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "64ca67d3-df6e-4a75-8954-764eb4eb521f",
+        "created_at": "2026-06-25T09:39:46.342Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "Gallery",
+            "href": "/en/gallery",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:49.504Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "53324cbd-30a3-4b1a-8262-8d3f83eb2da0",
+        "created_at": "2026-06-25T09:39:49.504Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/news",
+        "page_url": "http://localhost:8080/en/news",
+        "referrer": "http://localhost:8080/ar/news",
+        "locale": "en",
+        "properties": {
+            "path": "/en/news"
+        },
+        "timestamp": "2026-06-25T09:39:49.505Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "08640786-6800-4b45-a45d-5b9978139e1e",
+        "created_at": "2026-06-25T09:39:49.505Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "title": "Media Gallery | Ozerman Ltd",
+            "path": "/en/gallery"
+        },
+        "timestamp": "2026-06-25T09:39:49.653Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a6e21cc3-5bad-4e42-96fd-f4d51d70bbee",
+        "created_at": "2026-06-25T09:39:49.653Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "depth": 25
+        },
+        "timestamp": "2026-06-25T09:39:50.491Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "7f11b0b1-d191-4441-8986-2d75ea5a808d",
+        "created_at": "2026-06-25T09:39:50.491Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "depth": 50
+        },
+        "timestamp": "2026-06-25T09:39:50.541Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a669a932-e4ef-4c4c-bd6b-469cb5c44080",
+        "created_at": "2026-06-25T09:39:50.541Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "depth": 75
+        },
+        "timestamp": "2026-06-25T09:39:50.691Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "f2c06942-d086-4938-bf9d-fea8adb38529",
+        "created_at": "2026-06-25T09:39:50.691Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "depth": 100
+        },
+        "timestamp": "2026-06-25T09:39:50.841Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "0846c9a1-d326-45f3-ad5f-1cd5e1ec59e5",
+        "created_at": "2026-06-25T09:39:50.841Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "Contact",
+            "href": "/en/contact",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T09:39:52.205Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "4d8ba7cf-1ad3-41dc-bb86-1e8713c85d6c",
+        "created_at": "2026-06-25T09:39:52.205Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/gallery",
+        "page_url": "http://localhost:8080/en/gallery",
+        "referrer": "http://localhost:8080/en/news",
+        "locale": "en",
+        "properties": {
+            "path": "/en/gallery"
+        },
+        "timestamp": "2026-06-25T09:39:52.205Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "dd3b216a-f97d-40bf-9406-03b554e90c5e",
+        "created_at": "2026-06-25T09:39:52.205Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/contact",
+        "page_url": "http://localhost:8080/en/contact",
+        "referrer": "http://localhost:8080/en/gallery",
+        "locale": "en",
+        "properties": {
+            "title": "Contact Us | Ozerman Ltd",
+            "path": "/en/contact"
+        },
+        "timestamp": "2026-06-25T09:39:52.303Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "440e2bc0-19e9-424b-bac9-2b0111ea51b1",
+        "created_at": "2026-06-25T09:39:52.303Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en/contact",
+        "page_url": "http://localhost:8080/en/contact",
+        "referrer": "http://localhost:8080/en/gallery",
+        "locale": "en",
+        "properties": {
+            "depth": 25
+        },
+        "timestamp": "2026-06-25T09:39:52.875Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "d5ce6f43-3afc-4626-a084-1059bb27807c",
+        "created_at": "2026-06-25T09:39:52.875Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "form_start",
+        "page_path": "/en/contact",
+        "page_url": "http://localhost:8080/en/contact",
+        "referrer": "http://localhost:8080/en/gallery",
+        "locale": "en",
+        "properties": {
+            "form": "contact"
+        },
+        "timestamp": "2026-06-25T09:39:54.543Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "0793aee1-809a-41af-8fb0-616c5d24dd57",
+        "created_at": "2026-06-25T09:39:54.543Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "title": "Home | Ozerman Ltd",
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T10:32:37.460Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "2c4624eb-26cb-4fe0-b963-8c830519b533",
+        "created_at": "2026-06-25T10:32:37.460Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 25
+        },
+        "timestamp": "2026-06-25T10:33:27.901Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a150f1b2-280e-450b-8cc7-19c174e2afa5",
+        "created_at": "2026-06-25T10:33:27.901Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 50
+        },
+        "timestamp": "2026-06-25T10:33:28.468Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "f3023971-7a82-4eb1-9f58-2600ea89b1da",
+        "created_at": "2026-06-25T10:33:28.468Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 75
+        },
+        "timestamp": "2026-06-25T10:33:28.835Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "f2f11c74-8691-477c-97a1-dc879778bd12",
+        "created_at": "2026-06-25T10:33:28.835Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "scroll_depth",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "depth": 100
+        },
+        "timestamp": "2026-06-25T10:33:29.285Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "9bc84f50-29e8-4384-b294-4fd897b94cb6",
+        "created_at": "2026-06-25T10:33:29.285Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "About Us",
+            "href": "/en/about-us",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T10:34:09.648Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "251ac507-7cf0-4545-84a0-781b1b8d5040",
+        "created_at": "2026-06-25T10:34:09.648Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T10:34:09.648Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "ac5bc915-f443-48aa-b29e-e824d7b31ebd",
+        "created_at": "2026-06-25T10:34:09.648Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/about-us",
+        "page_url": "http://localhost:8080/en/about-us",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "title": "About Us | Ozerman Ltd",
+            "path": "/en/about-us"
+        },
+        "timestamp": "2026-06-25T10:34:09.821Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "24f00efc-ab89-4f1c-8ee3-a3162696b57a",
+        "created_at": "2026-06-25T10:34:09.821Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/about-us",
+        "page_url": "http://localhost:8080/en/about-us",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "Sectors",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-4 py-2 text-sm font-medium rounded-md transition-colors text-brand-600 hover:text-brand-900 hover:bg-brand-50"
+        },
+        "timestamp": "2026-06-25T10:34:10.403Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "8a7fd4a4-2321-4818-9edd-4f39dfa3a0bd",
+        "created_at": "2026-06-25T10:34:10.403Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/about-us",
+        "page_url": "http://localhost:8080/en/about-us",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "path": "/en/about-us"
+        },
+        "timestamp": "2026-06-25T10:34:10.403Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "3551196d-30c0-4c6f-8fb9-6f4105cafd39",
+        "created_at": "2026-06-25T10:34:10.403Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/about-us",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:10.508Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "02e6c4e1-a4ad-4d16-a6c5-cea0507a9fa8",
+        "created_at": "2026-06-25T10:34:10.508Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/about-us",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "TR",
+            "href": "/tr/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:11.666Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "0dcca63d-2ba9-450e-ab8a-8a5bae8e0542",
+        "created_at": "2026-06-25T10:34:11.666Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/en/about-us",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:11.666Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a55edeb1-7917-4b52-81e2-fdca48095dfe",
+        "created_at": "2026-06-25T10:34:11.666Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "title": "İş Sektörleri | Ozerman Ltd",
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:11.763Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "2eacdd23-3383-4678-aff4-9f76772c523e",
+        "created_at": "2026-06-25T10:34:11.763Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "tag": "a",
+            "text": "EN",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:12.582Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "ed47e449-75cb-4174-a1f2-39cbd15a027e",
+        "created_at": "2026-06-25T10:34:12.582Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:12.582Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "977b8712-814b-40da-8356-302e70776180",
+        "created_at": "2026-06-25T10:34:12.582Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:12.675Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "535f6a9b-6bd2-441c-959e-93756f1e9fdf",
+        "created_at": "2026-06-25T10:34:12.675Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "TR",
+            "href": "/tr/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:13.182Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "5a02c2de-a446-405e-a838-b603ac5d512f",
+        "created_at": "2026-06-25T10:34:13.182Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:13.182Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "2a39a450-f6f0-4d5b-b42a-f36854517646",
+        "created_at": "2026-06-25T10:34:13.182Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "title": "İş Sektörleri | Ozerman Ltd",
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:13.268Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "eccf9bab-15ad-491c-91be-de3e9b0517d2",
+        "created_at": "2026-06-25T10:34:13.268Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "tag": "a",
+            "text": "EN",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:13.730Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "83618d98-548b-482e-be52-f547e9cec6bb",
+        "created_at": "2026-06-25T10:34:13.730Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:13.730Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "12c7c516-ada1-449c-be68-f7bb0b4b7780",
+        "created_at": "2026-06-25T10:34:13.730Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:13.819Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "53a26edf-1cf3-4ee9-874f-2ad21d2c739a",
+        "created_at": "2026-06-25T10:34:13.819Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "TR",
+            "href": "/tr/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:14.298Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "aee57cdc-e9cf-4f44-b9f1-776d7ca5cb2d",
+        "created_at": "2026-06-25T10:34:14.298Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:14.298Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "966606de-3a0e-45d5-8b23-8a1c298e622f",
+        "created_at": "2026-06-25T10:34:14.298Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "title": "İş Sektörleri | Ozerman Ltd",
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:14.392Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "3aa96523-99a9-4ce4-a839-3662e4a646c6",
+        "created_at": "2026-06-25T10:34:14.392Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "tag": "a",
+            "text": "EN",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:14.763Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "efca8435-e900-4dec-a61a-c314c4c8db41",
+        "created_at": "2026-06-25T10:34:14.763Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:14.763Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "5a65616e-86ca-446a-8697-072318ffcd90",
+        "created_at": "2026-06-25T10:34:14.763Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:14.834Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "30ee8f6e-fba8-43c3-ad87-3d9dddcef5a2",
+        "created_at": "2026-06-25T10:34:14.834Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "tag": "a",
+            "text": "TR",
+            "href": "/tr/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:15.264Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "27a58888-71d4-402c-8eb3-44c67eac4c62",
+        "created_at": "2026-06-25T10:34:15.264Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:15.265Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "18ec6730-75b0-4c4d-bf6a-2a3bfd42a8fe",
+        "created_at": "2026-06-25T10:34:15.265Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "title": "İş Sektörleri | Ozerman Ltd",
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:15.353Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "6999f224-acd0-4d2c-9771-8c40665d2748",
+        "created_at": "2026-06-25T10:34:15.353Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "tag": "a",
+            "text": "AR",
+            "href": "/ar/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:17.314Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "bde241b0-1613-4745-b0a3-7d1b9d8f7b1a",
+        "created_at": "2026-06-25T10:34:17.314Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/tr/sectors",
+        "page_url": "http://localhost:8080/tr/sectors",
+        "referrer": "http://localhost:8080/en/sectors",
+        "locale": "tr",
+        "properties": {
+            "path": "/tr/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:17.315Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "16459d13-34b6-42c6-9b03-ab82cada4544",
+        "created_at": "2026-06-25T10:34:17.315Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/ar/sectors",
+        "page_url": "http://localhost:8080/ar/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "ar",
+        "properties": {
+            "title": "قطاعات الأعمال | Ozerman Ltd",
+            "path": "/ar/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:17.497Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "963958dd-50ee-457e-98b4-69d0081a6a7c",
+        "created_at": "2026-06-25T10:34:17.497Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "click",
+        "page_path": "/ar/sectors",
+        "page_url": "http://localhost:8080/ar/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "ar",
+        "properties": {
+            "tag": "a",
+            "text": "EN",
+            "href": "/en/sectors",
+            "id": null,
+            "classes": "px-2.5 py-1 text-xs font-semibold rounded transition-colors text-brand-600 hover:text-brand-900"
+        },
+        "timestamp": "2026-06-25T10:34:19.731Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "647c85b7-3a33-4ebe-accb-37ff196087b9",
+        "created_at": "2026-06-25T10:34:19.731Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/ar/sectors",
+        "page_url": "http://localhost:8080/ar/sectors",
+        "referrer": "http://localhost:8080/tr/sectors",
+        "locale": "ar",
+        "properties": {
+            "path": "/ar/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:19.732Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "225a4c8d-1c3e-4e89-ab67-cae7a81d67d6",
+        "created_at": "2026-06-25T10:34:19.732Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/ar/sectors",
+        "locale": "en",
+        "properties": {
+            "title": "Business Sectors | Ozerman Ltd",
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:34:19.844Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "1ee12926-333a-4081-98cb-494e55cc08b9",
+        "created_at": "2026-06-25T10:34:19.844Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en/sectors",
+        "page_url": "http://localhost:8080/en/sectors",
+        "referrer": "http://localhost:8080/ar/sectors",
+        "locale": "en",
+        "properties": {
+            "path": "/en/sectors"
+        },
+        "timestamp": "2026-06-25T10:35:31.932Z",
+        "ip_hash": "a33c6c9eeae7ce639196442f292dd4b526b1aff41e112ab08e0d41d3f1483cee",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "a3102d07-6613-4932-9e34-91759b7aa85e",
+        "created_at": "2026-06-25T10:35:31.932Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "title": "Home | Ozerman Ltd",
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T11:44:21.118Z",
+        "ip_hash": "23dedf60da20cfb4ac2644703462a4c0a54fef68a5e087189b88ae871fca6774",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "72a6b748-7680-4f3e-be6c-4f2a960a5461",
+        "created_at": "2026-06-25T11:44:21.118Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T11:44:27.542Z",
+        "ip_hash": "23dedf60da20cfb4ac2644703462a4c0a54fef68a5e087189b88ae871fca6774",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "fa34e4f4-4482-468f-8102-4b588382b62f",
+        "created_at": "2026-06-25T11:44:27.542Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_view",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "title": "Home | Ozerman Ltd",
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T11:46:46.467Z",
+        "ip_hash": "23dedf60da20cfb4ac2644703462a4c0a54fef68a5e087189b88ae871fca6774",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "c6f63c77-490f-490f-af23-62cb068e2d41",
+        "created_at": "2026-06-25T11:46:46.467Z"
+    },
+    {
+        "visitor_uuid": "38302608-c69e-48b3-bbfd-17e276ceff6f",
+        "event_name": "page_leave",
+        "page_path": "/en",
+        "page_url": "http://localhost:8080/en",
+        "referrer": "http://localhost:8080/en",
+        "locale": "en",
+        "properties": {
+            "path": "/en"
+        },
+        "timestamp": "2026-06-25T11:46:51.615Z",
+        "ip_hash": "23dedf60da20cfb4ac2644703462a4c0a54fef68a5e087189b88ae871fca6774",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        "id": "b51b067d-a91b-453a-b7d1-199e56e2176a",
+        "created_at": "2026-06-25T11:46:51.615Z"
+    }
+]
