@@ -2,9 +2,15 @@
 
 Your hosting account uses a fixed `public_html` document root. App code and `.env` live in the **home directory** (`/home/ozermanl/`), not inside `public_html`.
 
-## 1. Put credentials in `.env`
+**Important:** Editing `.env` on your Mac (Cursor) does **not** change the live site. You must edit `/home/ozermanl/.env` on the server.
 
-File Manager → `/home/ozermanl/.env` (create from `.env.example` if missing).
+If admin says `Cannot connect to MySQL on 127.0.0.1`, the server `.env` is still using local defaults (or is missing). Fix it below.
+
+## 1. Put credentials in `.env` (on the server)
+
+File Manager → **Settings** → enable **Show Hidden Files** → open `/home/ozermanl/` (home, not `public_html`).
+
+Edit **`.env`** (copy from `.env.example` if missing). It must look like this — **not** `127.0.0.1` / `ozermanltd` / `root`:
 
 ```env
 DB_HOST=localhost
@@ -27,6 +33,15 @@ Replace `YOUR_MYSQL_PASSWORD_HERE` with the password you set when creating the M
 Confirm the user **ozerman_SYSADMIN** is added to database **ozermanl_MAIN** with **ALL PRIVILEGES**.
 
 On most cPanel hosts `DB_HOST` is `localhost` (not `127.0.0.1`).
+
+### Verify from Terminal
+
+```bash
+cd ~
+php bin/check-db.php
+```
+
+You want `RESULT: connection OK`. If `.env exists: NO` or `DB_HOST: 127.0.0.1`, fix the file path/contents and run again.
 
 ## 2. Import schema
 
