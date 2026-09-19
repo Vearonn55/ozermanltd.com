@@ -90,7 +90,8 @@ bin/                 # CLI helpers
 4. Set `CLOUDFLARE_ENFORCE` only after Cloudflare is live; use `SITE_UNDER_CONSTRUCTION` as needed
 5. Disable dummy-data fallbacks in production
 
-Details: [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).
+Details: [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).  
+Database + admin QR setup: [`docs/CPANEL-DATABASE.md`](docs/CPANEL-DATABASE.md).
 
 ## License / private use
 
