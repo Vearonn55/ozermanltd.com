@@ -85,7 +85,7 @@ foreach ($resources as $path => $class) {
     $prefix = preg_quote($base . '/' . $path, '#');
 
     if (preg_match('#^' . $prefix . '(?:/(\d+))?(?:/(edit|status|autosave))?$#', $uri, $m) !== 1
-        && preg_match('#^' . $prefix . '/(create|bulk)$#', $uri, $m2) !== 1) {
+        && preg_match('#^' . $prefix . '/(create|bulk|seed-qr-landings)$#', $uri, $m2) !== 1) {
         continue;
     }
 
@@ -98,6 +98,10 @@ foreach ($resources as $path => $class) {
         }
         if ($m2[1] === 'bulk' && $method === 'POST' && method_exists($controller, 'bulk')) {
             $controller->bulk();
+            exit;
+        }
+        if ($m2[1] === 'seed-qr-landings' && $method === 'POST' && method_exists($controller, 'seedQrLandings')) {
+            $controller->seedQrLandings();
             exit;
         }
         continue;

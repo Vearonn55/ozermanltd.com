@@ -10,6 +10,16 @@ admin_partial('list-toolbar', [
 ]);
 ?>
 
+<?php if (!empty($missingQrLandings)): ?>
+<div class="alert alert-warning mb-4">
+    <p class="mb-2"><strong>QR / Catalogues pages are missing</strong> (<?= e(implode(', ', $missingQrLandings)) ?>). Public <code>/qr</code> and <code>/catalogues</code> still work from templates, but you cannot edit them here until created.</p>
+    <form method="POST" action="<?= admin_url('pages/seed-qr-landings') ?>">
+        <?= csrf_field() ?>
+        <button type="submit" class="btn btn-primary">Create QR &amp; Catalogues pages</button>
+    </form>
+</div>
+<?php endif; ?>
+
 <div x-data="adminBulk()">
     <form id="bulk-form" method="POST" action="<?= admin_url('pages/bulk') ?>"
           onsubmit="return this.elements.bulk_action.value !== 'delete' || confirm('Delete the selected pages?')"

@@ -112,6 +112,6 @@ The public `/qr` and `/catalogues` routes load these CMS pages when published; o
 | “Unknown database” | Database name typo — must match cPanel exactly (e.g. `ozermanl_MAIN`). |
 | “No account found” | Import `seed.sql` or run `reset-admin-password.php` |
 | “Incorrect password” | Re-run reset script |
-| Site 403 | Set `CLOUDFLARE_ENFORCE=false` until Cloudflare is ready |
+| Blank white `/admin` after login | PHP fatal (often missing tables). Deploy latest; you should see an error card. Import `schema.sql`, `seed.sql`, `analytics_schema.sql` into `ozermanl_MAIN`. |
 | Changes not visible | Hard refresh; confirm page is **Published** |
 

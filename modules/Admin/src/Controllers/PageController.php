@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Admin\Controllers;
 
 use Admin\Repositories\PageRepository;
+use Admin\Services\QrLandingSeeder;
+use App\Infrastructure\Database;
 
 class PageController extends BaseAdminController
 {
@@ -21,6 +23,12 @@ class PageController extends BaseAdminController
         $params = $this->listParams();
         $result = $this->repo->paginate($params['q'], $params['status'], $params['page']);
 
+        $missingQr = [];
+        $pdo = Database::connection(true);
+        if ($pdo !== null) {
+            $missingQr = (new QrLandingSeeder($this->repo, $pdo))->missingSlugs();
+        }
+
         $this->render('pages.index', [
             'pageTitle' => 'Pages',
             'items' => $result['items'],
@@ -29,7 +37,25 @@ class PageController extends BaseAdminController
             'page' => $result['page'],
             'q' => $params['q'],
             'statusFilter' => $params['status'],
+            'missingQrLandings' => $missingQr,
         ]);
+    }
+
+    public function seedQrLandings(): void
+    {
+        $this->authorize('editor');
+        $this->verifyCsrf();
+
+        $pdo = Database::connection(true);
+        if ($pdo === null) {
+            flash('error', 'Database connection failed.');
+            redirect(admin_url('pages'));
+        }
+
+        $messages = (new QrLandingSeeder($this->repo, $pdo))->run();
+        $this->logActivity('seed_qr_landings', 'page', null, ['messages' => $messages]);
+        flash('success', implode(' · ', $messages));
+        redirect(admin_url('pages'));
     }
 
     public function create(): void
