@@ -108,3 +108,4 @@ The public `/qr` and `/catalogues` routes load these CMS pages when published; o
 | “Incorrect password” | Re-run reset script |
 | Site 403 | Set `CLOUDFLARE_ENFORCE=false` until Cloudflare is ready |
 | Changes not visible | Hard refresh; confirm page is **Published** |
+
