@@ -30,9 +30,11 @@ Refresh published ranges occasionally from https://www.cloudflare.com/ips/ into 
 
 Follow [`ADMIN-AND-CPANEL.md`](ADMIN-AND-CPANEL.md). Summary:
 
-1. Deploy code; set document root to **`public/`**.
-2. Create MySQL DB + user; import `database/schema.sql` (+ analytics if used) and seeds as needed.
-3. Place `.env` from `.env.example` with production values:
+1. In cPanel **Git Version Control**, clone this repo **outside** `public_html` (e.g. `repositories/ozermanltd.com`). Use branch **`main`**.
+2. [`.cpanel.yml`](../.cpanel.yml) is required for Deploy. It copies the app to `~/ozermanltd.com` and does **not** overwrite an existing `.env` or files already in `public/uploads/`.
+3. Set the domain **document root** to `ozermanltd.com/public` (under your home directory).
+4. Create MySQL DB + user; import `database/schema.sql` (+ analytics if used) and seeds as needed.
+5. Place `.env` from `.env.example` with production values (first deploy only auto-creates `.env` from the example if missing — edit it immediately):
 
 ```env
 APP_ENV=production
@@ -45,11 +47,13 @@ DB_FALLBACK_DUMMY=false
 # + strong APP_KEY
 ```
 
-4. PHP **8.3+**; raise upload limits for Media Library.
-5. Writable: `storage/`, `public/uploads/`.
-6. AutoSSL (or valid cert) on the origin so Cloudflare Full (strict) works.
-7. Cron (optional): `php /path/to/bin/sync-analytics-queue.php`.
-8. Rotate admin password: `php bin/reset-admin-password.php admin@ozermanltd.com 'your-strong-password'`.
+6. PHP **8.3+**; raise upload limits for Media Library.
+7. Writable: `storage/`, `public/uploads/`.
+8. AutoSSL (or valid cert) on the origin so Cloudflare Full (strict) works.
+9. Cron (optional): `php /home/USER/ozermanltd.com/bin/sync-analytics-queue.php`.
+10. Rotate admin password: `php bin/reset-admin-password.php admin@ozermanltd.com 'your-strong-password'`.
+
+If Deploy says “No uncommitted changes exist on the checked-out branch”, run **Update** / pull on the cPanel repo so it matches GitHub, then Deploy again. Do not edit files inside the clone on the server.
 
 ## Smoke test after cutover
 
