@@ -31,10 +31,14 @@ if (file_exists($envFile)) {
         $key = trim($key);
         $value = trim($value, " \t\"'");
 
-        if ($key !== '' && getenv($key) === false) {
-            putenv("{$key}={$value}");
-            $_ENV[$key] = $value;
+        if ($key === '') {
+            continue;
         }
+
+        // File values win (cPanel may have empty DB_* in the process environment).
+        putenv("{$key}={$value}");
+        $_ENV[$key] = $value;
+        $_SERVER[$key] = $value;
     }
 }
 

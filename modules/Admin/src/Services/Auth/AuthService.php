@@ -17,7 +17,21 @@ class AuthService
     {
         $pdo = Database::connection(force: true);
         if ($pdo === null) {
-            return 'Cannot connect to MySQL on ' . (getenv('DB_HOST') ?: '127.0.0.1') . '. '
+            $host = getenv('DB_HOST') ?: '127.0.0.1';
+            $db = getenv('DB_DATABASE') ?: '(unset)';
+            $user = getenv('DB_USERNAME') ?: '(unset)';
+            $envPath = defined('BASE_PATH') ? BASE_PATH . '/.env' : '.env';
+            $envExists = defined('BASE_PATH') && is_file(BASE_PATH . '/.env');
+
+            if ((getenv('APP_ENV') ?: '') === 'production' || $host === 'localhost') {
+                return 'Cannot connect to MySQL'
+                    . " (host={$host}, database={$db}, user={$user}). "
+                    . ($envExists
+                        ? "Check DB_* values in {$envPath}. On cPanel use DB_HOST=localhost and your ozermanl_* database name."
+                        : "Missing {$envPath}. Create it in the home directory (Show Hidden Files), not only in public_html.");
+            }
+
+            return 'Cannot connect to MySQL on ' . $host . '. '
                 . 'Start MySQL (brew services start mysql@8.0) or run make db-docker-setup, then make db-setup.';
         }
 
