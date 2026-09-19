@@ -1,13 +1,20 @@
 <?php
 $isEdit = $item !== null;
 $slug = (string) ($item['slug'] ?? '');
-$customPath = (string) ($item['custom_path'] ?? $slug);
-$pathForUrl = trim($customPath !== '' ? $customPath : $slug, '/');
-$localeFree = admin_is_locale_free_path($pathForUrl) || admin_is_locale_free_path($slug);
-$localePrefix = $localeFree ? '' : rtrim((string) admin_config('view_site_url', '/en'), '/');
+$customPath = trim((string) ($item['custom_path'] ?? ''), '/');
+if ($customPath === '') {
+    $customPath = $slug;
+}
+$publicUrl = $isEdit ? admin_page_public_url($item) : admin_page_public_url(null, $customPath !== '' ? $customPath : $slug);
+$localeFreePaths = admin_config('locale_free_paths', ['qr', 'catalogues']);
+if (!is_array($localeFreePaths)) {
+    $localeFreePaths = ['qr', 'catalogues'];
+}
 ?>
 <form method="POST" action="<?= $isEdit ? admin_url('pages/' . $item['id']) : admin_url('pages') ?>" class="space-y-6"
-      x-data="pageEditor({ slug: <?= json_encode($slug) ?>, path: <?= json_encode($customPath) ?>, prefix: <?= json_encode($localePrefix) ?>, localeFreePaths: <?= json_encode(admin_config('locale_free_paths', ['qr', 'catalogues'])) ?> })"
+      data-page-editor="1"
+      data-locale-free-paths="<?= e(implode(',', $localeFreePaths)) ?>"
+      <?= $isEdit ? 'data-editing="1"' : '' ?>
       <?= $isEdit ? 'data-autosave-url="' . admin_url('pages/' . $item['id'] . '/autosave') . '"' : '' ?>>
     <?= csrf_field() ?>
 
@@ -15,23 +22,38 @@ $localePrefix = $localeFree ? '' : rtrim((string) admin_config('view_site_url', 
         <div class="card-header flex items-center justify-between">
             <span>Page &amp; URL</span>
             <?php if ($isEdit && ($item['status'] ?? '') === 'published'): ?>
-            <a href="<?= e(admin_page_public_url($item)) ?>" target="_blank">View on site ↗</a>
+            <a href="<?= e($publicUrl) ?>" target="_blank">View on site ↗</a>
             <?php endif; ?>
         </div>
         <div class="card-body space-y-4">
+            <div>
+                <label class="form-label">Public path</label>
+                <input type="text" name="custom_path" id="page-public-path" required
+                       value="<?= e($customPath) ?>"
+                       placeholder="catalogues"
+                       class="form-control js-page-path">
+                <p class="text-xs mt-1" style="color:var(--cui-muted)">
+                    Live URL path. Use <code>qr</code> or <code>catalogues</code> for locale-free pages
+                    (<code>/qr</code>, <code>/catalogues</code>). Other pages are served under <code>/en/…</code>.
+                </p>
+            </div>
+
+            <div class="url-preview">
+                Public URL:
+                <strong id="page-url-preview"><?= e($publicUrl !== '' ? $publicUrl : '/') ?></strong>
+                <button type="button" class="btn btn-link" data-copy-target="page-url-preview">Copy</button>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="form-label">Slug</label>
-                    <input type="text" name="slug" required x-model="slug" data-slug-target="single" class="form-control">
+                    <label class="form-label">Slug <span style="color:var(--cui-muted);font-weight:400">(internal id)</span></label>
+                    <input type="text" name="slug" id="page-slug" required
+                           value="<?= e($slug !== '' ? $slug : $customPath) ?>"
+                           class="form-control js-page-slug"
+                           <?= $isEdit ? 'data-slug-locked="1"' : 'data-slug-target="single"' ?>>
+                    <p class="text-xs mt-1" style="color:var(--cui-muted)">Kept in sync with public path for QR landings. Do not set two pages to the same slug.</p>
                 </div>
                 <div>
-                    <label class="form-label">Public path</label>
-                    <input type="text" name="custom_path" x-model="path" placeholder="campaigns/summer" class="form-control">
-                    <p class="text-xs mt-1" style="color:var(--cui-muted)">
-                        Use <code>qr</code> or <code>catalogues</code> for locale-free URLs (<code>/qr</code>, <code>/catalogues</code>).
-                        Other pages use the site locale prefix (e.g. <code>/en/…</code>).
-                    </p>
-                </div>                <div>
                     <label class="form-label">Template</label>
                     <select name="template" class="form-select">
                         <?php foreach (['custom' => 'Custom HTML embed', 'default' => 'Default (site content)', 'home' => 'Home', 'contact' => 'Contact'] as $tpl => $label): ?>
@@ -62,11 +84,6 @@ $localePrefix = $localeFree ? '' : rtrim((string) admin_config('view_site_url', 
                 <input type="checkbox" name="show_in_nav" value="1" <?= ($item['show_in_nav'] ?? 0) ? 'checked' : '' ?>>
                 Show in navigation
             </label>
-            <div class="url-preview">
-                Public URL:
-                <strong x-text="fullUrl"></strong>
-                <button type="button" class="btn btn-link" :data-copy="fullUrl">Copy</button>
-            </div>
         </div>
     </div>
 

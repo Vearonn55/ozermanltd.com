@@ -75,8 +75,13 @@ class PageController extends BaseAdminController
         $this->authorize('editor');
         $this->verifyCsrf();
 
-        $data = $this->payloadFromRequest();
-        $id = $this->repo->create($data);
+        try {
+            $data = $this->payloadFromRequest();
+            $id = $this->repo->create($data);
+        } catch (\Throwable $e) {
+            flash('error', $this->friendlyPageError($e));
+            redirect(admin_url('pages/create'));
+        }
 
         $this->recordRevision('page', $id, $data);
         $this->logActivity('create', 'page', $id);
@@ -110,13 +115,20 @@ class PageController extends BaseAdminController
         $this->authorize('editor');
         $this->verifyCsrf();
 
-        if (!$this->repo->find($id)) {
+        $existing = $this->repo->find($id);
+        if (!$existing) {
             flash('error', 'Page not found.');
             redirect(admin_url('pages'));
         }
 
-        $data = $this->payloadFromRequest();
-        $this->repo->update($id, $data);
+        try {
+            $data = $this->payloadFromRequest($existing);
+            $this->repo->assertUniqueSlugAndPath($data['slug'], $data['custom_path'] ?? null, $id);
+            $this->repo->update($id, $data);
+        } catch (\Throwable $e) {
+            flash('error', $this->friendlyPageError($e));
+            redirect(admin_url('pages/' . $id . '/edit'));
+        }
 
         $this->recordRevision('page', $id, $data);
         $this->logActivity('update', 'page', $id);
@@ -128,12 +140,13 @@ class PageController extends BaseAdminController
     {
         $this->authorize('editor');
 
-        if (!$this->repo->find($id)) {
+        $existing = $this->repo->find($id);
+        if (!$existing) {
             http_response_code(404);
             exit;
         }
 
-        $this->handleAutosave('page', $id, $this->payloadFromRequest());
+        $this->handleAutosave('page', $id, $this->payloadFromRequest($existing));
     }
 
     public function toggleStatus(int $id): void
@@ -182,13 +195,34 @@ class PageController extends BaseAdminController
         redirect(admin_url('pages'));
     }
 
-    /** @return array<string, mixed> */
-    private function payloadFromRequest(): array
+    /**
+     * @param array<string, mixed>|null $existing
+     * @return array<string, mixed>
+     */
+    private function payloadFromRequest(?array $existing = null): array
     {
         $slug = trim((string) ($_POST['slug'] ?? ''));
         $customPath = trim((string) ($_POST['custom_path'] ?? ''), '/');
+
+        // Prefer posted public path; never blank-out an existing page via empty Alpine fields.
+        if ($customPath === '' && $existing !== null) {
+            $customPath = trim((string) ($existing['custom_path'] ?? $existing['slug'] ?? ''), '/');
+        }
+        if ($slug === '' && $existing !== null) {
+            $slug = (string) ($existing['slug'] ?? '');
+        }
         if ($customPath === '') {
             $customPath = $slug;
+        }
+        if ($slug === '') {
+            $slug = $customPath;
+        }
+
+        // Locale-free landings: slug and path must match (qr / catalogues).
+        if (admin_is_locale_free_path($customPath) || admin_is_locale_free_path($slug)) {
+            $canonical = admin_is_locale_free_path($customPath) ? $customPath : $slug;
+            $slug = $canonical;
+            $customPath = $canonical;
         }
 
         return [
@@ -204,5 +238,18 @@ class PageController extends BaseAdminController
                 'html_embed', 'css_embed', 'js_embed', 'php_embed',
             ]),
         ];
+    }
+
+    private function friendlyPageError(\Throwable $e): string
+    {
+        $message = $e->getMessage();
+        if (str_contains($message, 'Duplicate') && str_contains($message, 'slug')) {
+            return 'That slug is already used by another page. For catalogues use slug/path `catalogues` (not `qr`).';
+        }
+        if (str_contains($message, 'Duplicate') && str_contains($message, 'custom_path')) {
+            return 'That public path is already used by another page.';
+        }
+
+        return $message;
     }
 }

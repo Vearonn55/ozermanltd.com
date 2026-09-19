@@ -103,6 +103,8 @@ class PageRepository extends BaseAdminRepository
 
     public function create(array $data): int
     {
+        $this->assertUniqueSlugAndPath($data['slug'], $data['custom_path'] ?? null, null);
+
         $stmt = $this->pdo->prepare(
             'INSERT INTO pages (slug, custom_path, template, embed_mode, status, show_in_nav, sort_order, published_at)
              VALUES (:slug, :custom_path, :template, :embed_mode, :status, :show_in_nav, :sort_order, :published_at)'
@@ -122,6 +124,33 @@ class PageRepository extends BaseAdminRepository
         $this->saveTranslations($pageId, $data['translations'] ?? []);
 
         return $pageId;
+    }
+
+    public function assertUniqueSlugAndPath(string $slug, ?string $customPath, ?int $exceptId): void
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT id, slug, custom_path FROM pages
+             WHERE (slug = :slug OR (:path IS NOT NULL AND custom_path = :path2))
+               AND (:except IS NULL OR id != :except2)
+             LIMIT 1'
+        );
+        $stmt->execute([
+            'slug' => $slug,
+            'path' => $customPath,
+            'path2' => $customPath,
+            'except' => $exceptId,
+            'except2' => $exceptId,
+        ]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return;
+        }
+
+        if (($row['slug'] ?? '') === $slug) {
+            throw new \RuntimeException("Duplicate entry '{$slug}' for key 'slug'");
+        }
+
+        throw new \RuntimeException("Duplicate entry '{$customPath}' for key 'custom_path'");
     }
 
     public function update(int $id, array $data): void
@@ -215,7 +244,7 @@ class PageRepository extends BaseAdminRepository
 
         try {
             $this->pdo->exec('CREATE UNIQUE INDEX uq_pages_custom_path ON pages (custom_path)');
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
             // Index already exists or engine does not allow a second unique on nullable path.
         }
     }

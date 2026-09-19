@@ -51,11 +51,11 @@
     function initSlugs() {
         document.querySelectorAll('[data-slug-source]').forEach(function (source) {
             var form = source.form;
-            if (!form) return;
+            if (!form || form.hasAttribute('data-editing')) return;
             var lang = source.getAttribute('data-slug-source');
             var target = form.querySelector('[data-slug-target="' + lang + '"]') ||
                 (lang === 'en' ? form.querySelector('[data-slug-target="single"]') : null);
-            if (!target) return;
+            if (!target || target.getAttribute('data-slug-locked') === '1') return;
 
             if (target.value.trim() !== '') target.dataset.slugTouched = '1';
             target.addEventListener('input', function () { target.dataset.slugTouched = target.value.trim() !== '' ? '1' : ''; });
@@ -63,6 +63,54 @@
                 if (target.dataset.slugTouched === '1') return;
                 target.value = slugify(source.value);
             });
+        });
+    }
+
+    function initPageEditor() {
+        document.querySelectorAll('form[data-page-editor]').forEach(function (form) {
+            var pathInput = form.querySelector('.js-page-path');
+            var slugInput = form.querySelector('.js-page-slug');
+            var preview = form.querySelector('#page-url-preview');
+            if (!pathInput || !preview) return;
+
+            var localeFree = (form.getAttribute('data-locale-free-paths') || 'qr,catalogues')
+                .split(',')
+                .map(function (s) { return s.trim(); })
+                .filter(Boolean);
+
+            function normalize(value) {
+                return String(value || '').replace(/^\/+|\/+$/g, '');
+            }
+
+            function publicUrl(path) {
+                path = normalize(path);
+                if (!path || path === 'home') return '/en';
+                if (localeFree.indexOf(path) !== -1) return '/' + path;
+                return '/en/' + path;
+            }
+
+            function syncFromPath() {
+                var path = normalize(pathInput.value);
+                pathInput.value = path;
+                if (slugInput && (!form.hasAttribute('data-editing') || localeFree.indexOf(path) !== -1)) {
+                    if (!slugInput.dataset.slugTouched || localeFree.indexOf(path) !== -1) {
+                        slugInput.value = path;
+                    }
+                }
+                preview.textContent = publicUrl(path || (slugInput ? slugInput.value : ''));
+            }
+
+            pathInput.addEventListener('input', syncFromPath);
+            pathInput.addEventListener('change', syncFromPath);
+            if (slugInput) {
+                slugInput.addEventListener('input', function () {
+                    slugInput.dataset.slugTouched = '1';
+                    if (!pathInput.value.trim()) {
+                        preview.textContent = publicUrl(slugInput.value);
+                    }
+                });
+            }
+            syncFromPath();
         });
     }
 
@@ -135,10 +183,16 @@
     /* ---------- Copy to clipboard ---------- */
     function initCopy() {
         document.addEventListener('click', function (event) {
-            var btn = event.target.closest('[data-copy]');
+            var btn = event.target.closest('[data-copy], [data-copy-target]');
             if (!btn) return;
             event.preventDefault();
-            navigator.clipboard.writeText(btn.getAttribute('data-copy')).then(function () {
+            var text = btn.getAttribute('data-copy');
+            if (!text && btn.getAttribute('data-copy-target')) {
+                var el = document.getElementById(btn.getAttribute('data-copy-target'));
+                text = el ? el.textContent.trim() : '';
+            }
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(function () {
                 var original = btn.textContent;
                 btn.textContent = 'Copied!';
                 setTimeout(function () { btn.textContent = original; }, 1500);
@@ -189,6 +243,7 @@
     }
 
     window.pageEditor = function (initial) {
+        // Kept for older cached markup; page form no longer depends on Alpine for URL fields.
         return {
             slug: initial.slug || '',
             path: initial.path || '',
@@ -196,16 +251,10 @@
             localeFreePaths: initial.localeFreePaths || ['qr', 'catalogues'],
             get fullUrl() {
                 var path = (this.path || this.slug || '').replace(/^\/+|\/+$/g, '');
-                if (path === 'home' || path === '') {
-                    return this.prefix || '/en';
-                }
-                if (this.localeFreePaths.indexOf(path) !== -1) {
-                    return '/' + path;
-                }
+                if (path === 'home' || path === '') return this.prefix || '/en';
+                if (this.localeFreePaths.indexOf(path) !== -1) return '/' + path;
                 var prefix = this.prefix || '';
-                if (!prefix) {
-                    return '/' + path;
-                }
+                if (!prefix) return '/' + path;
                 return prefix + '/' + path;
             }
         };
@@ -214,6 +263,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         initRichText();
         initSlugs();
+        initPageEditor();
         initAutosave();
         initCopy();
         initCodeMediaInsert();
