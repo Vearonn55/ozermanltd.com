@@ -31,29 +31,34 @@ Refresh published ranges occasionally from https://www.cloudflare.com/ips/ into 
 Follow [`ADMIN-AND-CPANEL.md`](ADMIN-AND-CPANEL.md). Summary:
 
 1. In cPanel **Git Version Control**, clone this repo **outside** `public_html` (e.g. `repositories/ozermanltd.com`). Use branch **`main`**.
-2. [`.cpanel.yml`](../.cpanel.yml) is required for Deploy. It copies the app to `~/ozermanltd.com` and does **not** overwrite an existing `.env` or files already in `public/uploads/`.
-3. Set the domain **document root** to `ozermanltd.com/public` (under your home directory).
+2. [`.cpanel.yml`](../.cpanel.yml) is required for Deploy. This host keeps the domain document root as **`public_html`**, so deploy does:
+   - App code → `$HOME/` (`bootstrap.php`, `app/`, `modules/`, `config/`, …)
+   - Web files → `$HOME/public_html/` (from repo `public/`)
+   - Does **not** overwrite an existing `$HOME/.env` or files already in `public_html/uploads/`
+3. You do **not** need to change the domain document root.
 4. Create MySQL DB + user; import `database/schema.sql` (+ analytics if used) and seeds as needed.
-5. Place `.env` from `.env.example` with production values (first deploy only auto-creates `.env` from the example if missing — edit it immediately):
+5. Edit `$HOME/.env` (File Manager → home directory, not inside `public_html`). First deploy only auto-creates `.env` from the example if missing:
 
 ```env
 APP_ENV=production
 APP_URL=https://ozermanltd.com
 SITE_UNDER_CONSTRUCTION=true
-CLOUDFLARE_ENFORCE=true
+CLOUDFLARE_ENFORCE=false
 DB_USE_DUMMY_DATA=false
 DB_FALLBACK_DUMMY=false
 # + real DB_* credentials
 # + strong APP_KEY
 ```
 
-6. PHP **8.3+**; raise upload limits for Media Library.
-7. Writable: `storage/`, `public/uploads/`.
-8. AutoSSL (or valid cert) on the origin so Cloudflare Full (strict) works.
-9. Cron (optional): `php /home/USER/ozermanltd.com/bin/sync-analytics-queue.php`.
-10. Rotate admin password: `php bin/reset-admin-password.php admin@ozermanltd.com 'your-strong-password'`.
+Use `CLOUDFLARE_ENFORCE=true` only after Cloudflare orange-cloud + Full (strict) are working.
 
-If Deploy says “No uncommitted changes exist on the checked-out branch”, run **Update** / pull on the cPanel repo so it matches GitHub, then Deploy again. Do not edit files inside the clone on the server.
+6. PHP **8.3+**; raise upload limits for Media Library.
+7. Writable: `$HOME/storage/`, `$HOME/public_html/uploads/`.
+8. AutoSSL (or valid cert) on the origin so Cloudflare Full (strict) works later.
+9. Cron (optional): `php /home/USER/bin/sync-analytics-queue.php`.
+10. Rotate admin password: `php /home/USER/bin/reset-admin-password.php admin@ozermanltd.com 'your-strong-password'`.
+
+If Deploy says “No uncommitted changes exist on the checked-out branch”, run **Update from Remote** on the cPanel repo so it matches GitHub, then Deploy again. Do not edit files inside the clone on the server.
 
 ## Smoke test after cutover
 

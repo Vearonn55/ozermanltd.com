@@ -9,7 +9,13 @@ declare(strict_types=1);
 define('BASE_PATH', __DIR__);
 define('APP_PATH', BASE_PATH . '/app');
 define('CONFIG_PATH', BASE_PATH . '/config');
-define('PUBLIC_PATH', BASE_PATH . '/public');
+// cPanel locked docroot uses public_html; local/dev uses public/
+define(
+    'PUBLIC_PATH',
+    is_dir(BASE_PATH . '/public_html')
+        ? BASE_PATH . '/public_html'
+        : BASE_PATH . '/public'
+);
 define('MODULES_PATH', BASE_PATH . '/modules');
 define('ADMIN_MODULE_PATH', MODULES_PATH . '/Admin');
 

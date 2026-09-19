@@ -1,48 +1,47 @@
 ---
-# cPanel Git Version Control — deployment tasks
+# cPanel Git Version Control — deployment for hosts that lock docroot to public_html
 #
-# Recommended layout:
-#   Clone path:  ~/repositories/ozermanltd.com  (or cPanel Git default)
-#   Deploy path: ~/ozermanltd.com
-#   Document root (Domains → domain → Document Root): ~/ozermanltd.com/public
+# Clone path:  ~/repositories/ozermanltd.com
+# App root:    ~/  (bootstrap.php, app/, modules/, … sit next to public_html)
+# Web root:    ~/public_html  (contents of repo public/)
 #
-# Do not clone the repo into public_html itself.
-# Preserve production .env and public/uploads across deploys (not overwritten below).
+# public/index.php loads dirname(__DIR__)/bootstrap.php → must be $HOME/bootstrap.php
+# Preserves existing $HOME/.env and public_html/uploads/
 # See docs/PRODUCTION-LAUNCH.md
 deployment:
   tasks:
-    - export DEPLOYPATH=$HOME/ozermanltd.com
-    - /bin/mkdir -p $DEPLOYPATH
-    - /bin/mkdir -p $DEPLOYPATH/public
-    - /bin/mkdir -p $DEPLOYPATH/storage/logs
-    - /bin/mkdir -p $DEPLOYPATH/storage/admin/rate_limits
-    - /bin/mkdir -p $DEPLOYPATH/storage/analytics
-    - /bin/mkdir -p $DEPLOYPATH/public/uploads
-    - /bin/cp -R app $DEPLOYPATH/
-    - /bin/cp -R bin $DEPLOYPATH/
-    - /bin/cp -R config $DEPLOYPATH/
-    - /bin/cp -R database $DEPLOYPATH/
-    - /bin/cp -R docs $DEPLOYPATH/
-    - /bin/cp -R modules $DEPLOYPATH/
-    - /bin/cp -R resources $DEPLOYPATH/
-    - /bin/cp -R routes $DEPLOYPATH/
-    - /bin/cp -R scripts $DEPLOYPATH/
-    - /bin/cp bootstrap.php $DEPLOYPATH/
-    - /bin/cp Makefile $DEPLOYPATH/
-    - /bin/cp README.md $DEPLOYPATH/
-    - /bin/cp .env.example $DEPLOYPATH/
-    - /bin/cp tailwind.config.js $DEPLOYPATH/
-    - /bin/cp -R public/assets $DEPLOYPATH/public/
-    - /bin/cp public/index.php $DEPLOYPATH/public/
-    - /bin/cp public/router.php $DEPLOYPATH/public/
-    - /bin/cp public/.htaccess $DEPLOYPATH/public/
-    - /bin/cp public/robots.txt $DEPLOYPATH/public/
-    - /bin/cp public/uploads/.htaccess $DEPLOYPATH/public/uploads/
-    - /bin/cp public/uploads/.gitkeep $DEPLOYPATH/public/uploads/
-    - /bin/cp -R storage/seo $DEPLOYPATH/storage/
-    - /bin/cp storage/logs/.gitkeep $DEPLOYPATH/storage/logs/
-    - /bin/cp storage/analytics/.gitkeep $DEPLOYPATH/storage/analytics/
-    - /bin/cp storage/admin/rate_limits/.gitkeep $DEPLOYPATH/storage/admin/rate_limits/
-    - /bin/chmod -R u+rwX $DEPLOYPATH/storage
-    - /bin/chmod -R u+rwX $DEPLOYPATH/public/uploads
-    - if [ ! -f $DEPLOYPATH/.env ]; then /bin/cp $DEPLOYPATH/.env.example $DEPLOYPATH/.env; fi
+    - export HOMEDIR=$HOME
+    - export WEBROOT=$HOME/public_html
+    - /bin/mkdir -p $WEBROOT
+    - /bin/mkdir -p $WEBROOT/uploads
+    - /bin/mkdir -p $HOMEDIR/storage/logs
+    - /bin/mkdir -p $HOMEDIR/storage/admin/rate_limits
+    - /bin/mkdir -p $HOMEDIR/storage/analytics
+    - /bin/cp -R app $HOMEDIR/
+    - /bin/cp -R bin $HOMEDIR/
+    - /bin/cp -R config $HOMEDIR/
+    - /bin/cp -R database $HOMEDIR/
+    - /bin/cp -R docs $HOMEDIR/
+    - /bin/cp -R modules $HOMEDIR/
+    - /bin/cp -R resources $HOMEDIR/
+    - /bin/cp -R routes $HOMEDIR/
+    - /bin/cp -R scripts $HOMEDIR/
+    - /bin/cp bootstrap.php $HOMEDIR/
+    - /bin/cp Makefile $HOMEDIR/
+    - /bin/cp README.md $HOMEDIR/
+    - /bin/cp .env.example $HOMEDIR/
+    - /bin/cp tailwind.config.js $HOMEDIR/
+    - /bin/cp -R public/assets $WEBROOT/
+    - /bin/cp public/index.php $WEBROOT/
+    - /bin/cp public/router.php $WEBROOT/
+    - /bin/cp public/.htaccess $WEBROOT/
+    - /bin/cp public/robots.txt $WEBROOT/
+    - /bin/cp public/uploads/.htaccess $WEBROOT/uploads/
+    - /bin/cp public/uploads/.gitkeep $WEBROOT/uploads/
+    - /bin/cp -R storage/seo $HOMEDIR/storage/
+    - /bin/cp storage/logs/.gitkeep $HOMEDIR/storage/logs/
+    - /bin/cp storage/analytics/.gitkeep $HOMEDIR/storage/analytics/
+    - /bin/cp storage/admin/rate_limits/.gitkeep $HOMEDIR/storage/admin/rate_limits/
+    - /bin/chmod -R u+rwX $HOMEDIR/storage
+    - /bin/chmod -R u+rwX $WEBROOT/uploads
+    - if [ ! -f $HOMEDIR/.env ]; then /bin/cp $HOMEDIR/.env.example $HOMEDIR/.env; fi

@@ -84,10 +84,10 @@ bin/                 # CLI helpers
 
 ## Production notes
 
-1. Document root = `public/`
-2. PHP 8.3+; writable `storage/` and `public/uploads/`
+1. Document root stays **`public_html`** on hosts that lock it (see `.cpanel.yml`)
+2. PHP 8.3+; writable `$HOME/storage/` and `$HOME/public_html/uploads/`
 3. Cloudflare: orange-cloud DNS, SSL Full (strict), Always Use HTTPS
-4. Set `CLOUDFLARE_ENFORCE=true` and `SITE_UNDER_CONSTRUCTION` as needed
+4. Set `CLOUDFLARE_ENFORCE` only after Cloudflare is live; use `SITE_UNDER_CONSTRUCTION` as needed
 5. Disable dummy-data fallbacks in production
 
 Details: [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).
