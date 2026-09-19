@@ -30,6 +30,7 @@ deployment:
     - /bin/cp Makefile $HOMEDIR/
     - /bin/cp README.md $HOMEDIR/
     - /bin/cp .env.example $HOMEDIR/
+    - /bin/cp .env.cpanel.example $HOMEDIR/
     - /bin/cp tailwind.config.js $HOMEDIR/
     - /bin/cp -R public/assets $WEBROOT/
     - /bin/cp public/index.php $WEBROOT/
@@ -44,4 +45,6 @@ deployment:
     - /bin/cp storage/admin/rate_limits/.gitkeep $HOMEDIR/storage/admin/rate_limits/
     - /bin/chmod -R u+rwX $HOMEDIR/storage
     - /bin/chmod -R u+rwX $WEBROOT/uploads
-    - if [ ! -f $HOMEDIR/.env ]; then /bin/cp $HOMEDIR/.env.example $HOMEDIR/.env; fi
+    # Prefer cPanel template (localhost + ozermanl_*), never local 127.0.0.1 defaults.
+    # Does not overwrite an existing .env — edit $HOME/.env manually if DB still fails.
+    - if [ ! -f $HOMEDIR/.env ]; then /bin/cp $HOMEDIR/.env.cpanel.example $HOMEDIR/.env; fi
