@@ -2,10 +2,12 @@
 $isEdit = $item !== null;
 $slug = (string) ($item['slug'] ?? '');
 $customPath = (string) ($item['custom_path'] ?? $slug);
-$localePrefix = rtrim((string) admin_config('view_site_url', '/en'), '/');
+$pathForUrl = trim($customPath !== '' ? $customPath : $slug, '/');
+$localeFree = admin_is_locale_free_path($pathForUrl) || admin_is_locale_free_path($slug);
+$localePrefix = $localeFree ? '' : rtrim((string) admin_config('view_site_url', '/en'), '/');
 ?>
 <form method="POST" action="<?= $isEdit ? admin_url('pages/' . $item['id']) : admin_url('pages') ?>" class="space-y-6"
-      x-data="pageEditor({ slug: <?= json_encode($slug) ?>, path: <?= json_encode($customPath) ?>, prefix: <?= json_encode($localePrefix) ?> })"
+      x-data="pageEditor({ slug: <?= json_encode($slug) ?>, path: <?= json_encode($customPath) ?>, prefix: <?= json_encode($localePrefix) ?>, localeFreePaths: <?= json_encode(admin_config('locale_free_paths', ['qr', 'catalogues'])) ?> })"
       <?= $isEdit ? 'data-autosave-url="' . admin_url('pages/' . $item['id'] . '/autosave') . '"' : '' ?>>
     <?= csrf_field() ?>
 
@@ -13,7 +15,7 @@ $localePrefix = rtrim((string) admin_config('view_site_url', '/en'), '/');
         <div class="card-header flex items-center justify-between">
             <span>Page &amp; URL</span>
             <?php if ($isEdit && ($item['status'] ?? '') === 'published'): ?>
-            <a href="<?= e(admin_preview_url($customPath === 'home' ? '' : $customPath)) ?>" target="_blank">View on site ↗</a>
+            <a href="<?= e(admin_page_public_url($item)) ?>" target="_blank">View on site ↗</a>
             <?php endif; ?>
         </div>
         <div class="card-body space-y-4">
@@ -25,9 +27,11 @@ $localePrefix = rtrim((string) admin_config('view_site_url', '/en'), '/');
                 <div>
                     <label class="form-label">Public path</label>
                     <input type="text" name="custom_path" x-model="path" placeholder="campaigns/summer" class="form-control">
-                    <p class="text-xs mt-1" style="color:var(--cui-muted)">Leave blank to use the slug. Nested paths are allowed (e.g. <code>offers/black-friday</code>).</p>
-                </div>
-                <div>
+                    <p class="text-xs mt-1" style="color:var(--cui-muted)">
+                        Use <code>qr</code> or <code>catalogues</code> for locale-free URLs (<code>/qr</code>, <code>/catalogues</code>).
+                        Other pages use the site locale prefix (e.g. <code>/en/…</code>).
+                    </p>
+                </div>                <div>
                     <label class="form-label">Template</label>
                     <select name="template" class="form-select">
                         <?php foreach (['custom' => 'Custom HTML embed', 'default' => 'Default (site content)', 'home' => 'Home', 'contact' => 'Contact'] as $tpl => $label): ?>

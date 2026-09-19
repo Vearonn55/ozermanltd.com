@@ -56,4 +56,6 @@ return [
     ],
     'default_login_hint' => '',
     'allow_page_php' => true,
+    // Public URLs without locale prefix (served by QrLandingController).
+    'locale_free_paths' => ['qr', 'catalogues'],
 ];

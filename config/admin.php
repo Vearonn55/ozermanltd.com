@@ -12,4 +12,5 @@ return [
     'upload_path' => null,
     'upload_url' => '/uploads',
     'default_login_hint' => 'admin@ozermanltd.com',
+    'locale_free_paths' => ['qr', 'catalogues'],
 ];

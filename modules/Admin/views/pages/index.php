@@ -48,11 +48,7 @@ admin_partial('list-toolbar', [
             </thead>
             <tbody>
                 <?php foreach ($items as $item):
-                    $publicPath = trim((string) (($item['custom_path'] ?? '') !== '' ? $item['custom_path'] : $item['slug']), '/');
-                    if (($item['slug'] ?? '') === 'home') {
-                        $publicPath = '';
-                    }
-                    $publicUrl = admin_preview_url($publicPath);
+                    $publicUrl = admin_page_public_url($item);
                 ?>
                 <tr>
                     <td>

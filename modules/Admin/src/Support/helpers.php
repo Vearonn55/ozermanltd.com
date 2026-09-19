@@ -112,6 +112,51 @@ if (!function_exists('admin_preview_url')) {
     }
 }
 
+if (!function_exists('admin_page_public_url')) {
+    /**
+     * Public URL for a CMS page. Locale-free paths (qr, catalogues) omit /en.
+     *
+     * @param array<string, mixed>|null $item
+     */
+    function admin_page_public_url(?array $item, ?string $pathOverride = null): string
+    {
+        $path = $pathOverride;
+        if ($path === null && $item !== null) {
+            $path = (string) (($item['custom_path'] ?? '') !== ''
+                ? $item['custom_path']
+                : ($item['slug'] ?? ''));
+        }
+        $path = trim((string) $path, '/');
+        if (($item['slug'] ?? '') === 'home' || $path === 'home') {
+            $path = '';
+        }
+
+        $localeFree = admin_config('locale_free_paths', ['qr', 'catalogues']);
+        if (!is_array($localeFree)) {
+            $localeFree = ['qr', 'catalogues'];
+        }
+
+        if ($path !== '' && in_array($path, $localeFree, true)) {
+            return '/' . $path;
+        }
+
+        return admin_preview_url($path);
+    }
+}
+
+if (!function_exists('admin_is_locale_free_path')) {
+    function admin_is_locale_free_path(string $path): bool
+    {
+        $path = trim($path, '/');
+        $localeFree = admin_config('locale_free_paths', ['qr', 'catalogues']);
+        if (!is_array($localeFree)) {
+            $localeFree = ['qr', 'catalogues'];
+        }
+
+        return $path !== '' && in_array($path, $localeFree, true);
+    }
+}
+
 if (!function_exists('admin_media_url')) {
     function admin_media_url(string $filePath): string
     {

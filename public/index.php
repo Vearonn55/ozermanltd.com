@@ -13,6 +13,12 @@ use App\Middleware\UnderConstructionMiddleware;
 $requestUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $requestUri = rtrim($requestUri, '/') ?: '/';
 
+// Locale-free QR landings: never serve under /en|/tr|/ar.
+if (preg_match('#^/(en|tr|ar)/(qr|catalogues)$#', $requestUri, $m) === 1) {
+    header('Location: /' . $m[2], true, 301);
+    exit;
+}
+
 (new CloudflareOriginMiddleware())->handle();
 
 if ($requestUri === '/sitemap.xml') {
