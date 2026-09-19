@@ -1,7 +1,5 @@
 -- Supplemental content seed for database-driven site
--- Run after seed.sql: mysql -u root -p ozermanltd < database/content_seed.sql
-
-USE ozermanltd;
+-- Run after seed.sql against the SAME selected database (e.g. ozermanl_MAIN).
 
 -- About page structured content (JSON in page_translations.content)
 -- Multilingual payload matches DummyData::aboutContent() (TR frontend reference)
