@@ -10,13 +10,15 @@ If admin says `Cannot connect to MySQL on 127.0.0.1`, the server `.env` is still
 
 File Manager → **Settings** → enable **Show Hidden Files** → open `/home/ozermanl/` (home, not `public_html`).
 
-Edit **`.env`** (copy from `.env.example` if missing). It must look like this — **not** `127.0.0.1` / `ozermanltd` / `root`:
+Edit **`.env`** (copy from `.env.cpanel.example` if missing). Use the **exact** names from cPanel → **MySQL Databases** → Current Databases / Current Users.
+
+Your account is `ozermanl`, so names look like `ozermanl_…` — **not** `ozerman_…`:
 
 ```env
 DB_HOST=localhost
 DB_PORT=3306
 DB_DATABASE=ozermanl_MAIN
-DB_USERNAME=ozerman_SYSADMIN
+DB_USERNAME=ozermanl_SYSADMIN
 DB_PASSWORD=YOUR_MYSQL_PASSWORD_HERE
 
 DB_USE_DUMMY_DATA=false
@@ -29,10 +31,12 @@ CLOUDFLARE_ENFORCE=false
 APP_KEY=generate-a-long-random-string
 ```
 
-Replace `YOUR_MYSQL_PASSWORD_HERE` with the password you set when creating the MySQL user in cPanel.  
-Confirm the user **ozerman_SYSADMIN** is added to database **ozermanl_MAIN** with **ALL PRIVILEGES**.
+Replace `YOUR_MYSQL_PASSWORD_HERE` with the password from MySQL Databases / Database Wizard.  
+If the password contains `#` `'` `"` or spaces, wrap it in double quotes: `DB_PASSWORD="your#pass"`.
 
-On most cPanel hosts `DB_HOST` is `localhost` (not `127.0.0.1`).
+Confirm under **Current Databases** that user **`ozermanl_SYSADMIN`** (check spelling) is attached to **`ozermanl_MAIN`** with **ALL PRIVILEGES**.
+
+On most cPanel hosts `DB_HOST` is `localhost` (UNIX socket — same as phpMyAdmin).
 
 ### Verify from Terminal
 
@@ -62,8 +66,8 @@ Or Terminal:
 
 ```bash
 cd ~
-mysql -u ozerman_SYSADMIN -p ozermanl_MAIN < database/schema.sql
-mysql -u ozerman_SYSADMIN -p ozermanl_MAIN < database/seed.sql
+mysql -u ozermanl_SYSADMIN -p ozermanl_MAIN < database/schema.sql
+mysql -u ozermanl_SYSADMIN -p ozermanl_MAIN < database/seed.sql
 ```
 
 
@@ -103,7 +107,9 @@ The public `/qr` and `/catalogues` routes load these CMS pages when published; o
 
 | Symptom | Fix |
 |---------|-----|
-| “Cannot connect to MySQL” | Wrong `DB_*` in `$HOME/.env`; user not privileged on DB |
+| “Cannot connect… host=localhost… ozermanl_MAIN” | Wrong username spelling (must be `ozermanl_SYSADMIN`, not `ozerman_SYSADMIN`), password mismatch, or user not added to DB. Copy exact names from MySQL Databases. |
+| “Access denied” in error detail | Reset MySQL user password in cPanel and paste the same value into `.env` (quote if it has `#` or spaces). |
+| “Unknown database” | Database name typo — must match cPanel exactly (e.g. `ozermanl_MAIN`). |
 | “No account found” | Import `seed.sql` or run `reset-admin-password.php` |
 | “Incorrect password” | Re-run reset script |
 | Site 403 | Set `CLOUDFLARE_ENFORCE=false` until Cloudflare is ready |

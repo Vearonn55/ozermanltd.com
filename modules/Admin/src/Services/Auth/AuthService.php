@@ -26,6 +26,13 @@ class AuthService
             // Always show loaded values (helps cPanel misconfig; brew hints hid the real problem).
             $detail = Database::lastError();
             $hint = $detail !== null ? ' MySQL said: ' . $detail : '';
+            $prefixHint = '';
+            if (defined('BASE_PATH') && preg_match('#/home/([^/]+)$#', BASE_PATH, $m)) {
+                $acct = $m[1];
+                if ($user !== '' && !str_starts_with((string) $user, $acct . '_')) {
+                    $prefixHint = " Username should usually be {$acct}_… (copy exact name from cPanel → MySQL Databases → Current Users).";
+                }
+            }
 
             return 'Cannot connect to MySQL'
                 . " (host={$host}, database={$db}, user={$user}). "
@@ -33,7 +40,8 @@ class AuthService
                     ? "Edit DB_* in {$envPath}."
                     : "Missing {$envPath}.")
                 . $hint
-                . ' On cPanel: MySQL Databases → add user to database with ALL PRIVILEGES; password in .env must match; try DB_HOST=127.0.0.1 if localhost fails.';
+                . $prefixHint
+                . ' Confirm user is added to the database with ALL PRIVILEGES; password must match.';
         }
 
         $stmt = $pdo->prepare(

@@ -32,7 +32,7 @@ if ($pdo === null) {
     if (Database::lastError() !== null) {
         echo "MySQL: " . Database::lastError() . "\n";
     }
-    echo "Fix: edit {$envFile} with DB_HOST=localhost, DB_DATABASE=ozermanl_MAIN, DB_USERNAME=ozerman_SYSADMIN, DB_PASSWORD=...\n";
+    echo "Fix: edit {$envFile} — copy EXACT DB name/user from cPanel MySQL Databases (usually ozermanl_MAIN / ozermanl_SYSADMIN).\n";
     echo "Also: cPanel → MySQL Databases → Add User To Database → ALL PRIVILEGES.\n";
     exit(1);
 }
