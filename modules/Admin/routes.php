@@ -30,6 +30,20 @@ use Admin\Controllers\TeamController;
 use Admin\Controllers\UserController;
 use Admin\Services\Auth\AuthService;
 
+set_exception_handler(static function (Throwable $e): void {
+    http_response_code(500);
+    $message = $e->getMessage();
+    if (function_exists('admin_guest_view')) {
+        admin_guest_view('errors.500', [
+            'pageTitle' => 'Error',
+            'message' => $message,
+        ]);
+        return;
+    }
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo "Admin error: {$message}\n";
+});
+
 (new AuthService())->startSession();
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

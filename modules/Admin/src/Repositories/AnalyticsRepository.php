@@ -11,15 +11,24 @@ class AnalyticsRepository extends BaseAdminRepository
 {
     public function summary(): array
     {
-        $store = new AnalyticsStore();
-        $stats = $store->stats();
+        try {
+            $store = new AnalyticsStore();
+            $stats = $store->stats();
 
-        $stats['contacts'] = (int) $this->pdo->query('SELECT COUNT(*) FROM contact_messages')->fetchColumn();
-        $stats['page_views'] = (int) $this->pdo->query(
-            "SELECT COUNT(*) FROM visitor_events WHERE event_name = 'page_view'"
-        )->fetchColumn();
+            $stats['contacts'] = (int) $this->pdo->query('SELECT COUNT(*) FROM contact_messages')->fetchColumn();
+            $stats['page_views'] = (int) $this->pdo->query(
+                "SELECT COUNT(*) FROM visitor_events WHERE event_name = 'page_view'"
+            )->fetchColumn();
 
-        return $stats;
+            return $stats;
+        } catch (\Throwable) {
+            return [
+                'contacts' => 0,
+                'page_views' => 0,
+                'visitors' => 0,
+                'events' => 0,
+            ];
+        }
     }
 
     public function recentEvents(int $limit = 50): array
