@@ -13,4 +13,5 @@ return [
     'upload_url' => '/uploads',
     'default_login_hint' => 'admin@ozermanltd.com',
     'locale_free_paths' => ['qr', 'catalogues'],
+    'max_upload_bytes' => 1024 * 1024 * 1024, // 1 GB (also raise PHP limits in cPanel)
 ];

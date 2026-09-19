@@ -36,6 +36,7 @@ deployment:
     - /bin/cp public/index.php $WEBROOT/
     - /bin/cp public/router.php $WEBROOT/
     - /bin/cp public/.htaccess $WEBROOT/
+    - /bin/cp public/.user.ini $WEBROOT/
     - /bin/cp public/robots.txt $WEBROOT/
     - /bin/cp public/uploads/.htaccess $WEBROOT/uploads/
     - /bin/cp public/uploads/.gitkeep $WEBROOT/uploads/

@@ -13,7 +13,7 @@ return [
     'session_name' => null, // use PHP default unless set
     'upload_path' => null,  // set by host; default public/uploads
     'upload_url' => '/uploads',
-    'max_upload_bytes' => 10 * 1024 * 1024,
+    'max_upload_bytes' => 1024 * 1024 * 1024, // 1 GB
     'allowed_mime_types' => [
         'image/jpeg',
         'image/png',
