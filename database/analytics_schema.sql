@@ -1,7 +1,7 @@
 -- Analytics & consent tables for Ozerman Ltd
--- Run after schema.sql: mysql -u root -p ozermanltd < database/analytics_schema.sql
-
-USE ozermanltd;
+-- Run after schema.sql against the SAME selected database.
+-- cPanel: select your DB in phpMyAdmin, then Import.
+-- Local: mysql -u root -p YOUR_DB_NAME < database/analytics_schema.sql
 
 CREATE TABLE IF NOT EXISTS visitor_profiles (
   id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

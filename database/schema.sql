@@ -1,16 +1,14 @@
 -- ============================================================
 -- CORPORATE WEBSITE DATABASE SCHEMA — MySQL 8.0+
 -- Converted from DBML for: ozermanltd.com
+--
+-- cPanel: do NOT run CREATE DATABASE here. In phpMyAdmin, select
+-- your existing database (e.g. ozermanl_MAIN), then Import this file.
+-- Local: mysql -u root -p YOUR_DB_NAME < database/schema.sql
 -- ============================================================
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
-CREATE DATABASE IF NOT EXISTS ozermanltd
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE ozermanltd;
 
 -- ============================================================
 -- GROUP 1 — USERS & AUTHENTICATION

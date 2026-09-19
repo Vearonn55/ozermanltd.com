@@ -1,9 +1,9 @@
 -- ============================================================
 -- SEED DATA — Ozerman Ltd (Dummy Content)
--- Run after schema.sql: mysql -u root -p ozermanltd < database/seed.sql
+-- Run after schema.sql against the SAME selected database.
+-- cPanel: select ozermanl_MAIN in phpMyAdmin, then Import.
+-- Local: mysql -u root -p YOUR_DB_NAME < database/seed.sql
 -- ============================================================
-
-USE ozermanltd;
 
 -- Languages
 INSERT INTO languages (code, name, is_default, is_active, sort_order) VALUES

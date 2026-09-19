@@ -30,13 +30,20 @@ On most cPanel hosts `DB_HOST` is `localhost` (not `127.0.0.1`).
 
 ## 2. Import schema
 
-cPanel → **phpMyAdmin** → select `ozermanl_MAIN` → **Import**:
+cPanel MySQL users **cannot** run `CREATE DATABASE`. You already created `ozermanl_MAIN` — use that.
 
-1. `database/schema.sql`
-2. `database/seed.sql` (languages + default admin user row)
-3. Optional: `database/content_seed.sql`, `database/analytics_schema.sql`
+**phpMyAdmin:**
 
-Or Terminal (paths may vary):
+1. Left sidebar → click **`ozermanl_MAIN`** (must be selected / bold).
+2. Top tab → **Import**.
+3. Choose file → Import in order:
+   1. `database/schema.sql` (tables only — no CREATE DATABASE)
+   2. `database/seed.sql`
+   3. Optional: `database/content_seed.sql`, `database/analytics_schema.sql`
+
+If Import still errors, open the SQL file and confirm there is **no** `CREATE DATABASE` / `USE ozermanltd` line (current `main` branch already removed those).
+
+Or Terminal:
 
 ```bash
 cd ~
@@ -44,7 +51,6 @@ mysql -u ozerman_SYSADMIN -p ozermanl_MAIN < database/schema.sql
 mysql -u ozerman_SYSADMIN -p ozermanl_MAIN < database/seed.sql
 ```
 
-(If SQL files are only under the deploy/home tree after Git deploy, use those absolute paths.)
 
 ## 3. Reset admin password
 
