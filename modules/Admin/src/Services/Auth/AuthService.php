@@ -24,11 +24,16 @@ class AuthService
             $envExists = defined('BASE_PATH') && is_file(BASE_PATH . '/.env');
 
             // Always show loaded values (helps cPanel misconfig; brew hints hid the real problem).
+            $detail = Database::lastError();
+            $hint = $detail !== null ? ' MySQL said: ' . $detail : '';
+
             return 'Cannot connect to MySQL'
                 . " (host={$host}, database={$db}, user={$user}). "
                 . ($envExists
-                    ? "Edit DB_* in {$envPath} — on cPanel use DB_HOST=localhost, DB_DATABASE=ozermanl_MAIN, DB_USERNAME=ozerman_SYSADMIN."
-                    : "Missing {$envPath}. Create it in the account home (Show Hidden Files), not inside public_html.");
+                    ? "Edit DB_* in {$envPath}."
+                    : "Missing {$envPath}.")
+                . $hint
+                . ' On cPanel: MySQL Databases → add user to database with ALL PRIVILEGES; password in .env must match; try DB_HOST=127.0.0.1 if localhost fails.';
         }
 
         $stmt = $pdo->prepare(

@@ -29,7 +29,11 @@ echo "PUBLIC_PATH: " . PUBLIC_PATH . "\n\n";
 $pdo = Database::connection(true);
 if ($pdo === null) {
     echo "RESULT: connection FAILED\n";
+    if (Database::lastError() !== null) {
+        echo "MySQL: " . Database::lastError() . "\n";
+    }
     echo "Fix: edit {$envFile} with DB_HOST=localhost, DB_DATABASE=ozermanl_MAIN, DB_USERNAME=ozerman_SYSADMIN, DB_PASSWORD=...\n";
+    echo "Also: cPanel → MySQL Databases → Add User To Database → ALL PRIVILEGES.\n";
     exit(1);
 }
 

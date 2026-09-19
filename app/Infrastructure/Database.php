@@ -11,6 +11,12 @@ class Database
 {
     private static ?PDO $connection = null;
     private static ?PDO $adminConnection = null;
+    private static ?string $lastError = null;
+
+    public static function lastError(): ?string
+    {
+        return self::$lastError;
+    }
 
     /**
      * @param bool $force When true, connect even if use_dummy_data is enabled (required for admin/auth).
@@ -50,7 +56,10 @@ class Database
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 ]
             );
-        } catch (PDOException) {
+            self::$lastError = null;
+        } catch (PDOException $e) {
+            // Never include DSN credentials; message is usually "Access denied" / "Unknown database".
+            self::$lastError = $e->getMessage();
             return null;
         }
 
@@ -67,5 +76,6 @@ class Database
     {
         self::$connection = null;
         self::$adminConnection = null;
+        self::$lastError = null;
     }
 }
