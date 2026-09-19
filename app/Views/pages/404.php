@@ -1,7 +1,7 @@
 <section class="min-h-[60vh] flex items-center justify-center py-20">
     <div class="text-center px-4">
         <div class="text-8xl font-display font-bold text-brand-100 mb-4">404</div>
-        <h1 class="font-display text-3xl font-bold text-brand-900 mb-4">
+        <h1 class="font-display text-3xl font-bold text-brand-800 mb-4">
             <?= e(t(['en' => 'Page Not Found', 'tr' => 'Sayfa Bulunamadı', 'ar' => 'الصفحة غير موجودة'])) ?>
         </h1>
         <p class="text-brand-500 mb-8 max-w-md mx-auto">

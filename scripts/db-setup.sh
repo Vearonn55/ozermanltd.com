@@ -3,6 +3,25 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 MYSQL="${MYSQL:-mysql}"
+
+if ! command -v "$MYSQL" >/dev/null 2>&1; then
+  for candidate in \
+    /opt/homebrew/opt/mysql@8.0/bin/mysql \
+    /opt/homebrew/opt/mysql/bin/mysql \
+    /usr/local/opt/mysql@8.0/bin/mysql \
+    /usr/local/opt/mysql/bin/mysql; do
+    if [ -x "$candidate" ]; then
+      MYSQL="$candidate"
+      break
+    fi
+  done
+fi
+
+if ! command -v "$MYSQL" >/dev/null 2>&1 && ! [ -x "$MYSQL" ]; then
+  echo "Error: mysql client not found."
+  echo "Install MySQL (brew install mysql@8.0) or use: make db-docker-setup"
+  exit 1
+fi
 DB_USER="${DB_USER:-root}"
 DB_PASS="${DB_PASS:-}"
 DB_NAME="${DB_NAME:-ozermanltd}"

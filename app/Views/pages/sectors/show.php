@@ -19,19 +19,19 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-3 gap-16">
             <div class="lg:col-span-2">
-                <h2 class="font-display text-2xl font-bold text-brand-900 mb-6 accent-line">
+                <h2 class="font-display text-2xl font-bold text-brand-800 mb-6 accent-line">
                     <?= e(t(['en' => 'Overview', 'tr' => 'Genel Bakış', 'ar' => 'نظرة عامة'])) ?>
                 </h2>
-                <p class="text-brand-600 leading-relaxed text-lg mb-10"><?= e(t($sector['overview'])) ?></p>
+                <div class="prose-ozerman text-brand-600 leading-relaxed text-lg mb-10"><?= t($sector['overview']) ?></div>
 
-                <h2 class="font-display text-2xl font-bold text-brand-900 mb-6 accent-line">
+                <h2 class="font-display text-2xl font-bold text-brand-800 mb-6 accent-line">
                     <?= e(t(['en' => 'Services', 'tr' => 'Hizmetler', 'ar' => 'الخدمات'])) ?>
                 </h2>
                 <div class="text-brand-600 leading-relaxed whitespace-pre-line"><?= e(t($sector['services'])) ?></div>
             </div>
             <div>
-                <div class="bg-brand-50 p-8 rounded-sm border border-brand-100 sticky top-28">
-                    <h3 class="font-display text-lg font-semibold text-brand-900 mb-6">
+                <div class="bg-brand-50 p-8 rounded-sm border border-brand-200 sticky top-28">
+                    <h3 class="font-display text-lg font-semibold text-brand-800 mb-6">
                         <?= e(t(['en' => 'Interested in this sector?', 'tr' => 'Bu sektörle ilgileniyor musunuz?', 'ar' => 'مهتم بهذا القطاع؟'])) ?>
                     </h3>
                     <p class="text-sm text-brand-500 mb-6">
@@ -54,7 +54,7 @@
 <?php if (!empty($projects)): ?>
 <section class="py-20 bg-brand-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="font-display text-2xl font-bold text-brand-900 mb-10 accent-line">
+        <h2 class="font-display text-2xl font-bold text-brand-800 mb-10 accent-line">
             <?= e(t(['en' => 'Related Projects', 'tr' => 'İlgili Projeler', 'ar' => 'مشاريع ذات صلة'])) ?>
         </h2>
         <div class="grid md:grid-cols-3 gap-8">
@@ -62,7 +62,7 @@
             <a href="<?= url('projects/' . $project['slug']) ?>" class="group card-hover">
                 <img src="<?= e($project['image']) ?>" alt="<?= e(t($project['title'])) ?>"
                      class="w-full h-48 object-cover rounded-sm mb-4 group-hover:scale-105 transition-transform duration-500" loading="lazy">
-                <h3 class="font-display text-lg font-semibold text-brand-900 group-hover:text-gold-600 transition-colors">
+                <h3 class="font-display text-lg font-semibold text-brand-800 group-hover:text-gold-600 transition-colors">
                     <?= e(t($project['title'])) ?>
                 </h3>
                 <p class="text-sm text-brand-500 mt-1"><?= e($project['location']) ?></p>

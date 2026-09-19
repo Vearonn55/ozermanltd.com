@@ -1,0 +1,28 @@
+-- Admin module schema contract
+-- Hosts must provide these tables (compatible definitions).
+-- Full CREATE statements: repository database/schema.sql (+ analytics_schema.sql if analytics enabled).
+--
+-- Required groups:
+--   1. Auth: users, user_sessions, user_activity_log
+--   2. i18n: languages
+--   3. Content: pages, page_translations, news, news_translations, news_categories,
+--      news_category_translations, projects, project_translations, project_categories,
+--      project_category_translations, sectors, sector_translations
+--   4. Media: media_folders, media
+--   5. Ops: contact_messages, settings, seo_meta
+--   6. Editorial: content_revisions (autosave + revision history for pages/news/projects/sectors)
+--   7. Structured content (optional feature flags): hero_slides, stat_counters,
+--      content_blocks, content_block_translations, gallery_collections,
+--      gallery_collection_translations, gallery_items, stores, store_translations,
+--      brands, brand_translations, team_members, team_member_translations,
+--      offices, office_translations, menus, menu_translations, menu_items,
+--      menu_item_translations
+--   8. Optional analytics: visitor_events, consent_records, visitors (see analytics_schema.sql)
+--
+-- users.role values: super_admin | content_manager | editor
+-- users.status values: active | inactive | suspended
+--
+-- Do not add host-only columns that Admin writes without extending this contract.
+-- Prefer host config (config/admin.php) for branding and feature flags.
+
+SELECT 'See database/schema.sql for authoritative CREATE TABLE statements.' AS admin_contract_note;

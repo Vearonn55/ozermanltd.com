@@ -1,0 +1,13 @@
+# Deny script execution in upload directory (Apache / cPanel)
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_authz_core.c>
+    Require all granted
+</IfModule>
+Options -Indexes
+<FilesMatch "\.(?i:php|phtml|php3|php4|php5|phar)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>

@@ -8,5 +8,6 @@ return [
     'username' => getenv('DB_USERNAME') ?: 'root',
     'password' => getenv('DB_PASSWORD') ?: '',
     'charset' => 'utf8mb4',
-    'use_dummy_data' => true,
+    'use_dummy_data' => filter_var(getenv('DB_USE_DUMMY_DATA') ?: 'false', FILTER_VALIDATE_BOOLEAN),
+    'fallback_to_dummy' => filter_var(getenv('DB_FALLBACK_DUMMY') ?: 'true', FILTER_VALIDATE_BOOLEAN),
 ];

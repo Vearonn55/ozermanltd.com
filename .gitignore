@@ -1,0 +1,23 @@
+.env
+.env.local
+.env.*.local
+bin/tailwindcss
+.DS_Store
+**/.DS_Store
+
+# Runtime / generated
+storage/logs/*.log
+storage/admin/rate_limits/*
+!storage/admin/rate_limits/.gitkeep
+storage/analytics/*.json
+!storage/analytics/.gitkeep
+storage/seo/import.sql
+
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/.htaccess
+
+# Local previews / scratch (not part of the app)
+Ozerman-Ticaret-Frontend-Preview.html
+original-*.gif
+*.local.html

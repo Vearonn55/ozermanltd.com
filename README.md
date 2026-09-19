@@ -1,134 +1,97 @@
-# Ozerman Ltd — Corporate Website
+# Özerman Ticaret — Corporate Website
 
-A modern, multilingual corporate website for **ozermanltd.com**, built per the project development report.
+Multilingual corporate site for [ozermanltd.com](https://ozermanltd.com): PHP front end, MySQL content, portable Admin CMS, SEO, cookie consent, and analytics.
 
-## Tech Stack
+## Soft launch (current production mode)
 
-- **PHP 8.3** — Backend routing and templating
-- **Tailwind CSS** — Utility-first styling (CDN)
-- **Alpine.js** — Interactive UI (sliders, filters, lightbox, mobile menu)
-- **MySQL 8.0+** — Full database schema (see `database/schema.sql`)
+While `SITE_UNDER_CONSTRUCTION=true`:
+
+| Path | Behavior |
+|------|----------|
+| `/qr` | Lajivert QR menu (locale-free) |
+| `/catalogues` | Lajivert catalogues |
+| `/admin` | Staff CMS |
+| `/assets/*`, `/uploads/*` | Static files |
+| Other public pages | Under construction (503) |
+
+Production cutover (cPanel + Cloudflare): [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).  
+Admin vs hosting ownership: [`docs/ADMIN-AND-CPANEL.md`](docs/ADMIN-AND-CPANEL.md).
+
+## Stack
+
+- PHP 8.3+ (routing & templates)
+- Tailwind CSS + Alpine.js
+- MySQL 8.0+
+- Portable Admin module in [`modules/Admin`](modules/Admin)
+
+## Quick start (local)
+
+```bash
+cp .env.example .env   # or: make setup
+# Edit .env — never commit .env
+
+make db-docker-setup   # or make db-setup with local MySQL
+make assets-install && make assets-build   # if Tailwind not built yet
+make dev
+```
+
+- Site: `http://localhost:8080/en` (or under construction if the flag is on)
+- QR: `http://localhost:8080/qr`
+- Admin: `http://localhost:8080/admin`
+
+Create or reset an admin user with:
+
+```bash
+php bin/reset-admin-password.php you@example.com 'your-strong-password'
+```
+
+Do **not** use seed/default passwords in production. Rotate credentials after any shared or demo environment.
+
+## Configuration
+
+Copy [`.env.example`](.env.example) to `.env`. Important flags (see example file for the full list):
+
+| Variable | Notes |
+|----------|--------|
+| `APP_ENV` | `development` locally; `production` on the host |
+| `APP_URL` | Public site URL |
+| `SITE_UNDER_CONSTRUCTION` | Soft-launch gate |
+| `CLOUDFLARE_ENFORCE` | Origin-only-via-Cloudflare (production) |
+| `DB_*` | Database connection |
+| `DB_USE_DUMMY_DATA` | Prefer `false` when MySQL is available |
+| `DB_FALLBACK_DUMMY` | Prefer `false` in production |
+
+Never commit `.env`, API keys, or real passwords. Keep secrets in the host environment / cPanel only.
 
 ## Features
 
-- Responsive corporate design (mobile-first)
-- Multi-language support: English, Turkish, Arabic (RTL)
-- Public pages: Home, About, Sectors, Projects, News, Gallery, Contact
-- SEO: meta tags, Open Graph, JSON-LD structured data, canonical URLs
-- Dummy content for demonstration (no database required to preview)
+- Locales: English, Turkish, Arabic (`/en`, `/tr`, `/ar`)
+- SEO: meta, Open Graph, hreflang, sitemap, redirects
+- Cookie consent + optional analytics (consent-gated)
+- Admin: pages (incl. HTML/CSS/JS embeds), news, projects, sectors, media library, contacts, SEO, users, audit log
 
-## Running Commands
-
-### First-time setup
-
-```bash
-make setup          # Create .env from .env.example
-# or
-./scripts/setup.sh
-```
-
-### Start development server
-
-```bash
-make dev            # http://localhost:8080/en
-# or
-./scripts/dev.sh
-
-# Custom port
-make dev PORT=3000
-# or
-PORT=3000 ./scripts/dev.sh
-```
-
-### Stop development server
-
-```bash
-make stop           # Kill process on port 8080
-# or press Ctrl+C in the terminal running the server
-```
-
-### Open in browser (macOS)
-
-```bash
-make open
-```
-
-### Database commands
-
-```bash
-make db-create      # Run schema.sql
-make db-seed        # Run seed.sql
-make db-setup       # Schema + seed
-make db-reset       # Drop and recreate (destructive)
-
-# With password
-make db-setup DB_PASS=yourpassword
-# or
-./scripts/db-setup.sh
-```
-
-### All available commands
-
-```bash
-make help
-```
-
-## Quick Start (manual)
-
-### Option 1: PHP Built-in Server (Development)
-
-```bash
-cd public
-php -S localhost:8080 router.php
-```
-
-Visit: http://localhost:8080/en
-
-### Option 2: Apache/cPanel
-
-Point the document root to the `public/` directory. The included `.htaccess` files handle URL rewriting.
-
-## Database Setup
-
-```bash
-mysql -u root -p < database/schema.sql
-mysql -u root -p ozermanltd < database/seed.sql
-```
-
-Copy `.env.example` to `.env` and configure database credentials.
-
-## URL Structure
-
-| Page | English | Turkish |
-|------|---------|---------|
-| Home | `/en` | `/tr` |
-| About | `/en/about-us` | `/tr/about-us` |
-| Sectors | `/en/sectors` | `/tr/sectors` |
-| Projects | `/en/projects` | `/tr/projects` |
-| News | `/en/news` | `/tr/news` |
-| Gallery | `/en/gallery` | `/tr/gallery` |
-| Contact | `/en/contact` | `/tr/contact` |
-
-## Project Structure
+## Project layout
 
 ```
-├── app/
-│   ├── Controllers/
-│   ├── Data/          # Dummy content (mirrors DB schema)
-│   ├── Helpers/
-│   └── Views/
-├── config/
-├── database/
-│   ├── schema.sql     # MySQL DDL (converted from DBML)
-│   └── seed.sql       # Sample data
-├── public/            # Web root
-│   ├── assets/
-│   └── index.php
-└── routes/
+app/                 # Public app (controllers, views, middleware, SEO)
+modules/Admin/       # Portable CMS
+config/              # App, DB, SEO, Cloudflare IP ranges
+database/            # Schema and seeds
+public/              # Document root (index.php, assets, uploads)
+docs/                # Deploy and admin docs
+bin/                 # CLI helpers
 ```
 
-## Next Steps (per Roadmap)
+## Production notes
 
-- Phase 4–5: Admin CMS with authentication
-- Phase 7: Database-driven content (replace dummy data)
-- Phase 8–10: SEO sitemap generation, performance optimization, security audit
+1. Document root = `public/`
+2. PHP 8.3+; writable `storage/` and `public/uploads/`
+3. Cloudflare: orange-cloud DNS, SSL Full (strict), Always Use HTTPS
+4. Set `CLOUDFLARE_ENFORCE=true` and `SITE_UNDER_CONSTRUCTION` as needed
+5. Disable dummy-data fallbacks in production
+
+Details: [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).
+
+## License / private use
+
+Internal project for Özerman Ticaret. Do not publish production secrets or visitor analytics dumps to this repository.

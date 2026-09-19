@@ -75,14 +75,18 @@ CREATE TABLE languages (
 CREATE TABLE pages (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   slug           VARCHAR(160) NOT NULL UNIQUE,
+  custom_path    VARCHAR(255) NULL,
   template       VARCHAR(80)  NOT NULL DEFAULT 'default',
+  embed_mode     VARCHAR(20)  NOT NULL DEFAULT 'site',
   status         VARCHAR(20)  NOT NULL DEFAULT 'draft',
   show_in_nav    TINYINT(1)   NOT NULL DEFAULT 1,
   sort_order     INT          NOT NULL DEFAULT 0,
   parent_id      INT UNSIGNED NULL,
+  banner_media_id INT UNSIGNED NULL,
   published_at   TIMESTAMP    NULL,
   created_at     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_pages_custom_path (custom_path),
   CONSTRAINT fk_pages_parent FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -93,6 +97,10 @@ CREATE TABLE page_translations (
   title             VARCHAR(255) NOT NULL,
   content           LONGTEXT     NULL,
   excerpt           TEXT         NULL,
+  html_embed        LONGTEXT     NULL,
+  css_embed         LONGTEXT     NULL,
+  js_embed          LONGTEXT     NULL,
+  php_embed         LONGTEXT     NULL,
   meta_title        VARCHAR(160) NULL,
   meta_description  VARCHAR(320) NULL,
   UNIQUE KEY uq_page_lang (page_id, language_id),
@@ -135,6 +143,18 @@ CREATE TABLE media (
   created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_media_folder FOREIGN KEY (folder_id) REFERENCES media_folders(id) ON DELETE SET NULL,
   CONSTRAINT fk_media_uploaded_by FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE pages
+  ADD CONSTRAINT fk_pages_banner_media FOREIGN KEY (banner_media_id) REFERENCES media(id) ON DELETE SET NULL;
+
+CREATE TABLE site_banners (
+  id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  location     VARCHAR(60)  NOT NULL UNIQUE,
+  media_id     INT UNSIGNED NULL,
+  fallback_url VARCHAR(500) NULL,
+  updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_site_banners_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE hero_slides (
@@ -189,6 +209,16 @@ CREATE TABLE menu_items (
   CONSTRAINT fk_menu_items_parent FOREIGN KEY (parent_id) REFERENCES menu_items(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE menu_translations (
+  id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  menu_id      INT UNSIGNED NOT NULL,
+  language_id  INT UNSIGNED NOT NULL,
+  title        VARCHAR(120) NULL,
+  UNIQUE KEY uq_menu_lang (menu_id, language_id),
+  CONSTRAINT fk_menu_translations_menu FOREIGN KEY (menu_id) REFERENCES menus(id) ON DELETE CASCADE,
+  CONSTRAINT fk_menu_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE menu_item_translations (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   item_id     INT UNSIGNED NOT NULL,
@@ -207,9 +237,11 @@ CREATE TABLE sectors (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   icon       VARCHAR(80) NULL,
   color      VARCHAR(20) NULL,
+  media_id   INT UNSIGNED NULL,
   sort_order INT         NOT NULL DEFAULT 0,
   is_active  TINYINT(1)  NOT NULL DEFAULT 1,
-  created_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_sectors_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE sector_translations (
@@ -258,12 +290,15 @@ CREATE TABLE subsidiary_translations (
 
 CREATE TABLE brands (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  subsidiary_id  INT UNSIGNED NOT NULL,
+  subsidiary_id  INT UNSIGNED NULL,
+  slug           VARCHAR(160) NULL UNIQUE,
+  media_id       INT UNSIGNED NULL,
   logo           VARCHAR(255) NULL,
   website_url    VARCHAR(255) NULL,
   sort_order     INT          NOT NULL DEFAULT 0,
   is_active      TINYINT(1)   NOT NULL DEFAULT 1,
-  CONSTRAINT fk_brands_subsidiary FOREIGN KEY (subsidiary_id) REFERENCES subsidiaries(id) ON DELETE CASCADE
+  CONSTRAINT fk_brands_subsidiary FOREIGN KEY (subsidiary_id) REFERENCES subsidiaries(id) ON DELETE CASCADE,
+  CONSTRAINT fk_brands_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE brand_translations (
@@ -271,10 +306,58 @@ CREATE TABLE brand_translations (
   brand_id     INT UNSIGNED NOT NULL,
   language_id  INT UNSIGNED NOT NULL,
   name         VARCHAR(120) NOT NULL,
+  tagline      VARCHAR(255) NULL,
   description  TEXT         NULL,
   UNIQUE KEY uq_brand_lang (brand_id, language_id),
   CONSTRAINT fk_brand_translations_brand FOREIGN KEY (brand_id) REFERENCES brands(id) ON DELETE CASCADE,
   CONSTRAINT fk_brand_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE stores (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  media_id    INT UNSIGNED NULL,
+  phone       VARCHAR(40)  NULL,
+  email       VARCHAR(180) NULL,
+  sort_order  INT          NOT NULL DEFAULT 0,
+  is_active   TINYINT(1)   NOT NULL DEFAULT 1,
+  created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_stores_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE store_translations (
+  id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  store_id       INT UNSIGNED NOT NULL,
+  language_id    INT UNSIGNED NOT NULL,
+  name           VARCHAR(160) NOT NULL,
+  slug           VARCHAR(180) NOT NULL,
+  city           VARCHAR(80)  NULL,
+  address        TEXT         NULL,
+  working_hours  VARCHAR(255) NULL,
+  UNIQUE KEY uq_store_lang (store_id, language_id),
+  CONSTRAINT fk_store_translations_store FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE,
+  CONSTRAINT fk_store_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Reusable localized content blocks for fixed page sections
+-- (area examples: home_operations, about_values, about_vision, about_mission)
+CREATE TABLE content_blocks (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  area        VARCHAR(60)  NOT NULL,
+  icon        VARCHAR(80)  NULL,
+  sort_order  INT          NOT NULL DEFAULT 0,
+  is_active   TINYINT(1)   NOT NULL DEFAULT 1,
+  KEY idx_content_blocks_area (area, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE content_block_translations (
+  id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  block_id     INT UNSIGNED NOT NULL,
+  language_id  INT UNSIGNED NOT NULL,
+  title        VARCHAR(200) NULL,
+  body         TEXT         NULL,
+  UNIQUE KEY uq_content_block_lang (block_id, language_id),
+  CONSTRAINT fk_content_block_translations_block FOREIGN KEY (block_id) REFERENCES content_blocks(id) ON DELETE CASCADE,
+  CONSTRAINT fk_content_block_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE team_members (
@@ -714,6 +797,22 @@ CREATE TABLE sitemaps (
   priority    DECIMAL(2,1) NULL DEFAULT 0.5,
   lastmod     TIMESTAMP    NULL,
   is_active   TINYINT(1)   NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- GROUP 12b — CONTENT REVISIONS (autosave + history)
+-- ============================================================
+
+CREATE TABLE content_revisions (
+  id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  entity_type  VARCHAR(60)  NOT NULL,
+  entity_id    INT UNSIGNED NOT NULL,
+  user_id      INT UNSIGNED NULL,
+  is_autosave  TINYINT(1)   NOT NULL DEFAULT 0,
+  payload      JSON         NOT NULL,
+  created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_content_revisions_entity (entity_type, entity_id, id),
+  CONSTRAINT fk_content_revisions_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

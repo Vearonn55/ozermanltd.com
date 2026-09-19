@@ -5,11 +5,132 @@ declare(strict_types=1);
 function config(string $key, $default = null)
 {
     static $appConfig = null;
+    static $adminConfig = null;
+
+    if ($key === 'admin' || str_starts_with($key, 'admin.')) {
+        if ($adminConfig === null) {
+            $defaults = defined('ADMIN_MODULE_PATH') && file_exists(ADMIN_MODULE_PATH . '/config/admin.php')
+                ? require ADMIN_MODULE_PATH . '/config/admin.php'
+                : [];
+            $host = file_exists(CONFIG_PATH . '/admin.php')
+                ? require CONFIG_PATH . '/admin.php'
+                : [];
+            $adminConfig = array_replace_recursive($defaults, $host);
+
+            if (empty($adminConfig['upload_path'])) {
+                $adminConfig['upload_path'] = (defined('PUBLIC_PATH') ? PUBLIC_PATH : dirname(CONFIG_PATH) . '/public') . '/uploads';
+            }
+        }
+
+        if ($key === 'admin') {
+            return $adminConfig;
+        }
+
+        $value = $adminConfig;
+        foreach (array_slice(explode('.', $key), 1) as $segment) {
+            if (!is_array($value) || !array_key_exists($segment, $value)) {
+                return $default;
+            }
+            $value = $value[$segment];
+        }
+
+        return $value;
+    }
+
     if ($appConfig === null) {
         $appConfig = require CONFIG_PATH . '/app.php';
     }
 
-    return $appConfig[$key] ?? $default;
+    if (!str_contains($key, '.')) {
+        return $appConfig[$key] ?? $default;
+    }
+
+    $value = $appConfig;
+    foreach (explode('.', $key) as $segment) {
+        if (!is_array($value) || !array_key_exists($segment, $value)) {
+            return $default;
+        }
+        $value = $value[$segment];
+    }
+
+    return $value;
+}
+
+function seo_config(string $key, $default = null)
+{
+    static $seoConfig = null;
+    if ($seoConfig === null) {
+        $seoConfig = require CONFIG_PATH . '/seo.php';
+    }
+
+    if ($key === '') {
+        return $seoConfig;
+    }
+
+    if (!str_contains($key, '.')) {
+        return $seoConfig[$key] ?? $default;
+    }
+
+    $value = $seoConfig;
+    foreach (explode('.', $key) as $segment) {
+        if (!is_array($value) || !array_key_exists($segment, $value)) {
+            return $default;
+        }
+        $value = $value[$segment];
+    }
+
+    return $value;
+}
+
+function build_seo(array $context): \App\Services\Seo\SeoDto
+{
+    $context['locale'] = $context['locale'] ?? app_locale();
+    return (new \App\Services\Seo\SeoService())->build($context);
+}
+
+function analytics_config(string $key, $default = null)
+{
+    static $analyticsConfig = null;
+    if ($analyticsConfig === null) {
+        $analyticsConfig = require CONFIG_PATH . '/analytics.php';
+    }
+
+    if ($key === '') {
+        return $analyticsConfig;
+    }
+
+    if (!str_contains($key, '.')) {
+        return $analyticsConfig[$key] ?? $default;
+    }
+
+    $value = $analyticsConfig;
+    foreach (explode('.', $key) as $segment) {
+        if (!is_array($value) || !array_key_exists($segment, $value)) {
+            return $default;
+        }
+        $value = $value[$segment];
+    }
+
+    return $value;
+}
+
+function json_response(array $data, int $status = 200): void
+{
+    http_response_code($status);
+    header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+}
+
+function db_fallback_to_dummy(): bool
+{
+    $config = require CONFIG_PATH . '/database.php';
+    return !empty($config['fallback_to_dummy']);
+}
+
+function content(): \App\Repositories\ContentRepository
+{
+    static $repository = null;
+    return $repository ??= new \App\Repositories\ContentRepository();
 }
 
 function e(?string $value): string
@@ -32,6 +153,24 @@ function url(string $path = '', ?string $locale = null): string
 function asset(string $path): string
 {
     return '/assets/' . ltrim($path, '/');
+}
+
+/**
+ * Public URL for an uploaded media file_path (or absolute/external URL).
+ */
+function media_url(?string $filePath, string $fallback = ''): string
+{
+    if ($filePath === null || $filePath === '') {
+        return $fallback;
+    }
+
+    if (str_starts_with($filePath, 'http://') || str_starts_with($filePath, 'https://') || str_starts_with($filePath, '/')) {
+        return $filePath;
+    }
+
+    $uploadUrl = rtrim((string) config('admin.upload_url', '/uploads'), '/');
+
+    return $uploadUrl . '/' . ltrim($filePath, '/');
 }
 
 function app_locale(): string
@@ -120,9 +259,18 @@ function locale_path_for(string $targetLocale): string
     return '/' . $targetLocale;
 }
 
-function format_date(string $date): string
+function format_date(?string $date): string
 {
-    return date('F j, Y', strtotime($date));
+    if ($date === null || $date === '' || $date === '0000-00-00' || str_starts_with($date, '0000-00-00')) {
+        return '';
+    }
+
+    $ts = strtotime($date);
+    if ($ts === false) {
+        return '';
+    }
+
+    return date('F j, Y', $ts);
 }
 
 function relative_path(): string
@@ -139,4 +287,56 @@ function relative_path(): string
     }
 
     return $current;
+}
+
+function csrf_token(): string
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        (new \Admin\Services\Auth\AuthService())->startSession();
+    }
+
+    if (empty($_SESSION['_csrf_token'])) {
+        $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
+    }
+
+    return $_SESSION['_csrf_token'];
+}
+
+function csrf_field(): string
+{
+    return '<input type="hidden" name="_csrf" value="' . e(csrf_token()) . '">';
+}
+
+function verify_csrf(string $token): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        (new \Admin\Services\Auth\AuthService())->startSession();
+    }
+
+    return isset($_SESSION['_csrf_token']) && hash_equals($_SESSION['_csrf_token'], $token);
+}
+
+function flash(string $type, string $message): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        (new \Admin\Services\Auth\AuthService())->startSession();
+    }
+
+    $_SESSION['_flash'][$type] = $message;
+}
+
+function get_flash(string $type): ?string
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        (new \Admin\Services\Auth\AuthService())->startSession();
+    }
+
+    if (!isset($_SESSION['_flash'][$type])) {
+        return null;
+    }
+
+    $message = $_SESSION['_flash'][$type];
+    unset($_SESSION['_flash'][$type]);
+
+    return $message;
 }
