@@ -4,13 +4,24 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/bootstrap.php';
 
+use App\Controllers\QrLandingController;
 use App\Controllers\SeoController;
+use App\Middleware\CloudflareOriginMiddleware;
 use App\Middleware\RedirectMiddleware;
+use App\Middleware\UnderConstructionMiddleware;
 
 $requestUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $requestUri = rtrim($requestUri, '/') ?: '/';
 
+(new CloudflareOriginMiddleware())->handle();
+
 if ($requestUri === '/sitemap.xml') {
+    if (config('under_construction', false)) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=UTF-8');
+        echo "Not Found\n";
+        exit;
+    }
     (new SeoController())->sitemap();
     exit;
 }
@@ -21,11 +32,27 @@ if (str_starts_with($requestUri, '/api/')) {
 }
 
 if ($requestUri === '/admin' || str_starts_with($requestUri, '/admin/')) {
-    require dirname(__DIR__) . '/routes/admin.php';
+    require ADMIN_MODULE_PATH . '/routes.php';
     exit;
 }
 
+// Locale-free QR landings (before locale redirect / under-construction gate allows them).
+if ($requestUri === '/qr') {
+    (new QrLandingController())->qr();
+    exit;
+}
+
+if ($requestUri === '/catalogues') {
+    (new QrLandingController())->catalogues();
+    exit;
+}
+
+(new UnderConstructionMiddleware())->handle($requestUri);
+
 (new RedirectMiddleware())->handle($requestUri);
+
+// Public pages may need session for CSRF (contact forms, news reviews).
+(new \Admin\Services\Auth\AuthService())->startSession();
 
 if ($requestUri === '/') {
     $defaultLocale = config('default_locale', 'en');

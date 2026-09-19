@@ -1,16 +1,16 @@
 <section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
     <div class="absolute inset-0 opacity-20">
-        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&q=80" alt="" class="w-full h-full object-cover">
+        <img src="<?= e(content()->banner('gallery')) ?>" alt="" class="w-full h-full object-cover">
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
             <?= e(t(['en' => 'Media Gallery', 'tr' => 'Medya Galerisi', 'ar' => 'معرض الوسائط'])) ?>
         </h1>
-        <p class="text-brand-300 text-lg max-w-2xl">
+        <p class="text-brand-300/90 text-lg max-w-2xl font-light">
             <?= e(t([
-                'en' => 'Explore our corporate events, project sites, and team culture through our media gallery.',
-                'tr' => 'Medya galerimiz aracılığıyla kurumsal etkinliklerimizi, proje sahalarımızı ve ekip kültürümüzü keşfedin.',
-                'ar' => 'استكشف فعالياتنا المؤسسية ومواقع المشاريع وثقافة الفريق من خلال معرض الوسائط.',
+                'en' => 'Corporate moments, showroom atmosphere, and partnership highlights from Özerman Ticaret.',
+                'tr' => 'Özerman Ticaret’ten kurumsal anlar, showroom atmosferi ve ortaklık kareleri.',
+                'ar' => 'لحظات مؤسسية وأجواء صالات العرض وأبرز الشراكات من أوزرمان للتجارة.',
             ])) ?>
         </p>
     </div>
@@ -19,10 +19,10 @@
 <section class="py-20 lg:py-28" x-data="{ activeTab: 0 }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Collection Tabs -->
-        <div class="flex flex-wrap gap-3 mb-12 border-b border-brand-100 pb-4">
+        <div class="flex flex-wrap gap-3 mb-12 border-b border-brand-200 pb-4">
             <?php foreach ($collections as $i => $collection): ?>
             <button @click="activeTab = <?= $i ?>"
-                    :class="activeTab === <?= $i ?> ? 'text-brand-900 border-b-2 border-gold-500' : 'text-brand-400 hover:text-brand-600'"
+                    :class="activeTab === <?= $i ?> ? 'text-brand-800 border-b-2 border-orange-500' : 'text-brand-400 hover:text-brand-600'"
                     class="px-4 py-2 text-sm font-semibold transition-colors">
                 <?= e(t($collection['title'])) ?>
             </button>
@@ -32,7 +32,7 @@
         <?php foreach ($collections as $i => $collection): ?>
         <div x-show="activeTab === <?= $i ?>" x-transition>
             <div class="mb-10">
-                <h2 class="font-display text-2xl font-bold text-brand-900 mb-3"><?= e(t($collection['title'])) ?></h2>
+                <h2 class="font-display text-2xl font-bold text-brand-800 mb-3"><?= e(t($collection['title'])) ?></h2>
                 <p class="text-brand-500"><?= e(t($collection['description'])) ?></p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" x-data="{ lightbox: false, activeImage: '', activeCaption: '' }">

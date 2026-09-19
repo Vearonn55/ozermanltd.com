@@ -16,8 +16,9 @@ class PageController
         $this->render('pages.home', [
             'slides' => $content->heroSlides($locale),
             'stats' => $content->stats($locale),
-            'sectors' => array_slice($content->sectors($locale), 0, 6),
-            'projects' => array_filter($content->projects($locale), fn($p) => $p['is_featured']),
+            'operations' => $content->operations($locale),
+            'partnerships' => $content->partnerships($locale),
+            'stores' => $content->stores($locale),
             'news' => array_slice($content->news($locale), 0, 3),
         ], [
             'entity_type' => 'page',
@@ -25,9 +26,9 @@ class PageController
             'path' => '',
             'title' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'],
             'description' => [
-                'en' => 'Ozerman Ltd — A diversified international business group operating across trading, construction, real estate, manufacturing, logistics, and energy.',
-                'tr' => 'Ozerman Ltd — Ticaret, inşaat, gayrimenkul, üretim, lojistik ve enerji sektörlerinde faaliyet gösteren çeşitlendirilmiş uluslararası iş grubu.',
-                'ar' => 'أوزرمان المحدودة — مجموعة أعمال دولية متنوعة تعمل في التجارة والبناء والعقارات والتصنيع واللوجستيات والطاقة.',
+                'en' => 'Özerman Ticaret — importer limited company connecting trusted brands with retail markets.',
+                'tr' => 'Özerman Ticaret — güvenilir markaları perakende pazarlara bağlayan ithalatçı limited şirket.',
+                'ar' => 'أوزرمان للتجارة — شركة استيراد محدودة تربط العلامات الموثوقة بأسواق التجزئة.',
             ],
         ]);
     }
@@ -48,13 +49,61 @@ class PageController
             'path' => 'about-us',
             'title' => ['en' => 'About Us', 'tr' => 'Hakkımızda', 'ar' => 'من نحن'],
             'description' => [
-                'en' => 'Learn about Ozerman Ltd — our history, vision, mission, core values, and leadership team.',
-                'tr' => 'Ozerman Ltd hakkında bilgi edinin — tarihimiz, vizyonumuz, misyonumuz, temel değerlerimiz ve liderlik ekibimiz.',
-                'ar' => 'تعرف على أوزرمان المحدودة — تاريخنا ورؤيتنا ومهمتنا وقيمنا الأساسية وفريق القيادة.',
+                'en' => 'Learn about Özerman Ticaret — our story as an importer limited company, values, and leadership.',
+                'tr' => 'Özerman Ticaret hakkında bilgi edinin — ithalatçı limited şirket hikâyemiz, değerlerimiz ve liderlik.',
+                'ar' => 'تعرف على أوزرمان للتجارة — قصتنا كشركة استيراد محدودة وقيمنا وقيادتنا.',
             ],
             'breadcrumbs' => [
                 ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
                 ['label' => ['en' => 'About Us', 'tr' => 'Hakkımızda', 'ar' => 'من نحن'], 'path' => 'about-us'],
+            ],
+        ]);
+    }
+
+    public function stores(): void
+    {
+        $content = content();
+        $locale = app_locale();
+
+        $this->render('pages.stores', [
+            'stores' => $content->stores($locale),
+        ], [
+            'entity_type' => 'page',
+            'entity_key' => 'our-stores',
+            'path' => 'our-stores',
+            'title' => ['en' => 'Our Stores', 'tr' => 'Mağazalarımız', 'ar' => 'متاجرنا'],
+            'description' => [
+                'en' => 'Visit Özerman Ticaret showrooms and retail points — placeholder locations pending final details.',
+                'tr' => 'Özerman Ticaret showroom ve satış noktalarını ziyaret edin — konum detayları yakında güncellenecek.',
+                'ar' => 'زوروا صالات عرض ونقاط بيع أوزرمان للتجارة — تفاصيل المواقع قيد التحديث.',
+            ],
+            'breadcrumbs' => [
+                ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
+                ['label' => ['en' => 'Our Stores', 'tr' => 'Mağazalarımız', 'ar' => 'متاجرنا'], 'path' => 'our-stores'],
+            ],
+        ]);
+    }
+
+    public function partnerships(): void
+    {
+        $content = content();
+        $locale = app_locale();
+
+        $this->render('pages.partnerships', [
+            'partnerships' => $content->partnerships($locale),
+        ], [
+            'entity_type' => 'page',
+            'entity_key' => 'partnerships',
+            'path' => 'partnerships',
+            'title' => ['en' => 'Partnerships', 'tr' => 'İş Ortaklıkları', 'ar' => 'الشراكات'],
+            'description' => [
+                'en' => 'Brands we represent and import — including Lajivert and Aymini — as part of our broader trade portfolio.',
+                'tr' => 'Temsil ettiğimiz ve ithal ettiğimiz markalar — Lajivert ve Aymini dahil — daha geniş ticaret portföyümüzün parçası.',
+                'ar' => 'العلامات التي نمثلها ونستوردها — بما في ذلك لاجيڤيرت وأيميني — ضمن محفظة تجارتنا الأوسع.',
+            ],
+            'breadcrumbs' => [
+                ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
+                ['label' => ['en' => 'Partnerships', 'tr' => 'İş Ortaklıkları', 'ar' => 'الشراكات'], 'path' => 'partnerships'],
             ],
         ]);
     }
@@ -195,6 +244,7 @@ class PageController
         $this->render('pages.news.show', [
             'article' => $article,
             'related' => array_filter($content->news($locale), fn($a) => $a['slug'] !== $slug),
+            'comments' => !empty($article['id']) ? $content->newsComments((int) $article['id']) : [],
         ], [
             'entity_type' => 'news',
             'entity_key' => $slug,
@@ -331,6 +381,92 @@ class PageController
                 'ar' => 'إدارة تفضيلات ملفات تعريف الارتباط وجمع البيانات.',
             ],
         ]);
+    }
+
+    public function articleReviewSubmit(string $slug): void
+    {
+        (new \Admin\Services\Auth\AuthService())->startSession();
+
+        $token = $_POST['_csrf'] ?? '';
+        if (!verify_csrf($token)) {
+            flash('error', t(['en' => 'Invalid security token.', 'tr' => 'Geçersiz güvenlik jetonu.', 'ar' => 'رمز أمان غير صالح.']));
+            redirect(url('news/' . $slug) . '#reviews');
+        }
+
+        $name = trim((string) ($_POST['author_name'] ?? ''));
+        $email = trim((string) ($_POST['author_email'] ?? ''));
+        $body = trim((string) ($_POST['content'] ?? ''));
+
+        if ($name === '' || $email === '' || $body === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            flash('error', t(['en' => 'Please fill in a valid name, email, and review.', 'tr' => 'Lütfen geçerli ad, e-posta ve yorum girin.', 'ar' => 'يرجى إدخال اسم وبريد ومراجعة صالحة.']));
+            redirect(url('news/' . $slug) . '#reviews');
+        }
+
+        $content = content();
+        $article = $content->newsBySlug($slug, app_locale());
+        if (!$article || empty($article['id'])) {
+            $this->notFound();
+            return;
+        }
+
+        try {
+            $content->addNewsComment((int) $article['id'], mb_substr($name, 0, 100), mb_substr($email, 0, 180), mb_substr($body, 0, 2000));
+            flash('success', t(['en' => 'Thank you — your review was submitted and awaits moderation.', 'tr' => 'Teşekkürler — yorumunuz gönderildi ve onay bekliyor.', 'ar' => 'شكرًا — تم إرسال مراجعتك وهي بانتظار الإشراف.']));
+        } catch (\Throwable) {
+            flash('error', t(['en' => 'Could not save your review. Please try again.', 'tr' => 'Yorum kaydedilemedi. Lütfen tekrar deneyin.', 'ar' => 'تعذر حفظ المراجعة. حاول مرة أخرى.']));
+        }
+
+        redirect(url('news/' . $slug) . '#reviews');
+    }
+
+    public function cms(string $path): void
+    {
+        $page = content()->cmsPageByPath($path, app_locale());
+        if ($page === null) {
+            $this->notFound();
+            return;
+        }
+
+        $page['php_output'] = $this->runEmbeddedPhp((string) ($page['php_embed'] ?? ''));
+        $seoContext = [
+            'entity_type' => 'page',
+            'entity_key' => $page['slug'] ?? $path,
+            'path' => $path,
+            'title' => $page['meta_title'] ?: ($page['title'] ?? $path),
+            'description' => $page['meta_description'] ?: ($page['excerpt'] ?? ''),
+        ];
+
+        if (($page['embed_mode'] ?? 'site') === 'blank') {
+            $data = [
+                'page' => $page,
+                'seo' => build_seo($seoContext),
+            ];
+            extract($data);
+            require APP_PATH . '/Views/pages/custom-blank.php';
+            return;
+        }
+
+        $this->render('pages.custom', ['page' => $page], $seoContext);
+    }
+
+    private function runEmbeddedPhp(string $code): string
+    {
+        $code = trim($code);
+        if ($code === '' || !admin_config('allow_page_php', false)) {
+            return '';
+        }
+
+        $code = preg_replace('/^\s*<\?(php)?/i', '', $code) ?? $code;
+        $code = preg_replace('/\?>\s*$/', '', $code) ?? $code;
+
+        ob_start();
+        try {
+            eval($code);
+        } catch (\Throwable) {
+            echo '<!-- PHP embed error -->';
+        }
+
+        return (string) ob_get_clean();
     }
 
     public function notFound(): void

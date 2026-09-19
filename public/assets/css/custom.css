@@ -1,32 +1,158 @@
-/* Ozerman Ltd — Custom Styles */
+/* Özerman Ticaret — Custom Styles */
+
+:root {
+    --oz-canvas: #FAFAF9;
+    --oz-surface: #F3F2EF;
+    --oz-border: #D4D2CC;
+    --oz-muted: #5E5E5E;
+    --oz-ink: #1C1B1A;
+    --oz-ink-deep: #141312;
+    --oz-heading: #3A3A3C;
+    --oz-accent: #EA4C37;
+    --oz-accent-soft: #FCEDEA;
+    --page-fade-ms: 140ms;
+}
 
 [x-cloak] { display: none !important; }
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+    background-color: var(--oz-canvas);
+}
+
+body {
+    background-color: var(--oz-canvas);
+    background-image:
+        radial-gradient(ellipse 80% 50% at 100% -10%, rgba(234, 76, 55, 0.05), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 0% 100%, rgba(28, 27, 26, 0.035), transparent 50%);
+}
+
+/* Branded page loader (replaces white-out transitions) */
+.oz-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 160ms ease, visibility 160ms ease;
+    /* Solid canvas — never show page remount/flicker underneath */
+    background: var(--oz-canvas);
+}
+.oz-loader.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.oz-loader[hidden] {
+    display: none;
+}
+.oz-loader.is-active[hidden] {
+    display: grid;
+}
+
+/* Early-nav state: cover before paint so destination page never flashes behind loader */
+html.oz-loading #oz-loader {
+    display: grid !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+html.oz-loading body > *:not(#oz-loader) {
+    visibility: hidden !important;
+}
+.oz-loader__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    text-align: center;
+    padding: 1.5rem;
+}
+.oz-loader__stage {
+    position: relative;
+    width: 5.5rem;
+    height: 5.5rem;
+    display: grid;
+    place-items: center;
+}
+.oz-loader__hex {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--oz-accent);
+    opacity: 0.9;
+    animation: oz-hex-spin 2.8s linear infinite;
+}
+.oz-loader__hex polygon {
+    fill: rgba(234, 76, 55, 0.06);
+}
+.oz-loader__mark {
+    position: relative;
+    z-index: 1;
+    width: 2.75rem;
+    height: auto;
+    animation: oz-mark-breathe 1.6s ease-in-out infinite;
+}
+.oz-loader__text {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--oz-muted);
+    animation: oz-text-pulse 1.6s ease-in-out infinite;
+}
+.site-header,
+.site-footer {
+    /* Keep chrome visually stable during paint / nav */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+#site-main {
+    min-height: 50vh;
+}
+
+@keyframes oz-hex-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes oz-mark-breathe {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.92); opacity: 0.88; }
+}
+@keyframes oz-text-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
 
 /* Hero slider */
 .hero-slide {
+    background-color: #1C1B1A;
     background-size: cover;
     background-position: center;
 }
 
 /* Prose for article content */
 .prose-ozerman h2 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Montserrat', system-ui, sans-serif;
     font-size: 1.5rem;
-    color: #102a43;
+    font-weight: 700;
+    color: var(--oz-heading);
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
 .prose-ozerman p {
-    color: #486581;
+    color: var(--oz-muted);
     line-height: 1.75;
     margin-bottom: 1rem;
 }
 .prose-ozerman ul {
     list-style-type: disc;
     list-style-position: inside;
-    color: #486581;
+    color: var(--oz-muted);
     margin-bottom: 1rem;
 }
 .prose-ozerman ul li {
@@ -35,27 +161,40 @@ html { scroll-behavior: smooth; }
 
 /* Card hover effect */
 .card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -12px rgba(16, 42, 67, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -16px rgba(28, 27, 26, 0.14);
 }
 
-/* Gold accent line */
+/* Soft orange accent line */
 .accent-line::after {
     content: '';
     display: block;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, #c9a227, #d4af37);
+    width: 48px;
+    height: 2px;
+    background: var(--oz-accent);
     margin-top: 1rem;
 }
 
+.accent-line.mx-auto::after {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.eyebrow {
+    letter-spacing: 0.22em;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: var(--oz-accent);
+}
+
 /* Status badges */
-.badge-ongoing { background: #dbeafe; color: #1e40af; }
-.badge-completed { background: #d1fae5; color: #065f46; }
-.badge-planning { background: #fef3c7; color: #92400e; }
+.badge-ongoing { background: #EEF2FF; color: #3730A3; }
+.badge-completed { background: #ECFDF5; color: #065F46; }
+.badge-planning { background: #FFF7ED; color: #9A3412; }
 
 /* RTL support */
 [dir="rtl"] .accent-line::after {
@@ -63,17 +202,53 @@ html { scroll-behavior: smooth; }
     margin-left: auto;
 }
 
-/* Section divider */
+/* Quiet section texture */
 .section-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23102a43' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231C1B1A' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Lazy load fade-in */
 img[loading="lazy"] {
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s ease;
 }
 img[loading="lazy"].loaded,
 img:not([loading="lazy"]) {
     opacity: 1;
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* No full-page view-transition morph — it caused footer/chrome flicker */
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .oz-loader__hex,
+    .oz-loader__mark,
+    .oz-loader__text {
+        animation: none !important;
+    }
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .card-hover,
+    .card-hover:hover {
+        transition: none;
+        transform: none;
+    }
+    img[loading="lazy"] {
+        opacity: 1;
+        transition: none;
+    }
 }

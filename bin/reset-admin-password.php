@@ -11,7 +11,7 @@ require dirname(__DIR__) . '/bootstrap.php';
 
 use App\Infrastructure\Database;
 
-$pdo = Database::connection(force: true);
+$pdo = Database::connection(true);
 
 if ($pdo === null) {
     fwrite(STDERR, "Error: Cannot connect to MySQL. Check .env DB_* settings.\n");

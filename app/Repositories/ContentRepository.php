@@ -21,6 +21,11 @@ class ContentRepository implements ContentProviderInterface
         return $this->resolve()->nav($locale);
     }
 
+    public function footerMenus(string $locale): array
+    {
+        return $this->resolve()->footerMenus($locale);
+    }
+
     public function heroSlides(string $locale): array
     {
         return $this->resolve()->heroSlides($locale);
@@ -86,9 +91,56 @@ class ContentRepository implements ContentProviderInterface
         return $this->resolve()->values($locale);
     }
 
+    public function stores(string $locale): array
+    {
+        return $this->resolve()->stores($locale);
+    }
+
+    public function partnerships(string $locale): array
+    {
+        return $this->resolve()->partnerships($locale);
+    }
+
+    public function operations(string $locale): array
+    {
+        return $this->resolve()->operations($locale);
+    }
+
+    public function banner(string $location): string
+    {
+        return $this->resolve()->banner($location);
+    }
+
+    public function newsComments(int $newsId): array
+    {
+        return $this->resolve()->newsComments($newsId);
+    }
+
+    public function addNewsComment(int $newsId, string $name, string $email, string $content): void
+    {
+        $this->resolve()->addNewsComment($newsId, $name, $email, $content);
+    }
+
     public function usingDatabase(): bool
     {
         return $this->shouldUseDatabase();
+    }
+
+    /** @return array<string, mixed>|null */
+    public function cmsPageByPath(string $path, string $locale): ?array
+    {
+        if (!$this->shouldUseDatabase()) {
+            return null;
+        }
+
+        try {
+            $provider = $this->database ??= new DatabaseContentProvider(
+                Database::connection(force: true)
+            );
+            return $provider->cmsPageByPath($path, $locale);
+        } catch (\Throwable) {
+            return null;
+        }
     }
 
     private function resolve(): ContentProviderInterface

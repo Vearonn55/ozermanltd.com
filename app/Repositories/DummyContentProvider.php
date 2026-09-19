@@ -13,6 +13,11 @@ class DummyContentProvider implements ContentProviderInterface
         return DummyData::nav();
     }
 
+    public function footerMenus(string $locale): array
+    {
+        return DummyData::footerMenus();
+    }
+
     public function heroSlides(string $locale): array
     {
         return DummyData::heroSlides();
@@ -76,5 +81,35 @@ class DummyContentProvider implements ContentProviderInterface
     public function values(string $locale): array
     {
         return DummyData::values();
+    }
+
+    public function stores(string $locale): array
+    {
+        return DummyData::stores();
+    }
+
+    public function partnerships(string $locale): array
+    {
+        return DummyData::partnerships();
+    }
+
+    public function operations(string $locale): array
+    {
+        return DummyData::operations();
+    }
+
+    public function banner(string $location): string
+    {
+        return DummyData::banner($location);
+    }
+
+    public function newsComments(int $newsId): array
+    {
+        return [];
+    }
+
+    public function addNewsComment(int $newsId, string $name, string $email, string $content): void
+    {
+        // Dummy provider cannot persist comments.
     }
 }

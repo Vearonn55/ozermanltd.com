@@ -10,6 +10,8 @@ define('BASE_PATH', __DIR__);
 define('APP_PATH', BASE_PATH . '/app');
 define('CONFIG_PATH', BASE_PATH . '/config');
 define('PUBLIC_PATH', BASE_PATH . '/public');
+define('MODULES_PATH', BASE_PATH . '/modules');
+define('ADMIN_MODULE_PATH', MODULES_PATH . '/Admin');
 
 $envFile = BASE_PATH . '/.env';
 if (file_exists($envFile)) {
@@ -42,7 +44,20 @@ spl_autoload_register(function (string $class): void {
     }
 });
 
+spl_autoload_register(function (string $class): void {
+    $prefix = 'Admin\\';
+    if (strpos($class, $prefix) !== 0) {
+        return;
+    }
+    $relative = str_replace('\\', '/', substr($class, strlen($prefix)));
+    $file = ADMIN_MODULE_PATH . '/src/' . $relative . '.php';
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
 require APP_PATH . '/Helpers/functions.php';
+require ADMIN_MODULE_PATH . '/src/Support/helpers.php';
 
 $config = require CONFIG_PATH . '/app.php';
 $dbConfig = require CONFIG_PATH . '/database.php';

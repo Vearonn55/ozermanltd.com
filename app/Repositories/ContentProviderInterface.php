@@ -8,6 +8,8 @@ interface ContentProviderInterface
 {
     public function nav(string $locale): array;
 
+    public function footerMenus(string $locale): array;
+
     public function heroSlides(string $locale): array;
 
     public function stats(string $locale): array;
@@ -33,4 +35,13 @@ interface ContentProviderInterface
     public function aboutContent(string $locale): array;
 
     public function values(string $locale): array;
+    public function stores(string $locale): array;
+    public function partnerships(string $locale): array;
+    public function operations(string $locale): array;
+
+    public function banner(string $location): string;
+
+    public function newsComments(int $newsId): array;
+
+    public function addNewsComment(int $newsId, string $name, string $email, string $content): void;
 }

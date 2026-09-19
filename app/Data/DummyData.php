@@ -11,11 +11,44 @@ class DummyData
         return [
             ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'url' => ''],
             ['label' => ['en' => 'About Us', 'tr' => 'Hakkımızda', 'ar' => 'من نحن'], 'url' => 'about-us'],
-            ['label' => ['en' => 'Sectors', 'tr' => 'Sektörler', 'ar' => 'القطاعات'], 'url' => 'sectors'],
-            ['label' => ['en' => 'Projects', 'tr' => 'Projeler', 'ar' => 'المشاريع'], 'url' => 'projects'],
+            ['label' => ['en' => 'Our Stores', 'tr' => 'Mağazalarımız', 'ar' => 'متاجرنا'], 'url' => 'our-stores'],
+            ['label' => ['en' => 'Partnerships', 'tr' => 'İş Ortaklıkları', 'ar' => 'الشراكات'], 'url' => 'partnerships'],
             ['label' => ['en' => 'News', 'tr' => 'Haberler', 'ar' => 'الأخبار'], 'url' => 'news'],
             ['label' => ['en' => 'Gallery', 'tr' => 'Galeri', 'ar' => 'المعرض'], 'url' => 'gallery'],
             ['label' => ['en' => 'Contact', 'tr' => 'İletişim', 'ar' => 'اتصل بنا'], 'url' => 'contact'],
+        ];
+    }
+
+    public static function footerMenus(): array
+    {
+        return [
+            'footer_col1' => [
+                'title' => ['en' => 'Quick Links', 'tr' => 'Hızlı Bağlantılar', 'ar' => 'روابط سريعة'],
+                'links' => [
+                    ['label' => ['en' => 'About Us', 'tr' => 'Hakkımızda', 'ar' => 'من نحن'], 'url' => 'about-us', 'target' => '_self'],
+                    ['label' => ['en' => 'Our Stores', 'tr' => 'Mağazalarımız', 'ar' => 'متاجرنا'], 'url' => 'our-stores', 'target' => '_self'],
+                    ['label' => ['en' => 'Partnerships', 'tr' => 'İş Ortaklıkları', 'ar' => 'الشراكات'], 'url' => 'partnerships', 'target' => '_self'],
+                    ['label' => ['en' => 'News', 'tr' => 'Haberler', 'ar' => 'الأخبار'], 'url' => 'news', 'target' => '_self'],
+                    ['label' => ['en' => 'Gallery', 'tr' => 'Galeri', 'ar' => 'المعرض'], 'url' => 'gallery', 'target' => '_self'],
+                ],
+            ],
+            'footer_col2' => [
+                'title' => ['en' => 'Explore', 'tr' => 'Keşfet', 'ar' => 'استكشف'],
+                'links' => [
+                    ['label' => ['en' => 'Represented Brands', 'tr' => 'Temsil Edilen Markalar', 'ar' => 'العلامات الممثلة'], 'url' => 'partnerships', 'target' => '_self'],
+                    ['label' => ['en' => 'Showrooms', 'tr' => 'Showroomlar', 'ar' => 'صالات العرض'], 'url' => 'our-stores', 'target' => '_self'],
+                    ['label' => ['en' => 'Partnership Inquiries', 'tr' => 'Ortaklık Talepleri', 'ar' => 'استفسارات الشراكة'], 'url' => 'contact', 'target' => '_self'],
+                    ['label' => ['en' => 'Media Gallery', 'tr' => 'Medya Galerisi', 'ar' => 'معرض الوسائط'], 'url' => 'gallery', 'target' => '_self'],
+                ],
+            ],
+            'footer_col3' => [
+                'title' => ['en' => 'Legal', 'tr' => 'Yasal', 'ar' => 'قانوني'],
+                'links' => [
+                    ['label' => ['en' => 'Privacy Policy', 'tr' => 'Gizlilik Politikası', 'ar' => 'سياسة الخصوصية'], 'url' => 'privacy-policy', 'target' => '_self'],
+                    ['label' => ['en' => 'Cookie Policy', 'tr' => 'Çerez Politikası', 'ar' => 'سياسة ملفات تعريف الارتباط'], 'url' => 'cookie-policy', 'target' => '_self'],
+                    ['label' => ['en' => 'Cookie Settings', 'tr' => 'Çerez Ayarları', 'ar' => 'إعدادات ملفات تعريف الارتباط'], 'url' => 'cookie-settings', 'target' => '_self'],
+                ],
+            ],
         ];
     }
 
@@ -24,48 +57,48 @@ class DummyData
         return [
             [
                 'title' => [
-                    'en' => 'Building a Global Legacy of Excellence',
-                    'tr' => 'Mükemmellikte Küresel Bir Miras İnşa Ediyoruz',
-                    'ar' => 'نبني إرثًا عالميًا من التميز',
+                    'en' => 'Import. Partner. Deliver.',
+                    'tr' => 'İthalat. Ortaklık. Dağıtım.',
+                    'ar' => 'استيراد. شراكة. توصيل.',
                 ],
                 'subtitle' => [
-                    'en' => 'Ozerman Ltd is a diversified international business group operating across trading, construction, real estate, and energy sectors.',
-                    'tr' => 'Ozerman Ltd, ticaret, inşaat, gayrimenkul ve enerji sektörlerinde faaliyet gösteren çeşitlendirilmiş uluslararası bir iş grubudur.',
-                    'ar' => 'أوزرمان المحدودة مجموعة أعمال دولية متنوعة تعمل في التجارة والبناء والعقارات والطاقة.',
+                    'en' => 'Özerman Ticaret is an importer limited company connecting trusted brands with retail markets through disciplined trade and local presence.',
+                    'tr' => 'Özerman Ticaret, güvenilir markaları disiplinli ticaret ve yerel varlıkla perakende pazarlara bağlayan bir ithalatçı limited şirketidir.',
+                    'ar' => 'أوزرمان للتجارة شركة استيراد محدودة تربط العلامات الموثوقة بأسواق التجزئة عبر تجارة منضبطة وحضور محلي.',
                 ],
-                'cta_text' => ['en' => 'Explore Our Sectors', 'tr' => 'Sektörlerimizi Keşfedin', 'ar' => 'استكشف قطاعاتنا'],
-                'cta_url' => 'sectors',
-                'image' => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80',
+                'cta_text' => ['en' => 'About Us', 'tr' => 'Hakkımızda', 'ar' => 'من نحن'],
+                'cta_url' => 'about-us',
+                'image' => 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&q=80',
             ],
             [
                 'title' => [
-                    'en' => 'Delivering Landmark Projects Worldwide',
-                    'tr' => 'Dünya Çapında Öncü Projeler',
-                    'ar' => 'تسليم مشاريع بارزة حول العالم',
+                    'en' => 'Brands We Represent',
+                    'tr' => 'Temsil Ettiğimiz Markalar',
+                    'ar' => 'العلامات التي نمثلها',
                 ],
                 'subtitle' => [
-                    'en' => 'From residential developments to commercial complexes, we create spaces that inspire communities and drive economic growth.',
-                    'tr' => 'Konut projelerinden ticari komplekslere kadar, topluluklara ilham veren ve ekonomik büyümeyi destekleyen alanlar yaratıyoruz.',
-                    'ar' => 'من المشاريع السكنية إلى المجمعات التجارية، نخلق مساحات تلهم المجتمعات وتدفع النمو الاقتصادي.',
+                    'en' => 'We build long-term import partnerships — currently bringing selected furniture brands such as Lajivert and Aymini to retail customers.',
+                    'tr' => 'Uzun soluklu ithalat ortaklıkları kuruyoruz — şu anda Lajivert ve Aymini gibi seçili mobilya markalarını perakende müşterilere sunuyoruz.',
+                    'ar' => 'نبني شراكات استيراد طويلة الأمد — ونقدم حاليًا علامات أثاث مختارة مثل لاجيڤيرت وأيميني لعملاء التجزئة.',
                 ],
-                'cta_text' => ['en' => 'View Projects', 'tr' => 'Projeleri Görüntüle', 'ar' => 'عرض المشاريع'],
-                'cta_url' => 'projects',
-                'image' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80',
+                'cta_text' => ['en' => 'Our Partnerships', 'tr' => 'İş Ortaklıklarımız', 'ar' => 'شراكاتنا'],
+                'cta_url' => 'partnerships',
+                'image' => 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600&q=80',
             ],
             [
                 'title' => [
-                    'en' => 'Trusted Partner in International Trade',
-                    'tr' => 'Uluslararası Ticarette Güvenilir Ortak',
-                    'ar' => 'شريك موثوق في التجارة الدولية',
+                    'en' => 'Visit Our Stores',
+                    'tr' => 'Mağazalarımızı Ziyaret Edin',
+                    'ar' => 'زوروا متاجرنا',
                 ],
                 'subtitle' => [
-                    'en' => 'Connecting markets across continents with integrity, efficiency, and a commitment to sustainable business practices.',
-                    'tr' => 'Kıtalar arası pazarları dürüstlük, verimlilik ve sürdürülebilir iş uygulamalarına bağlılıkla birbirine bağlıyoruz.',
-                    'ar' => 'نربط الأسواق عبر القارات بنزاهة وكفاءة والتزام بممارسات الأعمال المستدامة.',
+                    'en' => 'Experience our imported collections in carefully curated showrooms — placeholders for store details will be updated soon.',
+                    'tr' => 'İthal koleksiyonlarımızı özenle düzenlenmiş showroomlarda deneyimleyin — mağaza detayları yakında güncellenecektir.',
+                    'ar' => 'اختبروا مجموعاتنا المستوردة في صالات عرض منسقة بعناية — سيتم تحديث تفاصيل المتاجر قريبًا.',
                 ],
-                'cta_text' => ['en' => 'Get in Touch', 'tr' => 'İletişime Geçin', 'ar' => 'تواصل معنا'],
-                'cta_url' => 'contact',
-                'image' => 'https://images.unsplash.com/photo-1578575437130-527eed3abbcd?w=1600&q=80',
+                'cta_text' => ['en' => 'Find a Store', 'tr' => 'Mağaza Bul', 'ar' => 'اعثر على متجر'],
+                'cta_url' => 'our-stores',
+                'image' => 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80',
             ],
         ];
     }
@@ -73,10 +106,126 @@ class DummyData
     public static function stats(): array
     {
         return [
-            ['value' => '36+', 'label' => ['en' => 'Years of Experience', 'tr' => 'Yıllık Deneyim', 'ar' => 'سنوات من الخبرة']],
-            ['value' => '12', 'label' => ['en' => 'Business Sectors', 'tr' => 'İş Sektörü', 'ar' => 'قطاعات أعمال']],
-            ['value' => '4,000+', 'label' => ['en' => 'Homes Delivered', 'tr' => 'Teslim Edilen Konut', 'ar' => 'وحدات سكنية مُسلّمة']],
-            ['value' => '28', 'label' => ['en' => 'Countries Worldwide', 'tr' => 'Ülkede Faaliyet', 'ar' => 'دولة حول العالم']],
+            ['value' => '20+', 'label' => ['en' => 'Years in Trade', 'tr' => 'Yıllık Ticaret', 'ar' => 'سنوات في التجارة']],
+            ['value' => '12+', 'label' => ['en' => 'Brand Partners', 'tr' => 'Marka Ortağı', 'ar' => 'شركاء علامات']],
+            ['value' => '8', 'label' => ['en' => 'Retail Points', 'tr' => 'Satış Noktası', 'ar' => 'نقاط بيع']],
+            ['value' => '1,200+', 'label' => ['en' => 'SKU Portfolio', 'tr' => 'Ürün Çeşidi', 'ar' => 'تنوع المنتجات']],
+        ];
+    }
+
+    public static function operations(): array
+    {
+        return [
+            [
+                'title' => ['en' => 'Import & Trade', 'tr' => 'İthalat ve Ticaret', 'ar' => 'الاستيراد والتجارة'],
+                'description' => [
+                    'en' => 'We source and import selected goods with disciplined procurement, logistics coordination, and reliable wholesale pathways.',
+                    'tr' => 'Seçili ürünleri disiplinli tedarik, lojistik koordinasyon ve güvenilir toptan satış kanallarıyla ithal ederiz.',
+                    'ar' => 'نستورد سلعًا مختارة عبر مشتريات منضبطة وتنسيق لوجستي ومسارات جملة موثوقة.',
+                ],
+            ],
+            [
+                'title' => ['en' => 'Brand Partnerships', 'tr' => 'Marka Ortaklıkları', 'ar' => 'شراكات العلامات'],
+                'description' => [
+                    'en' => 'We represent and grow brand relationships across categories — furniture today, with room to expand the portfolio tomorrow.',
+                    'tr' => 'Kategoriler arasında marka ilişkilerini temsil eder ve büyütürüz — bugün mobilya, yarın genişleyen bir portföy.',
+                    'ar' => 'نمثل وننمي علاقات العلامات عبر الفئات — الأثاث اليوم، ومحفظة قابلة للتوسع غدًا.',
+                ],
+            ],
+            [
+                'title' => ['en' => 'Retail & Stores', 'tr' => 'Perakende ve Mağazalar', 'ar' => 'التجزئة والمتاجر'],
+                'description' => [
+                    'en' => 'Through our showrooms and retail points, customers meet imported collections with local service and guidance.',
+                    'tr' => 'Showroom ve satış noktalarımızda müşteriler ithal koleksiyonlarla yerel hizmet ve rehberlik bulur.',
+                    'ar' => 'عبر صالات العرض ونقاط البيع يلتقي العملاء بالمجموعات المستوردة مع خدمة محلية وإرشاد.',
+                ],
+            ],
+        ];
+    }
+
+    public static function stores(): array
+    {
+        return [
+            [
+                'slug' => 'istanbul-showroom',
+                'name' => ['en' => 'Istanbul Flagship Showroom', 'tr' => 'İstanbul Merkez Showroom', 'ar' => 'صالة عرض إسطنبول الرئيسية'],
+                'city' => ['en' => 'Istanbul', 'tr' => 'İstanbul', 'ar' => 'إسطنبول'],
+                'address' => [
+                    'en' => 'Lorem Cad. No:42, Dummy Mah., Kadıköy',
+                    'tr' => 'Lorem Cad. No:42, Dummy Mah., Kadıköy',
+                    'ar' => 'شارع لوريم رقم 42، حي دامّي، كاديكوي',
+                ],
+                'phone' => '+90 212 000 00 01',
+                'email' => 'istanbul@ozermanltd.com',
+                'hours' => ['en' => 'Mon–Sat: 10:00 – 20:00', 'tr' => 'Pzt–Cmt: 10:00 – 20:00', 'ar' => 'الإثنين–السبت: 10:00 – 20:00'],
+                'image' => 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80',
+            ],
+            [
+                'slug' => 'ankara-store',
+                'name' => ['en' => 'Ankara Retail Store', 'tr' => 'Ankara Perakende Mağaza', 'ar' => 'متجر أنقرة للتجزئة'],
+                'city' => ['en' => 'Ankara', 'tr' => 'Ankara', 'ar' => 'أنقرة'],
+                'address' => [
+                    'en' => 'Ipsum Bulvarı 18/B, Placeholder Plaza',
+                    'tr' => 'Ipsum Bulvarı 18/B, Placeholder Plaza',
+                    'ar' => 'شارع إيبسوم 18/ب، بلازا مؤقتة',
+                ],
+                'phone' => '+90 312 000 00 02',
+                'email' => 'ankara@ozermanltd.com',
+                'hours' => ['en' => 'Mon–Sat: 10:00 – 19:00', 'tr' => 'Pzt–Cmt: 10:00 – 19:00', 'ar' => 'الإثنين–السبت: 10:00 – 19:00'],
+                'image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+            ],
+            [
+                'slug' => 'izmir-corner',
+                'name' => ['en' => 'Izmir Concept Corner', 'tr' => 'İzmir Konsept Köşe', 'ar' => 'ركن إزمير المفاهيمي'],
+                'city' => ['en' => 'Izmir', 'tr' => 'İzmir', 'ar' => 'إزمير'],
+                'address' => [
+                    'en' => 'Dolor Sok. 7, Gibberish AVM Kat:2',
+                    'tr' => 'Dolor Sok. 7, Gibberish AVM Kat:2',
+                    'ar' => 'شارع دولور 7، مجمع جيبريش الطابق 2',
+                ],
+                'phone' => '+90 232 000 00 03',
+                'email' => 'izmir@ozermanltd.com',
+                'hours' => ['en' => 'Daily: 11:00 – 21:00', 'tr' => 'Her gün: 11:00 – 21:00', 'ar' => 'يوميًا: 11:00 – 21:00'],
+                'image' => 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80',
+            ],
+        ];
+    }
+
+    public static function partnerships(): array
+    {
+        return [
+            [
+                'slug' => 'lajivert',
+                'name' => 'Lajivert',
+                'tagline' => [
+                    'en' => 'Youth & kids room collections',
+                    'tr' => 'Genç ve çocuk odası koleksiyonları',
+                    'ar' => 'مجموعات غرف الشباب والأطفال',
+                ],
+                'description' => [
+                    'en' => 'Lajivert is among the brands we import and present through our retail network — contemporary youth and children’s furniture for growing households.',
+                    'tr' => 'Lajivert, ithal ettiğimiz ve perakende ağımızda sunduğumuz markalardandır — büyüyen aileler için çağdaş genç ve çocuk mobilyaları.',
+                    'ar' => 'لاجيڤيرت من العلامات التي نستوردها ونعرضها عبر شبكة التجزئة — أثاث معاصر للشباب والأطفال.',
+                ],
+                'url' => 'https://www.lajivert.com.tr',
+                'image' => 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80',
+            ],
+            [
+                'slug' => 'aymini',
+                'name' => 'Aymini',
+                'tagline' => [
+                    'en' => 'Baby furniture designed with care',
+                    'tr' => 'Özenle tasarlanmış bebek mobilyaları',
+                    'ar' => 'أثاث أطفال مصمم بعناية',
+                ],
+                'description' => [
+                    'en' => 'Aymini baby furniture is part of our current import portfolio, combining design quality with materials chosen for safer nursery environments.',
+                    'tr' => 'Aymini bebek mobilyaları mevcut ithalat portföyümüzün bir parçasıdır; tasarım kalitesini daha güvenli bebek odası malzemeleriyle birleştirir.',
+                    'ar' => 'أثاث أيميني للرضع جزء من محفظة الاستيراد الحالية، يجمع جودة التصميم ومواد مختارة لبيئات أكثر أمانًا.',
+                ],
+                'url' => 'https://www.aymini.com',
+                'image' => 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80',
+            ],
         ];
     }
 
@@ -559,19 +708,19 @@ class DummyData
     {
         return [
             'history' => [
-                'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Founded in 1990 by James Ozerman, our company began as a modest trading firm in London and has grown into a diversified international business group with operations spanning 28 countries.</p><p>Over three decades, we have expanded into construction, real estate, manufacturing, logistics, and energy — always guided by our commitment to quality, integrity, and sustainable growth. Today, Ozerman Ltd employs over 8,500 professionals worldwide and has delivered more than 4,000 residential units and numerous commercial landmarks.</p>',
-                'tr' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 1990 yılında James Ozerman tarafından kurulan şirketimiz, Londra\'da mütevazı bir ticaret firması olarak başladı ve 28 ülkede faaliyet gösteren çeşitlendirilmiş uluslararası bir iş grubuna dönüştü.</p><p>Üç yıldan fazla bir süredir inşaat, gayrimenkul, üretim, lojistik ve enerjiye genişledik — her zaman kalite, dürüstlük ve sürdürülebilir büyüme taahhüdümüzle yönlendirildik.</p>',
-                'ar' => '<p>تأسست شركتنا في عام 1990 على يد جيمس أوزرمان، وبدأت كشركة تجارية متواضعة في لندن ونمت لتصبح مجموعة أعمال دولية متنوعة تعمل في 28 دولة.</p><p>على مدى أكثر من ثلاثة عقود، توسعنا في البناء والعقارات والتصنيع واللوجستيات والطاقة — مسترشدين دائمًا بالتزامنا بالجودة والنزاهة والنمو المستدام.</p>',
+                'en' => '<p>Özerman Ticaret is an importer limited company built on disciplined trade, reliable partnerships, and a growing retail footprint. Lorem ipsum dolor sit amet — placeholder history text that will be replaced with the official company story.</p><p>Today we focus on importing and representing selected brands — including furniture lines such as Lajivert and Aymini — while remaining open to broader product categories that fit our wholesale and retail model.</p>',
+                'tr' => '<p>Özerman Ticaret; disiplinli ticaret, güvenilir ortaklıklar ve büyüyen bir perakende ağı üzerine kurulu bir ithalatçı limited şirkettir. Lorem ipsum dolor sit amet — resmi şirket hikâyesiyle değiştirilecek geçici metin.</p><p>Bugün Lajivert ve Aymini gibi seçili mobilya markalarını ithal edip temsil ederken, toptan ve perakende modelimize uyan daha geniş kategorilere de açığız.</p>',
+                'ar' => '<p>أوزرمان للتجارة شركة استيراد محدودة مبنية على تجارة منضبطة وشراكات موثوقة وحضور تجزئة متنامٍ. نص مؤقت سيُستبدل بالقصة الرسمية.</p><p>نركّز اليوم على استيراد وتمثيل علامات مختارة — بما في ذلك خطوط أثاث مثل لاجيڤيرت وأيميني — مع الانفتاح على فئات أوسع تناسب نموذج الجملة والتجزئة.</p>',
             ],
             'vision' => [
-                'en' => 'To be the most trusted and innovative international business group, creating lasting value for our stakeholders and the communities we serve.',
-                'tr' => 'Paydaşlarımız ve hizmet verdiğimiz topluluklar için kalıcı değer yaratan, en güvenilir ve yenilikçi uluslararası iş grubu olmak.',
-                'ar' => 'أن نكون مجموعة الأعمال الدولية الأكثر ثقة وابتكارًا، ونخلق قيمة دائمة لأصحاب المصلحة والمجتمعات التي نخدمها.',
+                'en' => 'To be a trusted importer and retail partner — connecting quality brands with customers through integrity and local service.',
+                'tr' => 'Kaliteli markaları dürüstlük ve yerel hizmetle müşterilere bağlayan, güvenilir bir ithalatçı ve perakende ortağı olmak.',
+                'ar' => 'أن نكون مستوردًا وشريك تجزئة موثوقًا — نربط العلامات الجيدة بالعملاء عبر النزاهة والخدمة المحلية.',
             ],
             'mission' => [
-                'en' => 'To deliver excellence across every sector we operate in, through strategic investment, operational expertise, and a relentless commitment to sustainable business practices.',
-                'tr' => 'Stratejik yatırım, operasyonel uzmanlık ve sürdürülebilir iş uygulamalarına kararlı bağlılık yoluyla faaliyet gösterdiğimiz her sektörde mükemmellik sunmak.',
-                'ar' => 'تقديم التميز في كل قطاع نعمل فيه، من خلال الاستثمار الاستراتيجي والخبرة التشغيلية والالتزام الدؤوب بممارسات الأعمال المستدامة.',
+                'en' => 'To import with care, represent brands responsibly, and deliver a clear retail experience across our stores and partner channels.',
+                'tr' => 'Özenle ithal etmek, markaları sorumlu şekilde temsil etmek ve mağazalarımız ile iş ortaklığı kanallarımızda net bir perakende deneyimi sunmak.',
+                'ar' => 'الاستيراد بعناية، وتمثيل العلامات بمسؤولية، وتقديم تجربة تجزئة واضحة عبر متاجرنا وقنوات الشركاء.',
             ],
         ];
     }
@@ -584,5 +733,23 @@ class DummyData
             }
         }
         return null;
+    }
+
+    public static function banner(string $location): string
+    {
+        $map = [
+            'about' => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80',
+            'contact' => 'https://images.unsplash.com/photo-1423666639041-f56000c27a9e?w=1600&q=80',
+            'stores' => 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80',
+            'partnerships' => 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600&q=80',
+            'gallery' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&q=80',
+            'news' => 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80',
+            'projects' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80',
+            'sectors' => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80',
+            'home_mid' => 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80',
+            'home_cta' => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80',
+        ];
+
+        return $map[$location] ?? $map['about'];
     }
 }

@@ -5,11 +5,55 @@ declare(strict_types=1);
 function config(string $key, $default = null)
 {
     static $appConfig = null;
+    static $adminConfig = null;
+
+    if ($key === 'admin' || str_starts_with($key, 'admin.')) {
+        if ($adminConfig === null) {
+            $defaults = defined('ADMIN_MODULE_PATH') && file_exists(ADMIN_MODULE_PATH . '/config/admin.php')
+                ? require ADMIN_MODULE_PATH . '/config/admin.php'
+                : [];
+            $host = file_exists(CONFIG_PATH . '/admin.php')
+                ? require CONFIG_PATH . '/admin.php'
+                : [];
+            $adminConfig = array_replace_recursive($defaults, $host);
+
+            if (empty($adminConfig['upload_path'])) {
+                $adminConfig['upload_path'] = (defined('PUBLIC_PATH') ? PUBLIC_PATH : dirname(CONFIG_PATH) . '/public') . '/uploads';
+            }
+        }
+
+        if ($key === 'admin') {
+            return $adminConfig;
+        }
+
+        $value = $adminConfig;
+        foreach (array_slice(explode('.', $key), 1) as $segment) {
+            if (!is_array($value) || !array_key_exists($segment, $value)) {
+                return $default;
+            }
+            $value = $value[$segment];
+        }
+
+        return $value;
+    }
+
     if ($appConfig === null) {
         $appConfig = require CONFIG_PATH . '/app.php';
     }
 
-    return $appConfig[$key] ?? $default;
+    if (!str_contains($key, '.')) {
+        return $appConfig[$key] ?? $default;
+    }
+
+    $value = $appConfig;
+    foreach (explode('.', $key) as $segment) {
+        if (!is_array($value) || !array_key_exists($segment, $value)) {
+            return $default;
+        }
+        $value = $value[$segment];
+    }
+
+    return $value;
 }
 
 function seo_config(string $key, $default = null)
@@ -111,6 +155,24 @@ function asset(string $path): string
     return '/assets/' . ltrim($path, '/');
 }
 
+/**
+ * Public URL for an uploaded media file_path (or absolute/external URL).
+ */
+function media_url(?string $filePath, string $fallback = ''): string
+{
+    if ($filePath === null || $filePath === '') {
+        return $fallback;
+    }
+
+    if (str_starts_with($filePath, 'http://') || str_starts_with($filePath, 'https://') || str_starts_with($filePath, '/')) {
+        return $filePath;
+    }
+
+    $uploadUrl = rtrim((string) config('admin.upload_url', '/uploads'), '/');
+
+    return $uploadUrl . '/' . ltrim($filePath, '/');
+}
+
 function app_locale(): string
 {
     return $GLOBALS['app_locale'] ?? config('default_locale', 'en');
@@ -197,9 +259,18 @@ function locale_path_for(string $targetLocale): string
     return '/' . $targetLocale;
 }
 
-function format_date(string $date): string
+function format_date(?string $date): string
 {
-    return date('F j, Y', strtotime($date));
+    if ($date === null || $date === '' || $date === '0000-00-00' || str_starts_with($date, '0000-00-00')) {
+        return '';
+    }
+
+    $ts = strtotime($date);
+    if ($ts === false) {
+        return '';
+    }
+
+    return date('F j, Y', $ts);
 }
 
 function relative_path(): string
@@ -218,44 +289,10 @@ function relative_path(): string
     return $current;
 }
 
-function admin_view(string $name, array $data = []): void
-{
-    extract($data);
-    $viewFile = APP_PATH . '/Views/admin/' . str_replace('.', '/', $name) . '.php';
-
-    if (!file_exists($viewFile)) {
-        http_response_code(500);
-        echo 'Admin view not found: ' . e($name);
-        return;
-    }
-
-    require APP_PATH . '/Views/admin/layouts/main.php';
-}
-
-function admin_guest_view(string $name, array $data = []): void
-{
-    extract($data);
-    $viewFile = APP_PATH . '/Views/admin/' . str_replace('.', '/', $name) . '.php';
-
-    if (!file_exists($viewFile)) {
-        http_response_code(500);
-        echo 'Admin view not found: ' . e($name);
-        return;
-    }
-
-    require APP_PATH . '/Views/admin/layouts/guest.php';
-}
-
-function admin_partial(string $name, array $data = []): void
-{
-    extract($data);
-    require APP_PATH . '/Views/admin/partials/' . $name . '.php';
-}
-
 function csrf_token(): string
 {
     if (session_status() === PHP_SESSION_NONE) {
-        (new \App\Services\Auth\AuthService())->startSession();
+        (new \Admin\Services\Auth\AuthService())->startSession();
     }
 
     if (empty($_SESSION['_csrf_token'])) {
@@ -273,7 +310,7 @@ function csrf_field(): string
 function verify_csrf(string $token): bool
 {
     if (session_status() === PHP_SESSION_NONE) {
-        (new \App\Services\Auth\AuthService())->startSession();
+        (new \Admin\Services\Auth\AuthService())->startSession();
     }
 
     return isset($_SESSION['_csrf_token']) && hash_equals($_SESSION['_csrf_token'], $token);
@@ -282,7 +319,7 @@ function verify_csrf(string $token): bool
 function flash(string $type, string $message): void
 {
     if (session_status() === PHP_SESSION_NONE) {
-        (new \App\Services\Auth\AuthService())->startSession();
+        (new \Admin\Services\Auth\AuthService())->startSession();
     }
 
     $_SESSION['_flash'][$type] = $message;
@@ -291,7 +328,7 @@ function flash(string $type, string $message): void
 function get_flash(string $type): ?string
 {
     if (session_status() === PHP_SESSION_NONE) {
-        (new \App\Services\Auth\AuthService())->startSession();
+        (new \Admin\Services\Auth\AuthService())->startSession();
     }
 
     if (!isset($_SESSION['_flash'][$type])) {
@@ -302,21 +339,4 @@ function get_flash(string $type): ?string
     unset($_SESSION['_flash'][$type]);
 
     return $message;
-}
-
-function admin_url(string $path = ''): string
-{
-    return '/admin' . ($path !== '' ? '/' . ltrim($path, '/') : '');
-}
-
-function admin_active(string $path): bool
-{
-    $uri = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
-    $target = admin_url($path);
-
-    if ($path === '') {
-        return $uri === '/admin';
-    }
-
-    return str_starts_with($uri, $target);
 }

@@ -75,7 +75,7 @@ class SitemapService
 
     private function staticPaths(): array
     {
-        return ['', 'about-us', 'sectors', 'projects', 'news', 'gallery', 'contact', 'privacy-policy', 'cookie-policy', 'cookie-settings'];
+        return ['', 'about-us', 'our-stores', 'partnerships', 'sectors', 'projects', 'news', 'gallery', 'contact', 'privacy-policy', 'cookie-policy', 'cookie-settings'];
     }
 
     private function entry(string $path, string $locale, string $changefreq, string $priority, ?string $lastmod = null): array

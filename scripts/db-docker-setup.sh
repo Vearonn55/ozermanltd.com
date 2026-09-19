@@ -36,7 +36,8 @@ echo "Creating analytics tables..."
 $COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" < database/analytics_schema.sql
 
 echo "Resetting admin password..."
-DB_PASSWORD="$DB_PASS" php bin/reset-admin-password.php
+DB_PASSWORD="$DB_PASS" /opt/homebrew/opt/php/bin/php bin/reset-admin-password.php 2>/dev/null \
+  || DB_PASSWORD="$DB_PASS" php bin/reset-admin-password.php
 
 echo ""
 echo "Docker MySQL is ready on 127.0.0.1:3306"

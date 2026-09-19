@@ -4,8 +4,9 @@
 USE ozermanltd;
 
 -- About page structured content (JSON in page_translations.content)
+-- Multilingual payload matches DummyData::aboutContent() (TR frontend reference)
 UPDATE page_translations
-SET content = '{"history":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Founded in 1990 by James Ozerman, our company began as a modest trading firm in London and has grown into a diversified international business group with operations spanning 28 countries.</p><p>Over three decades, we have expanded into construction, real estate, manufacturing, logistics, and energy.</p>","vision":"To be the most trusted and innovative international business group, creating lasting value for our stakeholders and the communities we serve.","mission":"To deliver excellence across every sector we operate in, through strategic investment, operational expertise, and a relentless commitment to sustainable business practices."}'
+SET content = '{"history":{"en":"<p>Özerman Ticaret is an importer limited company built on disciplined trade, reliable partnerships, and a growing retail footprint. Lorem ipsum dolor sit amet — placeholder history text that will be replaced with the official company story.</p><p>Today we focus on importing and representing selected brands — including furniture lines such as Lajivert and Aymini — while remaining open to broader product categories that fit our wholesale and retail model.</p>","tr":"<p>Özerman Ticaret; disiplinli ticaret, güvenilir ortaklıklar ve büyüyen bir perakende ağı üzerine kurulu bir ithalatçı limited şirkettir. Lorem ipsum dolor sit amet — resmi şirket hikâyesiyle değiştirilecek geçici metin.</p><p>Bugün Lajivert ve Aymini gibi seçili mobilya markalarını ithal edip temsil ederken, toptan ve perakende modelimize uyan daha geniş kategorilere de açığız.</p>","ar":"<p>أوزرمان للتجارة شركة استيراد محدودة مبنية على تجارة منضبطة وشراكات موثوقة وحضور تجزئة متنامٍ. نص مؤقت سيُستبدل بالقصة الرسمية.</p><p>نركّز اليوم على استيراد وتمثيل علامات مختارة — بما في ذلك خطوط أثاث مثل لاجيڤيرت وأيميني — مع الانفتاح على فئات أوسع تناسب نموذج الجملة والتجزئة.</p>"},"vision":{"en":"To be a trusted importer and retail partner — connecting quality brands with customers through integrity and local service.","tr":"Kaliteli markaları dürüstlük ve yerel hizmetle müşterilere bağlayan, güvenilir bir ithalatçı ve perakende ortağı olmak.","ar":"أن نكون مستوردًا وشريك تجزئة موثوقًا — نربط العلامات الجيدة بالعملاء عبر النزاهة والخدمة المحلية."},"mission":{"en":"To import with care, represent brands responsibly, and deliver a clear retail experience across our stores and partner channels.","tr":"Özenle ithal etmek, markaları sorumlu şekilde temsil etmek ve mağazalarımız ile iş ortaklığı kanallarımızda net bir perakende deneyimi sunmak.","ar":"الاستيراد بعناية، وتمثيل العلامات بمسؤولية، وتقديم تجربة تجزئة واضحة عبر متاجرنا وقنوات الشركاء."}}'
 WHERE page_id = 2 AND language_id = 1;
 
 -- Sector services
@@ -24,9 +25,9 @@ UPDATE project_translations SET features = '• Private beach access\n• Infini
 
 -- Media assets (external URLs for development)
 INSERT INTO media (file_name, original_name, file_path, file_type, mime_type, alt_text) VALUES
-('hero-1.jpg', 'hero-1.jpg', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80', 'image', 'image/jpeg', 'Ozerman corporate skyline'),
-('hero-2.jpg', 'hero-2.jpg', 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80', 'image', 'image/jpeg', 'Ozerman project development'),
-('hero-3.jpg', 'hero-3.jpg', 'https://images.unsplash.com/photo-1578575437130-527eed3abbcd?w=1600&q=80', 'image', 'image/jpeg', 'Ozerman global trade'),
+('hero-1.jpg', 'hero-1.jpg', 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&q=80', 'image', 'image/jpeg', 'Import logistics warehouse'),
+('hero-2.jpg', 'hero-2.jpg', 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600&q=80', 'image', 'image/jpeg', 'Furniture brand partnership'),
+('hero-3.jpg', 'hero-3.jpg', 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80', 'image', 'image/jpeg', 'Retail showroom'),
 ('project-1.jpg', 'project-1.jpg', 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80', 'image', 'image/jpeg', 'Marina Heights Residences'),
 ('project-2.jpg', 'project-2.jpg', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80', 'image', 'image/jpeg', 'Central Business Tower'),
 ('project-3.jpg', 'project-3.jpg', 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80', 'image', 'image/jpeg', 'Greenfield Industrial Park'),
@@ -43,10 +44,20 @@ UPDATE projects SET featured_image_id = 6 WHERE id = 3;
 UPDATE projects SET featured_image_id = 7 WHERE id = 4;
 UPDATE news SET featured_image_id = 8 WHERE id = 1;
 
+-- Hero slides for all locales (matches DummyData::heroSlides — TR frontend reference)
 INSERT INTO hero_slides (page_id, language_id, media_id, title, subtitle, cta_text, cta_url, sort_order) VALUES
-(1, 1, 1, 'Building a Global Legacy of Excellence', 'Ozerman Ltd is a diversified international business group operating across trading, construction, real estate, and energy sectors.', 'Explore Our Sectors', '/en/sectors', 0),
-(1, 1, 2, 'Delivering Landmark Projects Worldwide', 'From residential developments to commercial complexes, we create spaces that inspire communities and drive economic growth.', 'View Projects', '/en/projects', 1),
-(1, 1, 3, 'Trusted Partner in International Trade', 'Connecting markets across continents with integrity, efficiency, and a commitment to sustainable business practices.', 'Get in Touch', '/en/contact', 2);
+-- English
+(1, 1, 1, 'Import. Partner. Deliver.', 'Özerman Ticaret is an importer limited company connecting trusted brands with retail markets through disciplined trade and local presence.', 'About Us', '/en/about-us', 0),
+(1, 1, 2, 'Brands We Represent', 'We build long-term import partnerships — currently bringing selected furniture brands such as Lajivert and Aymini to retail customers.', 'Our Partnerships', '/en/partnerships', 1),
+(1, 1, 3, 'Visit Our Stores', 'Experience our imported collections in carefully curated showrooms — placeholders for store details will be updated soon.', 'Find a Store', '/en/our-stores', 2),
+-- Turkish
+(1, 2, 1, 'İthalat. Ortaklık. Dağıtım.', 'Özerman Ticaret, güvenilir markaları disiplinli ticaret ve yerel varlıkla perakende pazarlara bağlayan bir ithalatçı limited şirketidir.', 'Hakkımızda', '/tr/about-us', 0),
+(1, 2, 2, 'Temsil Ettiğimiz Markalar', 'Uzun soluklu ithalat ortaklıkları kuruyoruz — şu anda Lajivert ve Aymini gibi seçili mobilya markalarını perakende müşterilere sunuyoruz.', 'İş Ortaklıklarımız', '/tr/partnerships', 1),
+(1, 2, 3, 'Mağazalarımızı Ziyaret Edin', 'İthal koleksiyonlarımızı özenle düzenlenmiş showroomlarda deneyimleyin — mağaza detayları yakında güncellenecektir.', 'Mağaza Bul', '/tr/our-stores', 2),
+-- Arabic
+(1, 3, 1, 'استيراد. شراكة. توصيل.', 'أوزرمان للتجارة شركة استيراد محدودة تربط العلامات الموثوقة بأسواق التجزئة عبر تجارة منضبطة وحضور محلي.', 'من نحن', '/ar/about-us', 0),
+(1, 3, 2, 'العلامات التي نمثلها', 'نبني شراكات استيراد طويلة الأمد — ونقدم حاليًا علامات أثاث مختارة مثل لاجيڤيرت وأيميني لعملاء التجزئة.', 'شراكاتنا', '/ar/partnerships', 1),
+(1, 3, 3, 'زوروا متاجرنا', 'اختبروا مجموعاتنا المستوردة في صالات عرض منسقة بعناية — سيتم تحديث تفاصيل المتاجر قريبًا.', 'اعثر على متجر', '/ar/our-stores', 2);
 
 INSERT INTO gallery_collections (cover_image_id, sort_order) VALUES
 (9, 0), (9, 1), (9, 2);

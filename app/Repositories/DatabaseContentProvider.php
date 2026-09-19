@@ -54,6 +54,74 @@ class DatabaseContentProvider implements ContentProviderInterface
         return $nav !== [] ? $nav : DummyData::nav();
     }
 
+    public function footerMenus(string $locale): array
+    {
+        $stmt = $this->pdo->query(
+            "SELECT m.location,
+                    mt.title, tl.code AS title_lang,
+                    mi.id AS item_id, mi.url, mi.target, mi.sort_order,
+                    mit.label, il.code AS label_lang
+             FROM menus m
+             LEFT JOIN menu_translations mt ON mt.menu_id = m.id
+             LEFT JOIN languages tl ON tl.id = mt.language_id
+             LEFT JOIN menu_items mi ON mi.menu_id = m.id AND mi.is_active = 1
+             LEFT JOIN menu_item_translations mit ON mit.item_id = mi.id
+             LEFT JOIN languages il ON il.id = mit.language_id
+             WHERE m.location IN ('footer_col1', 'footer_col2', 'footer_col3')
+             ORDER BY m.location, mi.sort_order, mi.id"
+        );
+
+        $columns = [];
+        foreach ($stmt->fetchAll() as $row) {
+            $location = $row['location'];
+            $columns[$location] ??= ['title' => [], 'items' => []];
+
+            if ($row['title_lang'] !== null && $row['title'] !== null) {
+                $columns[$location]['title'][$row['title_lang']] = $row['title'];
+            }
+
+            if ($row['item_id'] !== null) {
+                $itemId = (int) $row['item_id'];
+                $columns[$location]['items'][$itemId]['url'] = $this->normalizeInternalPath((string) $row['url']);
+                $columns[$location]['items'][$itemId]['target'] = $row['target'] ?: '_self';
+                if ($row['label_lang'] !== null && $row['label'] !== null) {
+                    $columns[$location]['items'][$itemId]['label'][$row['label_lang']] = $row['label'];
+                }
+            }
+        }
+
+        $dummy = DummyData::footerMenus();
+        $menus = [];
+
+        foreach (['footer_col1', 'footer_col2', 'footer_col3'] as $location) {
+            $column = $columns[$location] ?? null;
+
+            if ($column === null || $column['items'] === []) {
+                $menus[$location] = $dummy[$location];
+                continue;
+            }
+
+            $links = [];
+            foreach ($column['items'] as $item) {
+                if (empty($item['label'])) {
+                    continue;
+                }
+                $links[] = [
+                    'label' => $item['label'],
+                    'url' => $item['url'],
+                    'target' => $item['target'],
+                ];
+            }
+
+            $menus[$location] = [
+                'title' => $this->mergeTranslations($column['title'], $dummy[$location]['title'] ?? []),
+                'links' => $links !== [] ? $links : ($dummy[$location]['links'] ?? []),
+            ];
+        }
+
+        return $menus;
+    }
+
     public function heroSlides(string $locale): array
     {
         $languageId = $this->languageId($locale);
@@ -81,7 +149,7 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'subtitle' => $this->mergeScalarTranslation($row['subtitle'], $dummy['subtitle'] ?? [], $locale),
                 'cta_text' => $this->mergeScalarTranslation($row['cta_text'], $dummy['cta_text'] ?? [], $locale),
                 'cta_url' => $this->normalizeInternalPath($row['cta_url'] ?? ''),
-                'image' => $row['image'] ?: ($dummy['image'] ?? ''),
+                'image' => $this->resolveMediaUrl($row['image'] ?: null, $dummy['image'] ?? ''),
             ];
         }
 
@@ -202,7 +270,7 @@ class DatabaseContentProvider implements ContentProviderInterface
         foreach ($stmt->fetchAll() as $row) {
             $id = (int) $row['id'];
             $collections[$id]['slug'] = $row['slug'];
-            $collections[$id]['cover'] = $row['cover'];
+            $collections[$id]['cover'] = $this->resolveMediaUrl($row['cover'] ?: null);
             $collections[$id]['title'][$row['lang']] = $row['title'];
             $collections[$id]['description'][$row['lang']] = $row['description'];
         }
@@ -228,7 +296,7 @@ class DatabaseContentProvider implements ContentProviderInterface
             foreach ($itemsStmt->fetchAll() as $itemIndex => $item) {
                 $dummyItem = $dummy['items'][$itemIndex] ?? [];
                 $items[] = [
-                    'image' => $item['image'] ?: ($dummyItem['image'] ?? ''),
+                    'image' => $this->resolveMediaUrl($item['image'] ?: null, $dummyItem['image'] ?? ''),
                     'caption' => $this->mergeScalarTranslation(
                         $item['caption'],
                         $dummyItem['caption'] ?? [],
@@ -326,7 +394,7 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'position' => $this->mergeScalarTranslation($row['position'], $dummy['position'] ?? [], $locale),
                 'bio' => $this->mergeScalarTranslation($row['bio'], $dummy['bio'] ?? [], $locale),
                 'type' => $row['type'],
-                'image' => $row['image'] ?: ($dummy['image'] ?? ''),
+                'image' => $this->resolveMediaUrl($row['image'] ?: null, $dummy['image'] ?? ''),
             ];
         }
 
@@ -334,6 +402,60 @@ class DatabaseContentProvider implements ContentProviderInterface
     }
 
     public function aboutContent(string $locale): array
+    {
+        $dummy = DummyData::aboutContent();
+        $row = $this->fetchAboutContentRow($locale);
+
+        // EN seed may store a multilingual JSON payload — reuse it for other locales.
+        if ((!$row || empty($row['content'])) && $locale !== 'en') {
+            $row = $this->fetchAboutContentRow('en');
+        }
+
+        if (!$row || empty($row['content'])) {
+            $content = $dummy;
+        } else {
+            $raw = trim((string) $row['content']);
+            $decoded = json_decode($raw, true);
+
+            if (!is_array($decoded)) {
+                $content = [
+                    'history' => $this->mergeTranslations([$locale => $raw], $dummy['history']),
+                    'vision' => $dummy['vision'],
+                    'mission' => $dummy['mission'],
+                ];
+            } else {
+                $content = [
+                    'history' => $this->mergeTranslations(
+                        is_array($decoded['history'] ?? null) ? $decoded['history'] : [$locale => $decoded['history'] ?? ''],
+                        $dummy['history']
+                    ),
+                    'vision' => $this->mergeTranslations(
+                        is_array($decoded['vision'] ?? null) ? $decoded['vision'] : [$locale => $decoded['vision'] ?? ''],
+                        $dummy['vision']
+                    ),
+                    'mission' => $this->mergeTranslations(
+                        is_array($decoded['mission'] ?? null) ? $decoded['mission'] : [$locale => $decoded['mission'] ?? ''],
+                        $dummy['mission']
+                    ),
+                ];
+            }
+        }
+
+        $visionBlock = $this->loadContentBlocks('about_vision');
+        if ($visionBlock !== []) {
+            $content['vision'] = $this->mergeTranslations($visionBlock[0]['body'] ?? [], $content['vision']);
+        }
+
+        $missionBlock = $this->loadContentBlocks('about_mission');
+        if ($missionBlock !== []) {
+            $content['mission'] = $this->mergeTranslations($missionBlock[0]['body'] ?? [], $content['mission']);
+        }
+
+        return $content;
+    }
+
+    /** @return array<string, mixed>|false */
+    private function fetchAboutContentRow(string $locale)
     {
         $languageId = $this->languageId($locale);
         $stmt = $this->pdo->prepare(
@@ -344,52 +466,208 @@ class DatabaseContentProvider implements ContentProviderInterface
              LIMIT 1'
         );
         $stmt->execute(['language_id' => $languageId]);
-        $row = $stmt->fetch();
 
-        if (!$row || empty($row['content'])) {
-            return DummyData::aboutContent();
-        }
-
-        $raw = trim((string) $row['content']);
-        $decoded = json_decode($raw, true);
-
-        if (!is_array($decoded)) {
-            return [
-                'history' => ['en' => $raw, 'tr' => $raw, 'ar' => $raw],
-                'vision' => ['en' => '', 'tr' => '', 'ar' => ''],
-                'mission' => ['en' => '', 'tr' => '', 'ar' => ''],
-            ];
-        }
-
-        $dummy = DummyData::aboutContent();
-        return [
-            'history' => $this->mergeTranslations(
-                is_array($decoded['history'] ?? null) ? $decoded['history'] : ['en' => $decoded['history'] ?? ''],
-                $dummy['history']
-            ),
-            'vision' => $this->mergeTranslations(
-                is_array($decoded['vision'] ?? null) ? $decoded['vision'] : ['en' => $decoded['vision'] ?? ''],
-                $dummy['vision']
-            ),
-            'mission' => $this->mergeTranslations(
-                is_array($decoded['mission'] ?? null) ? $decoded['mission'] : ['en' => $decoded['mission'] ?? ''],
-                $dummy['mission']
-            ),
-        ];
+        return $stmt->fetch();
     }
 
     public function values(string $locale): array
     {
-        return DummyData::values();
+        $blocks = $this->loadContentBlocks('about_values');
+        if ($blocks === []) {
+            return DummyData::values();
+        }
+
+        $dummy = DummyData::values();
+        $values = [];
+        foreach ($blocks as $index => $block) {
+            $fallback = $dummy[$index] ?? [];
+            $values[] = [
+                'title' => $this->mergeTranslations($block['title'] ?? [], $fallback['title'] ?? []),
+                'description' => $this->mergeTranslations($block['body'] ?? [], $fallback['description'] ?? []),
+                'icon' => $block['icon'] ?: ($fallback['icon'] ?? 'star'),
+            ];
+        }
+
+        return $values;
+    }
+
+    public function stores(string $locale): array
+    {
+        $stmt = $this->pdo->query(
+            'SELECT s.id, s.phone, s.email, s.sort_order, m.file_path AS image,
+                    st.name, st.slug, st.city, st.address, st.working_hours, l.code AS lang
+             FROM stores s
+             INNER JOIN store_translations st ON st.store_id = s.id
+             INNER JOIN languages l ON l.id = st.language_id
+             LEFT JOIN media m ON m.id = s.media_id
+             WHERE s.is_active = 1
+             ORDER BY s.sort_order, s.id, l.code'
+        );
+
+        $grouped = $this->groupTranslatedEntities($stmt->fetchAll(), function (array $entity): array {
+            return [
+                'slug' => $entity['fields']['slug']['en'] ?? array_values($entity['fields']['slug'])[0] ?? '',
+                'name' => $entity['fields']['name'],
+                'city' => $entity['fields']['city'],
+                'address' => $entity['fields']['address'],
+                'hours' => $entity['fields']['working_hours'],
+                'phone' => $entity['meta']['phone'] ?? '',
+                'email' => $entity['meta']['email'] ?? '',
+                'image' => $entity['meta']['image'] ?? '',
+            ];
+        }, [
+            'slug' => 'slug',
+            'name' => 'name',
+            'city' => 'city',
+            'address' => 'address',
+            'working_hours' => 'working_hours',
+        ], [
+            'phone' => 'phone',
+            'email' => 'email',
+            'image' => 'image',
+        ]);
+
+        if ($grouped === []) {
+            return DummyData::stores();
+        }
+
+        $dummy = DummyData::stores();
+        foreach ($grouped as $index => &$store) {
+            $fallback = $dummy[$index] ?? [];
+            if ($store['image'] === '' || $store['image'] === null) {
+                $store['image'] = $fallback['image'] ?? '';
+            } else {
+                $store['image'] = $this->resolveMediaUrl((string) $store['image'], $fallback['image'] ?? '');
+            }
+            $store['name'] = $this->mergeTranslations($store['name'] ?? [], $fallback['name'] ?? []);
+            $store['city'] = $this->mergeTranslations($store['city'] ?? [], $fallback['city'] ?? []);
+            $store['address'] = $this->mergeTranslations($store['address'] ?? [], $fallback['address'] ?? []);
+            $store['hours'] = $this->mergeTranslations($store['hours'] ?? [], $fallback['hours'] ?? []);
+        }
+        unset($store);
+
+        return array_values($grouped);
+    }
+
+    public function partnerships(string $locale): array
+    {
+        $stmt = $this->pdo->query(
+            'SELECT b.id, b.slug, b.logo, b.website_url, b.sort_order, m.file_path AS image,
+                    bt.name, bt.tagline, bt.description, l.code AS lang
+             FROM brands b
+             INNER JOIN brand_translations bt ON bt.brand_id = b.id
+             INNER JOIN languages l ON l.id = bt.language_id
+             LEFT JOIN media m ON m.id = b.media_id
+             WHERE b.is_active = 1
+             ORDER BY b.sort_order, b.id, l.code'
+        );
+
+        $grouped = $this->groupTranslatedEntities($stmt->fetchAll(), function (array $entity): array {
+            $nameEn = $entity['fields']['name']['en'] ?? array_values($entity['fields']['name'])[0] ?? '';
+
+            return [
+                'slug' => $entity['meta']['slug'] ?: strtolower(preg_replace('/[^a-z0-9]+/i', '-', $nameEn) ?? ''),
+                'name' => $nameEn,
+                'tagline' => $entity['fields']['tagline'],
+                'description' => $entity['fields']['description'],
+                'url' => $entity['meta']['website_url'] ?? '',
+                'image' => $entity['meta']['image'] ?: ($entity['meta']['logo'] ?? ''),
+            ];
+        }, [
+            'name' => 'name',
+            'tagline' => 'tagline',
+            'description' => 'description',
+        ], [
+            'slug' => 'slug',
+            'logo' => 'logo',
+            'website_url' => 'website_url',
+            'image' => 'image',
+        ]);
+
+        if ($grouped === []) {
+            return DummyData::partnerships();
+        }
+
+        $dummy = DummyData::partnerships();
+        foreach ($grouped as $index => &$partner) {
+            $fallback = $dummy[$index] ?? [];
+            if ($partner['image'] === '' || $partner['image'] === null) {
+                $partner['image'] = $fallback['image'] ?? '';
+            } elseif (!str_starts_with((string) $partner['image'], 'http')) {
+                $partner['image'] = $this->resolveMediaUrl((string) $partner['image'], $fallback['image'] ?? '');
+            }
+            if ($partner['url'] === '') {
+                $partner['url'] = $fallback['url'] ?? '';
+            }
+            if ($partner['name'] === '') {
+                $partner['name'] = $fallback['name'] ?? '';
+            }
+            $partner['tagline'] = $this->mergeTranslations($partner['tagline'] ?? [], $fallback['tagline'] ?? []);
+            $partner['description'] = $this->mergeTranslations($partner['description'] ?? [], $fallback['description'] ?? []);
+        }
+        unset($partner);
+
+        return array_values($grouped);
+    }
+
+    public function operations(string $locale): array
+    {
+        $blocks = $this->loadContentBlocks('home_operations');
+        if ($blocks === []) {
+            return DummyData::operations();
+        }
+
+        $dummy = DummyData::operations();
+        $operations = [];
+        foreach ($blocks as $index => $block) {
+            $fallback = $dummy[$index] ?? [];
+            $operations[] = [
+                'title' => $this->mergeTranslations($block['title'] ?? [], $fallback['title'] ?? []),
+                'description' => $this->mergeTranslations($block['body'] ?? [], $fallback['description'] ?? []),
+            ];
+        }
+
+        return $operations;
+    }
+
+    /**
+     * @return list<array{icon: ?string, title: array<string, string>, body: array<string, string>}>
+     */
+    private function loadContentBlocks(string $area): array
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT cb.id, cb.icon, cb.sort_order, cbt.title, cbt.body, l.code AS lang
+             FROM content_blocks cb
+             INNER JOIN content_block_translations cbt ON cbt.block_id = cb.id
+             INNER JOIN languages l ON l.id = cbt.language_id
+             WHERE cb.area = :area AND cb.is_active = 1
+             ORDER BY cb.sort_order, cb.id, l.code'
+        );
+        $stmt->execute(['area' => $area]);
+
+        return $this->groupTranslatedEntities($stmt->fetchAll(), static function (array $entity): array {
+            return [
+                'icon' => $entity['meta']['icon'] ?? null,
+                'title' => $entity['fields']['title'] ?? [],
+                'body' => $entity['fields']['body'] ?? [],
+            ];
+        }, [
+            'title' => 'title',
+            'body' => 'body',
+        ], [
+            'icon' => 'icon',
+        ]);
     }
 
     private function loadSectors(): array
     {
         $stmt = $this->pdo->query(
-            'SELECT s.id, s.icon, s.color, s.sort_order, st.slug, st.name, st.overview, st.services_text, l.code AS lang
+            'SELECT s.id, s.icon, s.color, s.sort_order, st.slug, st.name, st.overview, st.services_text, l.code AS lang,
+                    m.file_path AS image
              FROM sectors s
              INNER JOIN sector_translations st ON st.sector_id = s.id
              INNER JOIN languages l ON l.id = st.language_id
+             LEFT JOIN media m ON m.id = s.media_id
              WHERE s.is_active = 1
              ORDER BY s.sort_order, l.code'
         );
@@ -402,13 +680,17 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'name' => $entity['fields']['name'],
                 'overview' => $entity['fields']['overview'],
                 'services' => $entity['fields']['services_text'],
-                'image' => $entity['meta']['image'],
+                'image' => $this->resolveMediaUrl($entity['meta']['image'] ?? null),
             ];
         }, [
             'slug' => 'slug',
             'name' => 'name',
             'overview' => 'overview',
             'services_text' => 'services_text',
+        ], [
+            'icon' => 'icon',
+            'color' => 'color',
+            'image' => 'image',
         ]);
     }
 
@@ -441,7 +723,7 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'title' => $entity['fields']['title'],
                 'description' => $entity['fields']['description'],
                 'features' => $entity['fields']['features'],
-                'image' => $entity['meta']['image'],
+                'image' => $this->resolveMediaUrl($entity['meta']['image'] ?? null),
             ];
         }, [
             'slug' => 'slug',
@@ -472,11 +754,13 @@ class DatabaseContentProvider implements ContentProviderInterface
              LEFT JOIN news_category_translations nct ON nct.category_id = nc.id AND nct.language_id = nt.language_id
              LEFT JOIN media m ON m.id = n.featured_image_id
              WHERE n.status = \'published\'
+               AND (n.publish_date IS NULL OR n.publish_date <= NOW())
              ORDER BY n.publish_date DESC, l.code'
         );
 
         return $this->groupTranslatedEntities($stmt->fetchAll(), function (array $entity): array {
             return [
+                'id' => (int) ($entity['meta']['id'] ?? 0),
                 'slug' => $entity['fields']['slug']['en'] ?? array_values($entity['fields']['slug'])[0] ?? '',
                 'category' => $entity['fields']['category_name'],
                 'publish_date' => $entity['meta']['publish_date'] ? date('Y-m-d', strtotime((string) $entity['meta']['publish_date'])) : null,
@@ -484,7 +768,7 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'title' => $entity['fields']['title'],
                 'excerpt' => $entity['fields']['excerpt'],
                 'content' => $entity['fields']['content'],
-                'image' => $entity['meta']['image'],
+                'image' => $this->resolveMediaUrl($entity['meta']['image'] ?? null),
             ];
         }, [
             'slug' => 'slug',
@@ -493,10 +777,95 @@ class DatabaseContentProvider implements ContentProviderInterface
             'content' => 'content',
             'category_name' => 'category_name',
         ], [
+            'id' => 'id',
             'publish_date' => 'publish_date',
             'is_featured' => 'is_featured',
             'image' => 'image',
         ]);
+    }
+
+    public function banner(string $location): string
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT sb.fallback_url, m.file_path
+             FROM site_banners sb
+             LEFT JOIN media m ON m.id = sb.media_id
+             WHERE sb.location = :location
+             LIMIT 1'
+        );
+        $stmt->execute(['location' => $location]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return DummyData::banner($location);
+        }
+
+        return $this->resolveMediaUrl($row['file_path'] ?: null, (string) ($row['fallback_url'] ?: DummyData::banner($location)));
+    }
+
+    public function newsComments(int $newsId): array
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT id, author_name, content, created_at
+             FROM news_comments
+             WHERE news_id = :news_id AND status = 'approved'
+             ORDER BY created_at DESC"
+        );
+        $stmt->execute(['news_id' => $newsId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    public function addNewsComment(int $newsId, string $name, string $email, string $content): void
+    {
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO news_comments (news_id, author_name, author_email, content, status)
+             VALUES (:news_id, :name, :email, :content, 'pending')"
+        );
+        $stmt->execute([
+            'news_id' => $newsId,
+            'name' => $name,
+            'email' => $email,
+            'content' => $content,
+        ]);
+    }
+
+    /**
+     * Published CMS page for a public locale path (custom_path, then slug).
+     *
+     * @return array<string, mixed>|null
+     */
+    public function cmsPageByPath(string $path, string $locale): ?array
+    {
+        $path = trim($path, '/');
+        if ($path === '') {
+            return null;
+        }
+
+        $languageId = $this->languageId($locale);
+        $stmt = $this->pdo->prepare(
+            'SELECT p.id, p.slug, p.custom_path, p.template, p.embed_mode, p.status,
+                    pt.title, pt.content, pt.excerpt, pt.html_embed, pt.css_embed, pt.js_embed, pt.php_embed,
+                    pt.meta_title, pt.meta_description
+             FROM pages p
+             LEFT JOIN page_translations pt ON pt.page_id = p.id AND pt.language_id = :language_id
+             WHERE p.status = \'published\'
+               AND (p.custom_path = :path OR p.slug = :path2)
+             LIMIT 1'
+        );
+
+        try {
+            $stmt->execute([
+                'language_id' => $languageId,
+                'path' => $path,
+                'path2' => $path,
+            ]);
+        } catch (\Throwable) {
+            return null;
+        }
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
     }
 
     private function groupTranslatedEntities(array $rows, callable $formatter, array $fieldMap, array $metaMap = []): array
@@ -538,7 +907,7 @@ class DatabaseContentProvider implements ContentProviderInterface
             'name' => $sector['name'],
             'overview' => $sector['overview'],
             'services' => $sector['services'] ?? [],
-            'image' => $sector['image'] ?: ($dummy['image'] ?? ''),
+            'image' => $this->resolveMediaUrl($sector['image'] ?? null, $dummy['image'] ?? ''),
         ];
     }
 
@@ -558,7 +927,7 @@ class DatabaseContentProvider implements ContentProviderInterface
             'title' => $project['title'],
             'description' => $project['description'],
             'features' => $project['features'] ?? [],
-            'image' => $project['image'] ?: ($dummy['image'] ?? ''),
+            'image' => $this->resolveMediaUrl($project['image'] ?? null, $dummy['image'] ?? ''),
         ];
     }
 
@@ -574,7 +943,8 @@ class DatabaseContentProvider implements ContentProviderInterface
             'title' => $article['title'],
             'excerpt' => $article['excerpt'],
             'content' => $article['content'],
-            'image' => $article['image'] ?: ($dummy['image'] ?? ''),
+            'image' => $this->resolveMediaUrl($article['image'] ?? null, $dummy['image'] ?? ''),
+            'id' => $article['id'] ?? null,
         ];
     }
 
@@ -594,6 +964,11 @@ class DatabaseContentProvider implements ContentProviderInterface
     private function mergeTranslations(array $primary, array $fallback): array
     {
         return array_merge($fallback, array_filter($primary, static fn($value) => $value !== null && $value !== ''));
+    }
+
+    private function resolveMediaUrl(?string $path, string $fallback = ''): string
+    {
+        return media_url($path, $fallback);
     }
 
     private function mergeScalarTranslation(?string $value, array $fallback, string $locale): array

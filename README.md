@@ -1,268 +1,97 @@
-# Ozerman Ltd — Corporate Website (SEO Edition)
+# Özerman Ticaret — Corporate Website
 
-A modern, multilingual corporate website for **ozermanltd.com**, with a dedicated SEO layer, legacy import tooling, and cookie consent management.
+Multilingual corporate site for [ozermanltd.com](https://ozermanltd.com): PHP front end, MySQL content, portable Admin CMS, SEO, cookie consent, and analytics.
 
-This directory is a full copy of `ozermanltd.com` extended with Phase 8 SEO implementation.
+## Soft launch (current production mode)
 
-## Tech Stack
+While `SITE_UNDER_CONSTRUCTION=true`:
 
-- **PHP 8.3** — Backend routing and templating
-- **Tailwind CSS** — Utility-first styling (CDN)
-- **Alpine.js** — Interactive UI
-- **MySQL 8.0+** — Full database schema (see `database/schema.sql`)
+| Path | Behavior |
+|------|----------|
+| `/qr` | Lajivert QR menu (locale-free) |
+| `/catalogues` | Lajivert catalogues |
+| `/admin` | Staff CMS |
+| `/assets/*`, `/uploads/*` | Static files |
+| Other public pages | Under construction (503) |
 
-## SEO Features
+Production cutover (cPanel + Cloudflare): [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).  
+Admin vs hosting ownership: [`docs/ADMIN-AND-CPANEL.md`](docs/ADMIN-AND-CPANEL.md).
 
-- Centralized `SeoService` backed by `seo_meta` (DB) or `storage/seo/meta.json` (dummy/dev mode)
-- Meta tags, Open Graph, Twitter cards, canonical URLs, hreflang alternates
-- JSON-LD structured data (Organization, WebPage, Article, BreadcrumbList)
-- Dynamic `sitemap.xml` generation
-- 301/302 redirect middleware (`redirects` table or `storage/seo/redirects.json`)
-- Cookie consent banner with localStorage + cookie persistence
-- Plausible analytics loaded only after consent (configurable)
-- Legacy SEO scraper CLI for one-time migration
+## Stack
 
-## Running Commands
+- PHP 8.3+ (routing & templates)
+- Tailwind CSS + Alpine.js
+- MySQL 8.0+
+- Portable Admin module in [`modules/Admin`](modules/Admin)
 
-### First-time setup
-
-```bash
-make setup
-```
-
-### Start development server
+## Quick start (local)
 
 ```bash
+cp .env.example .env   # or: make setup
+# Edit .env — never commit .env
+
+make db-docker-setup   # or make db-setup with local MySQL
+make assets-install && make assets-build   # if Tailwind not built yet
 make dev
 ```
 
-Visit: http://localhost:8080/en
+- Site: `http://localhost:8080/en` (or under construction if the flag is on)
+- QR: `http://localhost:8080/qr`
+- Admin: `http://localhost:8080/admin`
 
-### Import SEO from legacy or local site
-
-With the dev server running in another terminal:
-
-```bash
-make import-seo
-# or against a specific URL
-make import-seo LEGACY_URL=https://old-ozerman-site.com
-```
-
-This writes:
-
-- `storage/seo/meta.json` — runtime SEO overrides
-- `storage/seo/redirects.json` — discovered redirects
-- `storage/seo/import.sql` — SQL ready for production DB import
-
-### Database mode
-
-Set in `.env`:
-
-```
-DB_USE_DUMMY_DATA=false
-```
-
-Then run `make db-setup` and optionally import SQL:
+Create or reset an admin user with:
 
 ```bash
-mysql -u root -p ozermanltd < storage/seo/import.sql
+php bin/reset-admin-password.php you@example.com 'your-strong-password'
 ```
 
-## SEO Architecture
+Do **not** use seed/default passwords in production. Rotate credentials after any shared or demo environment.
+
+## Configuration
+
+Copy [`.env.example`](.env.example) to `.env`. Important flags (see example file for the full list):
+
+| Variable | Notes |
+|----------|--------|
+| `APP_ENV` | `development` locally; `production` on the host |
+| `APP_URL` | Public site URL |
+| `SITE_UNDER_CONSTRUCTION` | Soft-launch gate |
+| `CLOUDFLARE_ENFORCE` | Origin-only-via-Cloudflare (production) |
+| `DB_*` | Database connection |
+| `DB_USE_DUMMY_DATA` | Prefer `false` when MySQL is available |
+| `DB_FALLBACK_DUMMY` | Prefer `false` in production |
+
+Never commit `.env`, API keys, or real passwords. Keep secrets in the host environment / cPanel only.
+
+## Features
+
+- Locales: English, Turkish, Arabic (`/en`, `/tr`, `/ar`)
+- SEO: meta, Open Graph, hreflang, sitemap, redirects
+- Cookie consent + optional analytics (consent-gated)
+- Admin: pages (incl. HTML/CSS/JS embeds), news, projects, sectors, media library, contacts, SEO, users, audit log
+
+## Project layout
 
 ```
-Controller → build_seo(context) → SeoService
-                                      ↓
-                               SeoRepository
-                               ├─ seo_meta (MySQL)
-                               └─ storage/seo/meta.json (fallback)
-
-Layout → partials/seo-head.php
-Footer → partials/cookie-consent.php → public/assets/js/consent.js
+app/                 # Public app (controllers, views, middleware, SEO)
+modules/Admin/       # Portable CMS
+config/              # App, DB, SEO, Cloudflare IP ranges
+database/            # Schema and seeds
+public/              # Document root (index.php, assets, uploads)
+docs/                # Deploy and admin docs
+bin/                 # CLI helpers
 ```
 
-## URL Structure
+## Production notes
 
-| Page | English | Turkish |
-|------|---------|---------|
-| Home | `/en` | `/tr` |
-| About | `/en/about-us` | `/tr/about-us` |
-| Sitemap | `/sitemap.xml` | `/sitemap.xml` |
+1. Document root = `public/`
+2. PHP 8.3+; writable `storage/` and `public/uploads/`
+3. Cloudflare: orange-cloud DNS, SSL Full (strict), Always Use HTTPS
+4. Set `CLOUDFLARE_ENFORCE=true` and `SITE_UNDER_CONSTRUCTION` as needed
+5. Disable dummy-data fallbacks in production
 
-## Project Structure
+Details: [`docs/PRODUCTION-LAUNCH.md`](docs/PRODUCTION-LAUNCH.md).
 
-```
-├── app/
-│   ├── Controllers/
-│   ├── Middleware/         # RedirectMiddleware
-│   ├── Services/
-│   │   ├── Seo/            # SeoService, SitemapService, SeoRepository
-│   │   └── Migration/      # LegacyScraper, SeoImporter
-│   └── Views/partials/
-│       ├── seo-head.php
-│       └── cookie-consent.php
-├── bin/
-│   └── import-legacy-seo.php
-├── config/
-│   └── seo.php
-└── storage/seo/
-    ├── meta.json
-    ├── redirects.json
-    └── import.sql          # generated by importer
-```
+## License / private use
 
-## Environment Variables
-
-| Variable | Default | Purpose |
-|----------|---------|---------|
-| `DB_USE_DUMMY_DATA` | `true` | Use JSON SEO store instead of MySQL |
-| `LEGACY_SITE_URL` | `http://localhost:8080` | Base URL for SEO scraper |
-| `PLAUSIBLE_DOMAIN` | `ozermanltd.com` | Analytics domain |
-| `ANALYTICS_REQUIRE_CONSENT` | `true` | Gate analytics behind consent banner |
-
-### Database mode (Step 1 — content from MySQL)
-
-Set in `.env`:
-
-```
-DB_USE_DUMMY_DATA=false
-DB_FALLBACK_DUMMY=true
-```
-
-Then:
-
-```bash
-make db-setup
-make dev
-```
-
-The site reads content through `ContentRepository` → `DatabaseContentProvider`.
-If the database is unavailable and `DB_FALLBACK_DUMMY=true`, it falls back to `DummyData.php`.
-
-Repository files:
-
-```
-app/Repositories/
-├── ContentRepository.php
-├── DatabaseContentProvider.php
-└── DummyContentProvider.php
-```
-
-Use `content()` helper in PHP: `content()->sectors(app_locale())`
-
-## Analytics & Visitor Events
-
-- Granular consent: Essential / Analytics / Marketing
-- Tracks events after analytics consent: page views, clicks, scroll depth, form start/submit, outbound links, consent changes
-- Stores visitor profiles, consent records, events, and contact submissions locally
-- Queues all payloads for external backend sync when you add an API later
-- Legal pages: Privacy Policy, Cookie Policy, Cookie Settings
-
-### Consent-based collection
-
-Data is stored locally in `storage/analytics/` (default dev mode) or MySQL tables from `database/analytics_schema.sql`.
-
-Events are **not collected** until the visitor accepts analytics cookies.
-
-### External backend (when ready)
-
-Set in `.env`:
-
-```
-EXTERNAL_SYNC_ENABLED=true
-EXTERNAL_API_URL=https://your-backend.example.com
-EXTERNAL_API_KEY=your-secret-key
-```
-
-Then run:
-
-```bash
-make sync-analytics
-```
-
-Expected ingest payload shape:
-
-```json
-{
-  "source": "https://ozermanltd.com",
-  "type": "events|consent|contact|identify",
-  "payload": { },
-  "sent_at": "2026-06-15T12:00:00Z"
-}
-```
-
-### API endpoints
-
-| Method | Path | Purpose |
-|--------|------|---------|
-| POST | `/api/analytics/consent` | Save consent choices |
-| POST | `/api/analytics/events` | Batch usage events |
-| POST | `/api/analytics/identify` | Link visitor UUID to name/email |
-| GET | `/api/analytics/stats` | Local collection stats |
-
-### Setup analytics tables (MySQL mode)
-
-```bash
-make db-analytics
-```
-
-## Admin CMS (Step 2)
-
-Visit: http://localhost:8080/admin
-
-**Credentials** (from `database/seed.sql`):
-
-| Email | Password |
-|-------|----------|
-| `admin@ozermanltd.com` | `admin123` |
-
-Requires MySQL running and `make db-setup`.
-
-**No local MySQL?** Use Docker:
-
-```bash
-make db-docker-setup   # starts MySQL in Docker + loads all data
-```
-
-Set `DB_PASSWORD=root` in `.env` when using Docker. Homebrew MySQL uses an empty password (`DB_PASSWORD=`).
-
-If login fails with "Incorrect password", run:
-
-```bash
-make reset-admin-password
-```
-
-### Features
-
-- Session-based login with `user_sessions` table + CSRF protection
-- Dashboard with content counts, analytics summary, recent contacts
-- CRUD for **Pages**, **News**, **Projects**, **Sectors** (multi-language tabs: en/tr/ar)
-- Contact message inbox with status workflow (new → read → replied → archived)
-- Analytics viewer (visitors, events, page views, top pages, consent breakdown)
-
-### Admin routes
-
-| Path | Purpose |
-|------|---------|
-| `/admin/login` | Sign in |
-| `/admin` | Dashboard |
-| `/admin/pages` | Manage pages |
-| `/admin/news` | Manage news articles |
-| `/admin/projects` | Manage projects |
-| `/admin/sectors` | Manage business sectors |
-| `/admin/contacts` | Contact submissions |
-| `/admin/analytics` | Analytics data |
-
-### Admin architecture
-
-```
-routes/admin.php → Controllers/Admin/* → Repositories/Admin/*
-                                      → Services/Auth/AuthService
-```
-
-## Next Steps
-
-- Media manager + file uploads
-- SEO meta editor in admin
-- User management & role permissions
-- Phase 9–10: Performance optimization and production deployment
+Internal project for Özerman Ticaret. Do not publish production secrets or visitor analytics dumps to this repository.

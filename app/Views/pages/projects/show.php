@@ -26,38 +26,38 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-3 gap-16">
             <div class="lg:col-span-2">
-                <h2 class="font-display text-2xl font-bold text-brand-900 mb-6 accent-line">
+                <h2 class="font-display text-2xl font-bold text-brand-800 mb-6 accent-line">
                     <?= e(t(['en' => 'Project Overview', 'tr' => 'Proje Özeti', 'ar' => 'نظرة عامة على المشروع'])) ?>
                 </h2>
-                <p class="text-brand-600 leading-relaxed text-lg mb-10"><?= e(t($project['description'])) ?></p>
+                <div class="prose-ozerman text-brand-600 leading-relaxed text-lg mb-10"><?= t($project['description']) ?></div>
 
-                <h2 class="font-display text-2xl font-bold text-brand-900 mb-6 accent-line">
+                <h2 class="font-display text-2xl font-bold text-brand-800 mb-6 accent-line">
                     <?= e(t(['en' => 'Key Features', 'tr' => 'Temel Özellikler', 'ar' => 'الميزات الرئيسية'])) ?>
                 </h2>
                 <div class="text-brand-600 leading-relaxed whitespace-pre-line"><?= e(t($project['features'])) ?></div>
             </div>
             <div>
-                <div class="bg-brand-50 p-8 rounded-sm border border-brand-100 sticky top-28 space-y-6">
-                    <h3 class="font-display text-lg font-semibold text-brand-900">
+                <div class="bg-brand-50 p-8 rounded-sm border border-brand-200 sticky top-28 space-y-6">
+                    <h3 class="font-display text-lg font-semibold text-brand-800">
                         <?= e(t(['en' => 'Project Details', 'tr' => 'Proje Detayları', 'ar' => 'تفاصيل المشروع'])) ?>
                     </h3>
                     <dl class="space-y-4 text-sm">
                         <div>
                             <dt class="text-brand-400 uppercase tracking-wider text-xs"><?= e(t(['en' => 'Location', 'tr' => 'Konum', 'ar' => 'الموقع'])) ?></dt>
-                            <dd class="text-brand-900 font-medium mt-1"><?= e($project['location']) ?></dd>
+                            <dd class="text-brand-800 font-medium mt-1"><?= e($project['location']) ?></dd>
                         </div>
                         <div>
                             <dt class="text-brand-400 uppercase tracking-wider text-xs"><?= e(t(['en' => 'Delivery', 'tr' => 'Teslimat', 'ar' => 'التسليم'])) ?></dt>
-                            <dd class="text-brand-900 font-medium mt-1"><?= e($project['delivery_date']) ?></dd>
+                            <dd class="text-brand-800 font-medium mt-1"><?= e($project['delivery_date']) ?></dd>
                         </div>
                         <div>
                             <dt class="text-brand-400 uppercase tracking-wider text-xs"><?= e(t(['en' => 'Category', 'tr' => 'Kategori', 'ar' => 'الفئة'])) ?></dt>
-                            <dd class="text-brand-900 font-medium mt-1"><?= e(t($project['category'])) ?></dd>
+                            <dd class="text-brand-800 font-medium mt-1"><?= e(t($project['category'])) ?></dd>
                         </div>
                         <?php if ($project['start_price']): ?>
                         <div>
                             <dt class="text-brand-400 uppercase tracking-wider text-xs"><?= e(t(['en' => 'Starting Price', 'tr' => 'Başlangıç Fiyatı', 'ar' => 'السعر الابتدائي'])) ?></dt>
-                            <dd class="text-brand-900 font-medium mt-1 text-lg">£<?= number_format($project['start_price']) ?></dd>
+                            <dd class="text-brand-800 font-medium mt-1 text-lg">£<?= number_format($project['start_price']) ?></dd>
                         </div>
                         <?php endif; ?>
                     </dl>
@@ -74,7 +74,7 @@
 <!-- Gallery placeholder -->
 <section class="py-20 bg-brand-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="font-display text-2xl font-bold text-brand-900 mb-10 accent-line">
+        <h2 class="font-display text-2xl font-bold text-brand-800 mb-10 accent-line">
             <?= e(t(['en' => 'Project Gallery', 'tr' => 'Proje Galerisi', 'ar' => 'معرض المشروع'])) ?>
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4" x-data="{ lightbox: false, activeImage: '' }">

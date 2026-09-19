@@ -48,7 +48,7 @@
             ],
         ] as $heading => $body): ?>
         <div>
-            <h2 class="font-display text-2xl font-bold text-brand-900 mb-3"><?= e(t($heading)) ?></h2>
+            <h2 class="font-display text-2xl font-bold text-brand-800 mb-3"><?= e(t($heading)) ?></h2>
             <p><?= e(t($body)) ?></p>
         </div>
         <?php endforeach; ?>
