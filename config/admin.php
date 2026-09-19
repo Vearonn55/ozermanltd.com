@@ -8,7 +8,8 @@ declare(strict_types=1);
 return [
     'brand_name' => 'Ozerman CMS',
     'view_site_url' => '/en',
-    'upload_path' => dirname(__DIR__) . '/public/uploads',
+    // null → resolved to PUBLIC_PATH/uploads (public/ locally, public_html/ on cPanel)
+    'upload_path' => null,
     'upload_url' => '/uploads',
     'default_login_hint' => 'admin@ozermanltd.com',
 ];
