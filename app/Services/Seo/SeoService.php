@@ -150,7 +150,7 @@ class SeoService
 
         $alternates[] = [
             'locale' => 'x-default',
-            'url' => $this->absoluteUrl($path, config('default_locale', 'en')),
+            'url' => $this->absoluteUrl($path, config('default_locale', 'tr')),
             'current' => false,
         ];
 

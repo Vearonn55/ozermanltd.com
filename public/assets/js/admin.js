@@ -82,11 +82,13 @@
                 return String(value || '').replace(/^\/+|\/+$/g, '');
             }
 
+            var prefix = form.getAttribute('data-public-prefix') || '/tr';
+
             function publicUrl(path) {
                 path = normalize(path);
-                if (!path || path === 'home') return '/en';
+                if (!path || path === 'home') return prefix;
                 if (localeFree.indexOf(path) !== -1) return '/' + path;
-                return '/en/' + path;
+                return prefix + '/' + path;
             }
 
             function syncFromPath() {
@@ -247,11 +249,11 @@
         return {
             slug: initial.slug || '',
             path: initial.path || '',
-            prefix: initial.prefix || '/en',
+            prefix: initial.prefix || '/tr',
             localeFreePaths: initial.localeFreePaths || ['qr', 'catalogues'],
             get fullUrl() {
                 var path = (this.path || this.slug || '').replace(/^\/+|\/+$/g, '');
-                if (path === 'home' || path === '') return this.prefix || '/en';
+                if (path === 'home' || path === '') return this.prefix || '/tr';
                 if (this.localeFreePaths.indexOf(path) !== -1) return '/' + path;
                 var prefix = this.prefix || '';
                 if (!prefix) return '/' + path;

@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 return [
     'brand_name' => 'CMS',
-    'view_site_url' => '/en',
+    'view_site_url' => '/tr',
     'mount_path' => '/admin',
     'session_name' => null, // use PHP default unless set
     'upload_path' => null,  // set by host; default public/uploads

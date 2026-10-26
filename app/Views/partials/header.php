@@ -2,6 +2,21 @@
 $nav = content()->nav(app_locale());
 $locales = config('locales', []);
 $currentLocale = app_locale();
+$primaryCodes = ['en', 'tr'];
+$primary = [];
+foreach ($primaryCodes as $code) {
+    if (isset($locales[$code])) {
+        $primary[$code] = $locales[$code];
+    }
+}
+$extra = array_diff_key($locales, $primary);
+$extraActive = isset($extra[$currentLocale]);
+$localeSwitch = [
+    'primary' => $primary,
+    'extra' => $extra,
+    'currentLocale' => $currentLocale,
+    'extraActive' => $extraActive,
+];
 ?>
 <header class="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         :class="scrolled ? 'bg-brand-50/95 backdrop-blur-md border-b border-brand-200 shadow-sm' : 'bg-brand-50/90 backdrop-blur-sm border-b border-transparent'">
@@ -28,13 +43,8 @@ $currentLocale = app_locale();
             </nav>
 
             <div class="flex items-center gap-3">
-                <div class="hidden sm:flex items-center gap-1 bg-brand-100 rounded-sm p-1">
-                    <?php foreach ($locales as $code => $info): ?>
-                    <a href="<?= e(locale_path_for($code)) ?>"
-                       class="px-2.5 py-1 text-xs font-semibold rounded-sm transition-colors duration-200 <?= $code === $currentLocale ? 'bg-brand-800 text-brand-50' : 'text-brand-500 hover:text-brand-800' ?>">
-                        <?= strtoupper(e($code)) ?>
-                    </a>
-                    <?php endforeach; ?>
+                <div class="hidden sm:flex items-center">
+                    <?php partial('locale-switch', $localeSwitch + ['openUp' => false]); ?>
                 </div>
 
                 <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 rounded-sm text-brand-500 hover:bg-brand-100 transition-colors" aria-label="Toggle menu">
@@ -65,13 +75,8 @@ $currentLocale = app_locale();
                 <?= e(t($item['label'])) ?>
             </a>
             <?php endforeach; ?>
-            <div class="flex gap-2 px-4 pt-3 border-t border-brand-200 mt-3">
-                <?php foreach ($locales as $code => $info): ?>
-                <a href="/<?= e($code) ?>"
-                   class="px-3 py-1.5 text-xs font-semibold rounded-sm <?= $code === $currentLocale ? 'bg-brand-800 text-brand-50' : 'bg-brand-100 text-brand-500' ?>">
-                    <?= strtoupper(e($code)) ?>
-                </a>
-                <?php endforeach; ?>
+            <div class="px-4 pt-3 border-t border-brand-200 mt-3">
+                <?php partial('locale-switch', $localeSwitch + ['openUp' => true]); ?>
             </div>
         </nav>
     </div>

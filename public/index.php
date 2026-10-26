@@ -67,13 +67,13 @@ if ($requestUri === '/catalogues') {
 (new \Admin\Services\Auth\AuthService())->startSession();
 
 if ($requestUri === '/') {
-    $defaultLocale = config('default_locale', 'en');
+    $defaultLocale = config('default_locale', 'tr');
     header('Location: /' . $defaultLocale, true, 302);
     exit;
 }
 
 $segments = array_values(array_filter(explode('/', trim($requestUri, '/'))));
-$locale = $segments[0] ?? config('default_locale', 'en');
+$locale = $segments[0] ?? config('default_locale', 'tr');
 
 set_locale($locale);
 

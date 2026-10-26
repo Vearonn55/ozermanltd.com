@@ -9,10 +9,10 @@ return [
     'tagline' => 'Distinguished brands. A strong local structure.',
     'url' => rtrim(env('APP_URL', 'https://ozermanltd.com'), '/'),
     'env' => env('APP_ENV', 'development'),
-    'default_locale' => 'en',
+    'default_locale' => 'tr',
     'locales' => [
-        'en' => ['name' => 'English', 'dir' => 'ltr'],
         'tr' => ['name' => 'Türkçe', 'dir' => 'ltr'],
+        'en' => ['name' => 'English', 'dir' => 'ltr'],
         'ar' => ['name' => 'العربية', 'dir' => 'rtl'],
     ],
     'contact' => [

@@ -209,13 +209,13 @@ function media_url(?string $filePath, string $fallback = ''): string
 
 function app_locale(): string
 {
-    return $GLOBALS['app_locale'] ?? config('default_locale', 'en');
+    return $GLOBALS['app_locale'] ?? config('default_locale', 'tr');
 }
 
 function set_locale(string $locale): void
 {
     $locales = config('locales', []);
-    $GLOBALS['app_locale'] = array_key_exists($locale, $locales) ? $locale : config('default_locale', 'en');
+    $GLOBALS['app_locale'] = array_key_exists($locale, $locales) ? $locale : config('default_locale', 'tr');
 }
 
 function locale_dir(): string
@@ -226,7 +226,9 @@ function locale_dir(): string
 function t(array $translations, ?string $locale = null): string
 {
     $locale = $locale ?? app_locale();
-    return $translations[$locale] ?? $translations['en'] ?? '';
+    $fallback = (string) config('default_locale', 'tr');
+
+    return $translations[$locale] ?? $translations[$fallback] ?? $translations['en'] ?? '';
 }
 
 function view(string $name, array $data = []): void

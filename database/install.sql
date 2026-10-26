@@ -915,8 +915,8 @@ CREATE TABLE IF NOT EXISTS analytics_sync_queue (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO languages (code, name, is_default, is_active, sort_order) VALUES
-('en', 'English', 1, 1, 0),
-('tr', 'Türkçe', 0, 1, 1),
+('en', 'English', 0, 1, 1),
+('tr', 'Türkçe', 1, 1, 0),
 ('ar', 'العربية', 0, 1, 2);
 
 INSERT INTO users (name, email, password_hash, role, status) VALUES

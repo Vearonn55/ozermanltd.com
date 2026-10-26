@@ -114,7 +114,7 @@ if (!function_exists('admin_preview_url')) {
 
 if (!function_exists('admin_page_public_url')) {
     /**
-     * Public URL for a CMS page. Locale-free paths (qr, catalogues) omit /en.
+     * Public URL for a CMS page. Locale-free paths (qr, catalogues) omit the locale prefix.
      *
      * @param array<string, mixed>|null $item
      */

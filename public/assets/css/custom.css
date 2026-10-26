@@ -199,9 +199,69 @@ html.oz-loading body > *:not(#oz-loader) {
 }
 .nav-indicator.is-ready {
     opacity: 1;
-    transition:
-        transform 0.42s cubic-bezier(0.45, 0, 0.55, 1),
-        width 0.42s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.locale-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    position: relative;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    white-space: nowrap;
+}
+.locale-switch__sep {
+    color: var(--oz-border);
+    font-weight: 400;
+    user-select: none;
+}
+.locale-switch__link {
+    color: var(--oz-muted);
+    padding: 0.2rem 0.05rem;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+.locale-switch__link:hover,
+.locale-switch__link.is-active {
+    color: var(--oz-ink);
+}
+.locale-switch__plus {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 0.1rem;
+}
+.locale-switch__more {
+    position: relative;
+    display: flex;
+}
+.locale-switch__menu {
+    position: absolute;
+    z-index: 70;
+    top: calc(100% + 0.7rem);
+    inset-inline-end: 0;
+    min-width: 9.5rem;
+    padding: 0.3rem;
+    background: var(--oz-canvas);
+    border: 1px solid var(--oz-border);
+    box-shadow: 0 16px 32px -20px rgba(28, 27, 26, 0.45);
+}
+.locale-switch--up .locale-switch__menu {
+    top: auto;
+    bottom: calc(100% + 0.45rem);
+}
+.locale-switch__option {
+    display: block;
+    padding: 0.5rem 0.7rem;
+    color: var(--oz-ink);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+.locale-switch__option:hover,
+.locale-switch__option.is-active {
+    background: var(--oz-surface);
 }
 .nav-link {
     transition: color 0.25s ease;

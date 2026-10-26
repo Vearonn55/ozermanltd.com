@@ -7,7 +7,7 @@ declare(strict_types=1);
  */
 return [
     'brand_name' => 'Dashboard',
-    'view_site_url' => '/en',
+    'view_site_url' => '/tr',
     // null → resolved to PUBLIC_PATH/uploads (public/ locally, public_html/ on cPanel)
     'upload_path' => null,
     'upload_url' => '/uploads',

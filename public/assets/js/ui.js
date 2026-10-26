@@ -41,56 +41,149 @@
   window.OzermanLoader = { show: showLoader, hide: hideLoader };
 
   // --- Menu underline (accelerates, then decelerates) ---
+  // The bar used to receive its transition in the same frame it was placed.
+  // The browser then interpolated from width 0, and a webfont swap or resize
+  // mid-flight left the used transform parked between two links.
   const nav = document.querySelector('[data-nav-indicator]');
   const indicator = nav ? nav.querySelector('.nav-indicator') : null;
   if (nav && indicator) {
+    const motionMs = 420;
     const activeLink = () => nav.querySelector('a.is-active');
-    const place = (link, animate) => {
-      if (!link || nav.getClientRects().length === 0) {
-        indicator.style.opacity = '0';
-        return;
-      }
-      const navBox = nav.getBoundingClientRect();
-      const box = link.getBoundingClientRect();
-      if (!animate) {
-        indicator.style.transition = 'none';
-      }
-      indicator.style.opacity = '1';
-      indicator.style.width = box.width + 'px';
-      indicator.style.transform = 'translateX(' + (box.left - navBox.left) + 'px)';
-      if (!animate) {
-        void indicator.offsetWidth;
-        indicator.style.transition = '';
-      }
-    };
-
+    const px = (n) => Math.round(n * 100) / 100;
+    const normPath = (path) => (path.length > 1 ? path.replace(/\/+$/, '') : path);
     const pathOf = (link) => {
       try {
-        return new URL(link.href, window.location.href).pathname;
+        return normPath(new URL(link.href, window.location.href).pathname);
       } catch (e) {
         return '';
       }
     };
+    const metrics = (link) => {
+      const navBox = nav.getBoundingClientRect();
+      const box = link.getBoundingClientRect();
+      return { x: px(box.left - navBox.left), w: px(box.width) };
+    };
+    const write = (box) => {
+      indicator.style.opacity = '1';
+      indicator.style.width = box.w + 'px';
+      indicator.style.transform = 'translateX(' + box.x + 'px)';
+    };
+    const enableTransition = () => {
+      indicator.style.transition = reduceMotion
+        ? 'none'
+        : 'transform ' + motionMs + 'ms cubic-bezier(0.45, 0, 0.55, 1), width ' + motionMs + 'ms cubic-bezier(0.45, 0, 0.55, 1)';
+    };
+    const hide = () => {
+      indicator.style.transition = 'none';
+      indicator.style.opacity = '0';
+      indicator.classList.remove('is-ready');
+    };
+    const snap = (link) => {
+      if (!link || nav.getClientRects().length === 0) {
+        hide();
+        return null;
+      }
+      const box = metrics(link);
+      indicator.style.transition = 'none';
+      indicator.classList.add('is-ready');
+      write(box);
+      void indicator.offsetWidth;
+      return box;
+    };
+    const restingOffTarget = () => {
+      const link = activeLink();
+      if (!link || nav.getClientRects().length === 0) {
+        return false;
+      }
+      const box = metrics(link);
+      const painted = indicator.getBoundingClientRect();
+      const navBox = nav.getBoundingClientRect();
+      return Math.abs(px(painted.left - navBox.left) - box.x) > 1
+        || Math.abs(px(painted.width) - box.w) > 1;
+    };
+
+    let phase = 'init';
+    let moveToken = 0;
+
+    const settle = (token) => {
+      if (token !== moveToken) {
+        return;
+      }
+      moveToken += 1;
+      phase = 'idle';
+      snap(activeLink());
+      requestAnimationFrame(enableTransition);
+    };
+
+    const slideToActive = () => {
+      const link = activeLink();
+      if (!link) {
+        phase = 'idle';
+        snap(null);
+        requestAnimationFrame(enableTransition);
+        return;
+      }
+      const token = moveToken;
+      phase = 'moving';
+      enableTransition();
+      write(metrics(link));
+      const timer = window.setTimeout(() => settle(token), motionMs + 80);
+      const onEnd = (event) => {
+        if (event.target !== indicator || event.propertyName !== 'transform') {
+          return;
+        }
+        indicator.removeEventListener('transitionend', onEnd);
+        window.clearTimeout(timer);
+        settle(token);
+      };
+      indicator.addEventListener('transitionend', onEnd);
+    };
+
     let fromPath = '';
     try {
-      fromPath = sessionStorage.getItem('oz-nav-from') || '';
+      fromPath = normPath(sessionStorage.getItem('oz-nav-from') || '');
       sessionStorage.removeItem('oz-nav-from');
     } catch (e) {}
     const current = activeLink();
     const fromLink = fromPath
       ? [...nav.querySelectorAll('a')].find((link) => pathOf(link) === fromPath)
       : null;
+    const animate = !reduceMotion && fromLink && current && fromLink !== current;
 
-    if (fromLink && current && fromLink !== current) {
-      place(fromLink, false);
-      indicator.classList.add('is-ready');
+    snap(animate ? fromLink : current);
+    requestAnimationFrame(() => {
+      // Fonts may have reflowed the labels since the first measurement.
+      snap(animate ? fromLink : current);
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => place(current, true));
+        if (!animate) {
+          phase = 'idle';
+          enableTransition();
+          return;
+        }
+        moveToken += 1;
+        slideToActive();
       });
-    } else {
-      place(current, false);
-      indicator.classList.add('is-ready');
-    }
+    });
+
+    const realign = () => {
+      if (phase === 'init' || nav.getClientRects().length === 0) {
+        return;
+      }
+      const link = activeLink();
+      if (!link) {
+        hide();
+        return;
+      }
+      if (phase === 'moving') {
+        write(metrics(link));
+        return;
+      }
+      if (!restingOffTarget()) {
+        return;
+      }
+      snap(link);
+      requestAnimationFrame(enableTransition);
+    };
 
     nav.addEventListener('click', (event) => {
       const link = event.target.closest('a');
@@ -98,10 +191,26 @@
         return;
       }
       try {
-        sessionStorage.setItem('oz-nav-from', window.location.pathname);
+        sessionStorage.setItem('oz-nav-from', normPath(window.location.pathname));
       } catch (e) {}
     });
-    window.addEventListener('resize', () => place(activeLink(), false));
+    window.addEventListener('resize', realign);
+    window.addEventListener('pageshow', (event) => {
+      if (!event.persisted) {
+        return;
+      }
+      moveToken += 1;
+      phase = 'idle';
+      snap(activeLink());
+      requestAnimationFrame(enableTransition);
+    });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(realign);
+    }
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(realign);
+      observer.observe(nav);
+    }
   }
 
   // --- Lazy images ---

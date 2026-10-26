@@ -14,6 +14,7 @@ if (!is_array($localeFreePaths)) {
 <form method="POST" action="<?= $isEdit ? admin_url('pages/' . $item['id']) : admin_url('pages') ?>" class="space-y-6"
       data-page-editor="1"
       data-locale-free-paths="<?= e(implode(',', $localeFreePaths)) ?>"
+      data-public-prefix="<?= e(rtrim((string) admin_config('view_site_url', '/tr'), '/')) ?>"
       <?= $isEdit ? 'data-editing="1"' : '' ?>
       <?= $isEdit ? 'data-autosave-url="' . admin_url('pages/' . $item['id'] . '/autosave') . '"' : '' ?>>
     <?= csrf_field() ?>
@@ -34,7 +35,7 @@ if (!is_array($localeFreePaths)) {
                        class="form-control js-page-path">
                 <p class="text-xs mt-1" style="color:var(--cui-muted)">
                     Live URL path. Use <code>qr</code> or <code>catalogues</code> for locale-free pages
-                    (<code>/qr</code>, <code>/catalogues</code>). Other pages are served under <code>/en/…</code>.
+                    (<code>/qr</code>, <code>/catalogues</code>). Other pages are served under <code><?= e(rtrim((string) admin_config('view_site_url', '/tr'), '/')) ?>/…</code>.
                 </p>
             </div>
 
