@@ -1,16 +1,16 @@
-<section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
+<section class="page-banner bg-brand-900">
     <div class="absolute inset-0 opacity-20">
         <img src="<?= e(content()->banner('sectors')) ?>" alt="" class="w-full h-full object-cover">
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
-            <?= e(t(['en' => 'Business Sectors', 'tr' => 'İş Sektörleri', 'ar' => 'قطاعات الأعمال'])) ?>
+            <?= e(t(['en' => 'Areas of Work', 'tr' => 'Çalışma Alanlarımız', 'ar' => 'مجالات عملنا'])) ?>
         </h1>
         <p class="text-brand-300 text-lg max-w-2xl">
             <?= e(t([
-                'en' => 'Lorem ipsum dolor sit amet — explore our diversified portfolio of business sectors driving growth across global markets.',
-                'tr' => 'Lorem ipsum dolor sit amet — küresel pazarlarda büyümeyi destekleyen çeşitlendirilmiş iş sektörleri portföyümüzü keşfedin.',
-                'ar' => 'استكشف محفظتنا المتنوعة من قطاعات الأعمال التي تدفع النمو عبر الأسواق العالمية.',
+                'en' => 'Distribution, brand partnerships, and retail service in Cyprus.',
+                'tr' => 'Kıbrıs’ta distribütörlük, marka iş birlikleri ve perakende hizmet.',
+                'ar' => 'التوزيع وتعاونات العلامات وخدمة التجزئة في قبرص.',
             ])) ?>
         </p>
     </div>

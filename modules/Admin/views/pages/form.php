@@ -65,7 +65,7 @@ if (!is_array($localeFreePaths)) {
                     <label class="form-label">Render mode</label>
                     <select name="embed_mode" class="form-select">
                         <option value="site" <?= ($item['embed_mode'] ?? 'site') === 'site' ? 'selected' : '' ?>>Inside site layout (header/footer)</option>
-                        <option value="blank" <?= ($item['embed_mode'] ?? '') === 'blank' ? 'selected' : '' ?>>Blank document (full HTML/CSS/JS/PHP)</option>
+                        <option value="blank" <?= ($item['embed_mode'] ?? '') === 'blank' ? 'selected' : '' ?>>Blank document (custom code)</option>
                     </select>
                 </div>
                 <div>
@@ -95,7 +95,7 @@ if (!is_array($localeFreePaths)) {
         'html_embed' => ['type' => 'code', 'label' => 'HTML embed', 'lang' => 'html'],
         'css_embed' => ['type' => 'code', 'label' => 'CSS', 'lang' => 'css'],
         'js_embed' => ['type' => 'code', 'label' => 'JavaScript', 'lang' => 'js'],
-        'php_embed' => ['type' => 'code', 'label' => 'PHP (runs on the server when the page loads)', 'lang' => 'php'],
+        'php_embed' => ['type' => 'code', 'label' => 'Server code (advanced, optional)', 'lang' => 'php'],
         'meta_title' => 'text',
         'meta_description' => 'textarea',
     ];
@@ -104,7 +104,7 @@ if (!is_array($localeFreePaths)) {
 
     <p class="text-sm" style="color:var(--cui-muted)">
         Insert media from the library into the active HTML/CSS/JS/PHP editor with <strong>Insert media</strong>.
-        PHP output is printed where the embed runs; HTML/CSS/JS are output as WordPress-style custom code.
+        Custom code is optional. Leave it blank unless you mean to change how this page is built. A mistake here can break the public page.
     </p>
 
     <div class="flex items-center gap-3">

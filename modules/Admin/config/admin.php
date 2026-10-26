@@ -44,7 +44,7 @@ return [
         'offices' => true,
         'menus' => true,
         'categories' => true,
-        'comments' => true,
+        'comments' => false,
         'contacts' => true,
         'analytics' => true,
         'media' => true,

@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/bootstrap.php';
 
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+header('X-Permitted-Cross-Domain-Policies: none');
+
 use App\Controllers\QrLandingController;
 use App\Controllers\SeoController;
 use App\Middleware\CloudflareOriginMiddleware;
@@ -57,7 +63,7 @@ if ($requestUri === '/catalogues') {
 
 (new RedirectMiddleware())->handle($requestUri);
 
-// Public pages may need session for CSRF (contact forms, news reviews).
+// Public pages may need session for CSRF on the contact form.
 (new \Admin\Services\Auth\AuthService())->startSession();
 
 if ($requestUri === '/') {

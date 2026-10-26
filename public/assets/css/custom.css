@@ -128,11 +128,83 @@ html.oz-loading body > *:not(#oz-loader) {
     50% { opacity: 1; }
 }
 
-/* Hero slider */
+/* Inner-page banner. Same frame on every page except the landing hero. */
+.page-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 18rem;
+}
+.page-banner > .relative {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .page-banner {
+    height: 24rem;
+  }
+}
+
+/* Hero slider — crossfade, then the copy eases in */
 .hero-slide {
     background-color: #1C1B1A;
     background-size: cover;
     background-position: center;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.85s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.hero-slide.is-active {
+    opacity: 1;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.hero-copy {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-slide.is-active .hero-copy {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.16s;
+}
+.hero-copy-wrap {
+    padding-inline: 4.75rem;
+}
+@media (min-width: 640px) {
+    .hero-copy-wrap {
+        padding-inline: 5.5rem;
+    }
+}
+
+/* Top menu: one orange underline that eases between links */
+.nav-main {
+    position: relative;
+}
+.nav-indicator {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background: var(--oz-accent);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(0);
+}
+.nav-indicator.is-ready {
+    opacity: 1;
+    transition:
+        transform 0.42s cubic-bezier(0.45, 0, 0.55, 1),
+        width 0.42s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.nav-link {
+    transition: color 0.25s ease;
 }
 
 /* Prose for article content */
@@ -217,6 +289,15 @@ img:not([loading="lazy"]) {
     opacity: 1;
 }
 
+
+.hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 /* Scroll reveal */
 .reveal {
     opacity: 0;
@@ -237,10 +318,17 @@ img:not([loading="lazy"]) {
     .oz-loader__text {
         animation: none !important;
     }
+    .hero-slide,
+    .hero-copy,
+    .nav-indicator.is-ready,
     .reveal {
+        transition: none;
+        animation: none;
+    }
+    .hero-slide.is-active .hero-copy,
+    .reveal.is-visible {
         opacity: 1;
         transform: none;
-        transition: none;
     }
     .card-hover,
     .card-hover:hover {

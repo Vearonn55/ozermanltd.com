@@ -19,16 +19,16 @@ class PageController
             'operations' => $content->operations($locale),
             'partnerships' => $content->partnerships($locale),
             'stores' => $content->stores($locale),
-            'news' => array_slice($content->news($locale), 0, 3),
+            'news' => array_reverse(array_slice($content->news($locale), 0, 3)),
         ], [
             'entity_type' => 'page',
             'entity_key' => 'home',
             'path' => '',
             'title' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'],
             'description' => [
-                'en' => 'Özerman Ticaret — importer limited company connecting trusted brands with retail markets.',
-                'tr' => 'Özerman Ticaret — güvenilir markaları perakende pazarlara bağlayan ithalatçı limited şirket.',
-                'ar' => 'أوزرمان للتجارة — شركة استيراد محدودة تربط العلامات الموثوقة بأسواق التجزئة.',
+                'en' => 'Özerman Ticaret — a distribution and trading company in Cyprus connecting brands with quality retail service.',
+                'tr' => 'Özerman Ticaret — Kıbrıs’ta markaları nitelikli perakende hizmetleriyle buluşturan distribütörlük ve ticaret şirketi.',
+                'ar' => 'أوزرمان للتجارة — شركة توزيع وتجارة في قبرص تجمع العلامات مع خدمات تجزئة نوعية.',
             ],
         ]);
     }
@@ -49,9 +49,9 @@ class PageController
             'path' => 'about-us',
             'title' => ['en' => 'About Us', 'tr' => 'Hakkımızda', 'ar' => 'من نحن'],
             'description' => [
-                'en' => 'Learn about Özerman Ticaret — our story as an importer limited company, values, and leadership.',
-                'tr' => 'Özerman Ticaret hakkında bilgi edinin — ithalatçı limited şirket hikâyemiz, değerlerimiz ve liderlik.',
-                'ar' => 'تعرف على أوزرمان للتجارة — قصتنا كشركة استيراد محدودة وقيمنا وقيادتنا.',
+                'en' => 'Özerman Ticaret was founded in 2020 in Cyprus — our story, vision, and mission.',
+                'tr' => 'Özerman Ticaret 2020 yılında Kıbrıs’ta kurulmuştur — hikâyemiz, vizyonumuz ve misyonumuz.',
+                'ar' => 'تأسست أوزرمان للتجارة عام 2020 في قبرص — قصتنا ورؤيتنا ومهمتنا.',
             ],
             'breadcrumbs' => [
                 ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
@@ -73,9 +73,9 @@ class PageController
             'path' => 'our-stores',
             'title' => ['en' => 'Our Stores', 'tr' => 'Mağazalarımız', 'ar' => 'متاجرنا'],
             'description' => [
-                'en' => 'Visit Özerman Ticaret showrooms and retail points — placeholder locations pending final details.',
-                'tr' => 'Özerman Ticaret showroom ve satış noktalarını ziyaret edin — konum detayları yakında güncellenecek.',
-                'ar' => 'زوروا صالات عرض ونقاط بيع أوزرمان للتجارة — تفاصيل المواقع قيد التحديث.',
+                'en' => 'Visit our Nicosia and Famagusta stores. Free delivery and installation across Cyprus.',
+                'tr' => 'Lefkoşa ve Gazimağusa mağazalarımızı ziyaret edin. Ada genelinde ücretsiz teslimat ve kurulum.',
+                'ar' => 'زوروا متاجرنا في نيقوسيا وفاماغوستا. توصيل وتركيب مجاني في قبرص.',
             ],
             'breadcrumbs' => [
                 ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
@@ -95,15 +95,15 @@ class PageController
             'entity_type' => 'page',
             'entity_key' => 'partnerships',
             'path' => 'partnerships',
-            'title' => ['en' => 'Partnerships', 'tr' => 'İş Ortaklıkları', 'ar' => 'الشراكات'],
+            'title' => ['en' => 'Our Brands', 'tr' => 'Markalarımız', 'ar' => 'علاماتنا'],
             'description' => [
-                'en' => 'Brands we represent and import — including Lajivert and Aymini — as part of our broader trade portfolio.',
-                'tr' => 'Temsil ettiğimiz ve ithal ettiğimiz markalar — Lajivert ve Aymini dahil — daha geniş ticaret portföyümüzün parçası.',
-                'ar' => 'العلامات التي نمثلها ونستوردها — بما في ذلك لاجيڤيرت وأيميني — ضمن محفظة تجارتنا الأوسع.',
+                'en' => 'Our own brand Daphne Baby together with Lajivert and Aymini distributorships in Cyprus.',
+                'tr' => 'Kendi markamız Daphne Baby ile Lajivert ve Aymini Kıbrıs distribütörlükleri.',
+                'ar' => 'علامتنا دافني بيبي إلى جانب وكالات لاجيڤيرت وأيميني في قبرص.',
             ],
             'breadcrumbs' => [
                 ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
-                ['label' => ['en' => 'Partnerships', 'tr' => 'İş Ortaklıkları', 'ar' => 'الشراكات'], 'path' => 'partnerships'],
+                ['label' => ['en' => 'Our Brands', 'tr' => 'Markalarımız', 'ar' => 'علاماتنا'], 'path' => 'partnerships'],
             ],
         ]);
     }
@@ -119,11 +119,11 @@ class PageController
             'entity_type' => 'page',
             'entity_key' => 'sectors',
             'path' => 'sectors',
-            'title' => ['en' => 'Business Sectors', 'tr' => 'İş Sektörleri', 'ar' => 'قطاعات الأعمال'],
+            'title' => ['en' => 'Areas of Work', 'tr' => 'Çalışma Alanlarımız', 'ar' => 'مجالات عملنا'],
             'description' => [
-                'en' => 'Explore Ozerman Ltd business sectors — trading, construction, real estate, manufacturing, logistics, and energy.',
-                'tr' => 'Ozerman Ltd iş sektörlerini keşfedin — ticaret, inşaat, gayrimenkul, üretim, lojistik ve enerji.',
-                'ar' => 'استكشف قطاعات أعمال أوزرمان — التجارة والبناء والعقارات والتصنيع واللوجستيات والطاقة.',
+                'en' => 'Distribution, brand partnerships, and retail after-sales service from Özerman Ticaret in Cyprus.',
+                'tr' => 'Özerman Ticaret’in Kıbrıs’taki distribütörlük, marka iş birlikleri ve satış sonrası perakende hizmeti.',
+                'ar' => 'التوزيع وتعاونات العلامات وخدمة التجزئة بعد البيع من أوزرمان للتجارة في قبرص.',
             ],
         ]);
     }
@@ -141,7 +141,7 @@ class PageController
 
         $relatedProjects = array_filter(
             $content->projects($locale),
-            fn($p) => in_array($slug, ['real-estate', 'construction']) || $p['is_featured']
+            fn($p) => !empty($p['is_featured'])
         );
 
         $this->render('pages.sectors.show', [
@@ -173,11 +173,11 @@ class PageController
             'entity_type' => 'page',
             'entity_key' => 'projects',
             'path' => 'projects',
-            'title' => ['en' => 'Projects', 'tr' => 'Projeler', 'ar' => 'المشاريع'],
+            'title' => ['en' => 'Our Work', 'tr' => 'Çalışmalarımız', 'ar' => 'أعمالنا'],
             'description' => [
-                'en' => 'Browse Ozerman Ltd project portfolio — residential, commercial, and industrial developments worldwide.',
-                'tr' => 'Ozerman Ltd proje portföyüne göz atın — dünya çapında konut, ticari ve endüstriyel gelişmeler.',
-                'ar' => 'تصفح محفظة مشاريع أوزرمان — تطويرات سكنية وتجارية وصناعية حول العالم.',
+                'en' => 'Özerman Ticaret focuses on brands, stores, and distribution in Cyprus.',
+                'tr' => 'Özerman Ticaret, Kıbrıs’ta markalar, mağazalar ve distribütörlük üzerine çalışır.',
+                'ar' => 'تركّز أوزرمان للتجارة على العلامات والمتاجر والتوزيع في قبرص.',
             ],
         ]);
     }
@@ -221,11 +221,11 @@ class PageController
             'entity_type' => 'page',
             'entity_key' => 'news',
             'path' => 'news',
-            'title' => ['en' => 'News & Announcements', 'tr' => 'Haberler ve Duyurular', 'ar' => 'الأخبار والإعلانات'],
+            'title' => ['en' => 'Corporate', 'tr' => 'Kurumsal', 'ar' => 'المؤسسي'],
             'description' => [
-                'en' => 'Latest news and announcements from Ozerman Ltd.',
-                'tr' => 'Ozerman Ltd\'den son haberler ve duyurular.',
-                'ar' => 'آخر الأخبار والإعلانات من أوزرمان المحدودة.',
+                'en' => 'Milestones of Özerman Ticaret, from Bebecik Online and Daphne Baby to the company founded in 2020.',
+                'tr' => 'Bebecik Online ve Daphne Baby’den 2020’de kurulan Özerman Ticaret’e kilometre taşlarımız.',
+                'ar' => 'محطات أوزرمان للتجارة، من بيبيسيك أونلاين ودافني بيبي إلى الشركة التي تأسست عام 2020.',
             ],
         ]);
     }
@@ -244,7 +244,6 @@ class PageController
         $this->render('pages.news.show', [
             'article' => $article,
             'related' => array_filter($content->news($locale), fn($a) => $a['slug'] !== $slug),
-            'comments' => !empty($article['id']) ? $content->newsComments((int) $article['id']) : [],
         ], [
             'entity_type' => 'news',
             'entity_key' => $slug,
@@ -259,7 +258,7 @@ class PageController
             'include_organization' => false,
             'breadcrumbs' => [
                 ['label' => ['en' => 'Home', 'tr' => 'Ana Sayfa', 'ar' => 'الرئيسية'], 'path' => ''],
-                ['label' => ['en' => 'News', 'tr' => 'Haberler', 'ar' => 'الأخبار'], 'path' => 'news'],
+                ['label' => ['en' => 'Corporate', 'tr' => 'Kurumsal', 'ar' => 'المؤسسي'], 'path' => 'news'],
                 ['label' => $article['title'], 'path' => 'news/' . $slug],
             ],
         ]);
@@ -278,9 +277,9 @@ class PageController
             'path' => 'gallery',
             'title' => ['en' => 'Media Gallery', 'tr' => 'Medya Galerisi', 'ar' => 'معرض الوسائط'],
             'description' => [
-                'en' => 'Corporate media gallery — events, project sites, and team culture at Ozerman Ltd.',
-                'tr' => 'Kurumsal medya galerisi — Ozerman Ltd\'de etkinlikler, proje sahaları ve ekip kültürü.',
-                'ar' => 'معرض الوسائط المؤسسية — الفعاليات ومواقع المشاريع وثقافة الفريق في أوزرمان.',
+                'en' => 'Photos from Özerman Ticaret stores and the brands we represent in Cyprus.',
+                'tr' => 'Özerman Ticaret mağazalarından ve Kıbrıs’ta temsil ettiğimiz markalardan görüntüler.',
+                'ar' => 'صور من متاجر أوزرمان للتجارة والعلامات التي نمثلها في قبرص.',
             ],
         ]);
     }
@@ -300,20 +299,43 @@ class PageController
             'path' => 'contact',
             'title' => ['en' => 'Contact Us', 'tr' => 'İletişim', 'ar' => 'اتصل بنا'],
             'description' => [
-                'en' => 'Get in touch with Ozerman Ltd — contact form, office locations, and department contacts.',
-                'tr' => 'Ozerman Ltd ile iletişime geçin — iletişim formu, ofis konumları ve departman iletişim bilgileri.',
-                'ar' => 'تواصل مع أوزرمان المحدودة — نموذج الاتصال ومواقع المكاتب وجهات الاتصال.',
+                'en' => 'Contact Özerman Ticaret to discuss brand representation and commercial partnerships in Cyprus.',
+                'tr' => 'Marka temsilciliği ve ticari iş birlikleri için Özerman Ticaret ile iletişime geçin.',
+                'ar' => 'تواصلوا مع أوزرمان للتجارة لمناقشة تمثيل العلامات والتعاونات التجارية في قبرص.',
             ],
         ]);
     }
 
     public function contactSubmit(): void
     {
+        if (!verify_csrf((string) ($_POST['_csrf'] ?? ''))) {
+            redirect(url('contact') . '?error=consent');
+            return;
+        }
+
+        if (trim((string) ($_POST['company_website'] ?? '')) !== '') {
+            redirect(url('contact') . '?sent=1');
+            return;
+        }
+
+        $limiter = \Admin\Support\RateLimiter::forAdmin();
+        $rateKey = 'contact:' . (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        if ($limiter->tooManyAttempts($rateKey, 5, 900)) {
+            redirect(url('contact') . '?error=submit');
+            return;
+        }
+        $limiter->hit($rateKey, 900);
+
         $visitorUuid = trim((string) ($_POST['visitor_uuid'] ?? ''));
         $privacyAccepted = isset($_POST['consent_privacy']);
         $marketingOptIn = isset($_POST['consent_marketing']);
+        $name = mb_substr(trim((string) ($_POST['name'] ?? '')), 0, 120);
+        $email = mb_substr(trim((string) ($_POST['email'] ?? '')), 0, 180);
+        $phone = mb_substr(trim((string) ($_POST['phone'] ?? '')), 0, 40);
+        $subject = mb_substr(trim((string) ($_POST['subject'] ?? '')), 0, 160);
+        $message = mb_substr(trim((string) ($_POST['message'] ?? '')), 0, 4000);
 
-        if (!$privacyAccepted || $visitorUuid === '') {
+        if (!$privacyAccepted || $visitorUuid === '' || $name === '' || $message === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             redirect(url('contact') . '?error=consent');
             return;
         }
@@ -321,11 +343,11 @@ class PageController
         try {
             (new EventCollector())->saveContact([
                 'visitor_uuid' => $visitorUuid,
-                'name' => trim((string) ($_POST['name'] ?? '')),
-                'email' => trim((string) ($_POST['email'] ?? '')),
-                'phone' => trim((string) ($_POST['phone'] ?? '')),
-                'subject' => trim((string) ($_POST['subject'] ?? '')),
-                'message' => trim((string) ($_POST['message'] ?? '')),
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'subject' => $subject,
+                'message' => $message,
                 'locale' => app_locale(),
                 'marketing_opt_in' => $marketingOptIn,
                 'analytics_opt_in' => isset($_POST['consent_analytics']),
@@ -346,9 +368,9 @@ class PageController
             'path' => 'privacy-policy',
             'title' => ['en' => 'Privacy Policy', 'tr' => 'Gizlilik Politikası', 'ar' => 'سياسة الخصوصية'],
             'description' => [
-                'en' => 'Privacy Policy for Ozerman Ltd — how we collect, use, and protect your personal data.',
-                'tr' => 'Ozerman Ltd Gizlilik Politikası — kişisel verilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz.',
-                'ar' => 'سياسة الخصوصية لأوزرمان المحدودة — كيف نجمع بياناتك الشخصية ونستخدمها ونحميها.',
+                'en' => 'Privacy Policy for Özerman Ticaret — how we collect, use, and protect your personal data.',
+                'tr' => 'Özerman Ticaret Gizlilik Politikası — kişisel verilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz.',
+                'ar' => 'سياسة الخصوصية لأوزرمان للتجارة — كيف نجمع بياناتك الشخصية ونستخدمها ونحميها.',
             ],
         ]);
     }
@@ -361,9 +383,9 @@ class PageController
             'path' => 'cookie-policy',
             'title' => ['en' => 'Cookie Policy', 'tr' => 'Çerez Politikası', 'ar' => 'سياسة ملفات تعريف الارتباط'],
             'description' => [
-                'en' => 'Cookie Policy for Ozerman Ltd — essential, analytics, and marketing cookies.',
-                'tr' => 'Ozerman Ltd Çerez Politikası — gerekli, analitik ve pazarlama çerezleri.',
-                'ar' => 'سياسة ملفات تعريف الارتباط لأوزرمان المحدودة.',
+                'en' => 'Cookie Policy for Özerman Ticaret — essential, analytics, and marketing cookies.',
+                'tr' => 'Özerman Ticaret Çerez Politikası — gerekli, analitik ve pazarlama çerezleri.',
+                'ar' => 'سياسة ملفات تعريف الارتباط لأوزرمان للتجارة.',
             ],
         ]);
     }
@@ -376,47 +398,11 @@ class PageController
             'path' => 'cookie-settings',
             'title' => ['en' => 'Cookie Settings', 'tr' => 'Çerez Ayarları', 'ar' => 'إعدادات ملفات تعريف الارتباط'],
             'description' => [
-                'en' => 'Manage your cookie and data collection preferences for Ozerman Ltd.',
-                'tr' => 'Ozerman Ltd için çerez ve veri toplama tercihlerinizi yönetin.',
-                'ar' => 'إدارة تفضيلات ملفات تعريف الارتباط وجمع البيانات.',
+                'en' => 'Manage your cookie and data collection preferences for Özerman Ticaret.',
+                'tr' => 'Özerman Ticaret için çerez ve veri toplama tercihlerinizi yönetin.',
+                'ar' => 'إدارة تفضيلات ملفات تعريف الارتباط وجمع البيانات لأوزرمان للتجارة.',
             ],
         ]);
-    }
-
-    public function articleReviewSubmit(string $slug): void
-    {
-        (new \Admin\Services\Auth\AuthService())->startSession();
-
-        $token = $_POST['_csrf'] ?? '';
-        if (!verify_csrf($token)) {
-            flash('error', t(['en' => 'Invalid security token.', 'tr' => 'Geçersiz güvenlik jetonu.', 'ar' => 'رمز أمان غير صالح.']));
-            redirect(url('news/' . $slug) . '#reviews');
-        }
-
-        $name = trim((string) ($_POST['author_name'] ?? ''));
-        $email = trim((string) ($_POST['author_email'] ?? ''));
-        $body = trim((string) ($_POST['content'] ?? ''));
-
-        if ($name === '' || $email === '' || $body === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            flash('error', t(['en' => 'Please fill in a valid name, email, and review.', 'tr' => 'Lütfen geçerli ad, e-posta ve yorum girin.', 'ar' => 'يرجى إدخال اسم وبريد ومراجعة صالحة.']));
-            redirect(url('news/' . $slug) . '#reviews');
-        }
-
-        $content = content();
-        $article = $content->newsBySlug($slug, app_locale());
-        if (!$article || empty($article['id'])) {
-            $this->notFound();
-            return;
-        }
-
-        try {
-            $content->addNewsComment((int) $article['id'], mb_substr($name, 0, 100), mb_substr($email, 0, 180), mb_substr($body, 0, 2000));
-            flash('success', t(['en' => 'Thank you — your review was submitted and awaits moderation.', 'tr' => 'Teşekkürler — yorumunuz gönderildi ve onay bekliyor.', 'ar' => 'شكرًا — تم إرسال مراجعتك وهي بانتظار الإشراف.']));
-        } catch (\Throwable) {
-            flash('error', t(['en' => 'Could not save your review. Please try again.', 'tr' => 'Yorum kaydedilemedi. Lütfen tekrar deneyin.', 'ar' => 'تعذر حفظ المراجعة. حاول مرة أخرى.']));
-        }
-
-        redirect(url('news/' . $slug) . '#reviews');
     }
 
     public function cms(string $path): void

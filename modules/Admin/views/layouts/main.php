@@ -24,7 +24,14 @@
                 </div>
                 <?php if (!empty($user)): ?>
                 <div class="cui-header-meta flex items-center gap-4 shrink-0">
-                    <span class="hidden sm:inline"><?= e($user['name']) ?> · <?= e($user['role']) ?></span>
+                    <?php
+                    $roleLabel = [
+                        'super_admin' => 'Administrator',
+                        'content_manager' => 'Manager',
+                        'editor' => 'Editor',
+                    ][$user['role']] ?? 'Staff';
+                    ?>
+                    <span class="hidden sm:inline"><?= e($user['name']) ?> · <?= e($roleLabel) ?></span>
                     <a href="<?= admin_url('logout') ?>">Sign out</a>
                 </div>
                 <?php endif; ?>

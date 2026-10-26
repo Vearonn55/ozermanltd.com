@@ -10,7 +10,7 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-brand-50 border border-brand-200 rounded-lg p-8 space-y-6">
             <p class="text-brand-700">
-                <?= e(t(['en' => 'Manage how Ozerman Ltd collects and uses your data. Essential cookies are always enabled.', 'tr' => 'Ozerman Ltd\'nin verilerinizi nasıl topladığını ve kullandığını yönetin. Gerekli çerezler her zaman etkindir.', 'ar' => 'إدارة كيفية جمع Ozerman Ltd لبياناتك واستخدامها. ملفات تعريف الارتباط الأساسية مفعّلة دائمًا.'])) ?>
+                <?= e(t(['en' => 'Manage how Özerman Ticaret collects and uses your data. Essential cookies are always enabled.', 'tr' => 'Özerman Ticaret’in verilerinizi nasıl topladığını ve kullandığını yönetin. Gerekli çerezler her zaman etkindir.', 'ar' => 'إدارة كيفية جمع أوزرمان للتجارة لبياناتك واستخدامها. ملفات تعريف الارتباط الأساسية مفعّلة دائمًا.'])) ?>
             </p>
 
             <label class="flex items-start gap-3">

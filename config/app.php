@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'name' => 'Özerman Ticaret',
-    'tagline' => 'Import. Partner. Deliver.',
+    'tagline' => 'Distinguished brands. A strong local structure.',
     'url' => rtrim(getenv('APP_URL') ?: 'https://ozermanltd.com', '/'),
     'env' => getenv('APP_ENV') ?: 'development',
     'default_locale' => 'en',
@@ -15,15 +15,10 @@ return [
     ],
     'contact' => [
         'email' => 'info@ozermanltd.com',
-        'phone' => '+90 212 000 00 00',
-        'address' => 'Lorem Cad. No:1, Dummy Mah., Istanbul, Turkey',
+        'phone' => '',
+        'address' => 'Kıbrıs',
     ],
-    'social' => [
-        'linkedin' => 'https://linkedin.com/company/ozermanltd',
-        'twitter' => 'https://twitter.com/ozermanltd',
-        'instagram' => 'https://instagram.com/ozermanltd',
-        'youtube' => 'https://youtube.com/ozermanltd',
-    ],
+    'social' => [],
     'under_construction' => filter_var(getenv('SITE_UNDER_CONSTRUCTION') ?: 'false', FILTER_VALIDATE_BOOLEAN),
     'cloudflare' => [
         'enforce' => filter_var(getenv('CLOUDFLARE_ENFORCE') ?: 'false', FILTER_VALIDATE_BOOLEAN),

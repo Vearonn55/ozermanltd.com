@@ -803,33 +803,6 @@ class DatabaseContentProvider implements ContentProviderInterface
         return $this->resolveMediaUrl($row['file_path'] ?: null, (string) ($row['fallback_url'] ?: DummyData::banner($location)));
     }
 
-    public function newsComments(int $newsId): array
-    {
-        $stmt = $this->pdo->prepare(
-            "SELECT id, author_name, content, created_at
-             FROM news_comments
-             WHERE news_id = :news_id AND status = 'approved'
-             ORDER BY created_at DESC"
-        );
-        $stmt->execute(['news_id' => $newsId]);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-    }
-
-    public function addNewsComment(int $newsId, string $name, string $email, string $content): void
-    {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO news_comments (news_id, author_name, author_email, content, status)
-             VALUES (:news_id, :name, :email, :content, 'pending')"
-        );
-        $stmt->execute([
-            'news_id' => $newsId,
-            'name' => $name,
-            'email' => $email,
-            'content' => $content,
-        ]);
-    }
-
     /**
      * Published CMS page for a public locale path (custom_path, then slug).
      *

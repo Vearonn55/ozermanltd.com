@@ -11,20 +11,14 @@ $dir = locale_dir();
     <?php partial('seo-head', ['seo' => $seo]); ?>
 
     <link rel="stylesheet" href="<?= asset('css/tailwind.css') ?>">
+    <?php if (isset($slides[0]['image']) && $slides[0]['image'] !== ''): ?>
+    <link rel="preload" as="image" href="<?= e($slides[0]['image']) ?>" fetchpriority="high">
+    <?php endif; ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"></noscript>
     <link rel="stylesheet" href="<?= asset('css/custom.css') ?>">
-    <script>
-        /* Show branded loader before first paint when navigating between pages */
-        (function () {
-            try {
-                if (sessionStorage.getItem('oz-nav-loading') === '1') {
-                    document.documentElement.classList.add('oz-loading');
-                }
-            } catch (e) {}
-        })();
-    </script>
     <script defer src="<?= asset('vendor/alpinejs/alpine.min.js') ?>"></script>
     <script defer src="<?= asset('js/ui.js') ?>"></script>
 </head>

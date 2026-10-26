@@ -152,7 +152,15 @@ function url(string $path = '', ?string $locale = null): string
 
 function asset(string $path): string
 {
-    return '/assets/' . ltrim($path, '/');
+    $relative = ltrim($path, '/');
+    $url = '/assets/' . $relative;
+    $file = dirname(__DIR__, 2) . '/public/assets/' . $relative;
+
+    if (is_file($file)) {
+        $url .= '?v=' . filemtime($file);
+    }
+
+    return $url;
 }
 
 /**

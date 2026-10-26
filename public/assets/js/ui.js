@@ -28,21 +28,81 @@
     }, 180);
   };
 
-  // Arriving from an in-site navigation: loader already covering via html.oz-loading
-  if (sessionStorage.getItem('oz-nav-loading') === '1') {
+  // Drop a leftover flag from the old full-page loader so it cannot hold the next view.
+  try {
     sessionStorage.removeItem('oz-nav-loading');
-    showLoader();
-    const reveal = () => {
-      window.setTimeout(hideLoader, reduceMotion ? 0 : 180);
-    };
-    if (document.readyState === 'complete') {
-      reveal();
-    } else {
-      window.addEventListener('load', reveal, { once: true });
-    }
+  } catch (e) {}
+  root.classList.remove('oz-loading');
+  if (loader) {
+    loader.classList.remove('is-active');
+    loader.hidden = true;
   }
 
   window.OzermanLoader = { show: showLoader, hide: hideLoader };
+
+  // --- Menu underline (accelerates, then decelerates) ---
+  const nav = document.querySelector('[data-nav-indicator]');
+  const indicator = nav ? nav.querySelector('.nav-indicator') : null;
+  if (nav && indicator) {
+    const activeLink = () => nav.querySelector('a.is-active');
+    const place = (link, animate) => {
+      if (!link || nav.getClientRects().length === 0) {
+        indicator.style.opacity = '0';
+        return;
+      }
+      const navBox = nav.getBoundingClientRect();
+      const box = link.getBoundingClientRect();
+      if (!animate) {
+        indicator.style.transition = 'none';
+      }
+      indicator.style.opacity = '1';
+      indicator.style.width = box.width + 'px';
+      indicator.style.transform = 'translateX(' + (box.left - navBox.left) + 'px)';
+      if (!animate) {
+        void indicator.offsetWidth;
+        indicator.style.transition = '';
+      }
+    };
+
+    const pathOf = (link) => {
+      try {
+        return new URL(link.href, window.location.href).pathname;
+      } catch (e) {
+        return '';
+      }
+    };
+    let fromPath = '';
+    try {
+      fromPath = sessionStorage.getItem('oz-nav-from') || '';
+      sessionStorage.removeItem('oz-nav-from');
+    } catch (e) {}
+    const current = activeLink();
+    const fromLink = fromPath
+      ? [...nav.querySelectorAll('a')].find((link) => pathOf(link) === fromPath)
+      : null;
+
+    if (fromLink && current && fromLink !== current) {
+      place(fromLink, false);
+      indicator.classList.add('is-ready');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => place(current, true));
+      });
+    } else {
+      place(current, false);
+      indicator.classList.add('is-ready');
+    }
+
+    nav.addEventListener('click', (event) => {
+      const link = event.target.closest('a');
+      if (!link || !nav.contains(link)) {
+        return;
+      }
+      try {
+        sessionStorage.setItem('oz-nav-from', window.location.pathname);
+      } catch (e) {}
+    });
+    window.addEventListener('resize', () => place(activeLink(), false));
+  }
 
   // --- Lazy images ---
   document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
@@ -74,51 +134,4 @@
     reveals.forEach((el) => observer.observe(el));
   }
 
-  if (reduceMotion) {
-    return;
-  }
-
-  const isInternalNavLink = (anchor) => {
-    if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) {
-      return false;
-    }
-    const href = anchor.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-      return false;
-    }
-    let url;
-    try {
-      url = new URL(anchor.href, window.location.href);
-    } catch {
-      return false;
-    }
-    if (url.origin !== window.location.origin) {
-      return false;
-    }
-    if (url.pathname === window.location.pathname && url.search === window.location.search) {
-      return false;
-    }
-    return true;
-  };
-
-  document.addEventListener('click', (event) => {
-    if (event.defaultPrevented || event.button !== 0) {
-      return;
-    }
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-      return;
-    }
-
-    const anchor = event.target.closest('a[href]');
-    if (!isInternalNavLink(anchor)) {
-      return;
-    }
-
-    event.preventDefault();
-    sessionStorage.setItem('oz-nav-loading', '1');
-    showLoader();
-    window.setTimeout(() => {
-      window.location.assign(anchor.href);
-    }, 100);
-  });
 })();

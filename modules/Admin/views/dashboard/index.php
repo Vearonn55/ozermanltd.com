@@ -1,10 +1,10 @@
 <?php if (!empty($siteUsesDatabase)): ?>
 <div class="mb-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm">
-    Public site is reading content from <strong>MySQL</strong>. Changes to News, Projects, and Sectors appear after save (hard refresh if needed).
+    Visitors see saved content. After you publish, use <strong>View site</strong> and refresh to confirm.
 </div>
 <?php else: ?>
 <div class="mb-4 rounded-lg bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm">
-    Public site is using <strong>dummy data</strong> — CMS changes will not appear. Set <code>DB_USE_DUMMY_DATA=false</code> in .env and ensure MySQL is running.
+    The public site is not using saved content yet, so changes here will not appear for visitors. Ask the person who set up the site to connect it before you publish.
 </div>
 <?php endif; ?>
 

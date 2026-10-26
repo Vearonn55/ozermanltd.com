@@ -1,5 +1,5 @@
 -- ============================================================
--- SEED DATA — Ozerman Ltd (Dummy Content)
+-- SEED DATA — Özerman Ticaret
 -- Run after schema.sql against the SAME selected database.
 -- cPanel: select ozermanl_MAIN in phpMyAdmin, then Import.
 -- Local: mysql -u root -p YOUR_DB_NAME < database/seed.sql
@@ -27,30 +27,30 @@ INSERT INTO pages (slug, template, status, show_in_nav, sort_order, published_at
 
 -- Page translations (English)
 INSERT INTO page_translations (page_id, language_id, title, excerpt, meta_title, meta_description) VALUES
-(1, 1, 'Home', 'Özerman Ticaret — Import. Partner. Deliver.', 'Özerman Ticaret | Importer Limited Company', 'An importer limited company connecting trusted brands with retail markets through disciplined trade and local presence.'),
-(2, 1, 'About Us', 'Learn about our history, vision, and how we trade.', 'About Us | Özerman Ticaret', 'Özerman Ticaret is an importer limited company built on disciplined trade, brand partnerships, and retail presence.'),
-(3, 1, 'Business Sectors', 'Explore our diversified portfolio of business sectors.', 'Business Sectors | Ozerman Ltd', 'Trading, construction, real estate, manufacturing, logistics, and energy.'),
-(4, 1, 'Projects', 'Browse our project portfolio worldwide.', 'Projects | Ozerman Ltd', 'Residential, commercial, and industrial developments worldwide.'),
-(5, 1, 'News', 'Latest news and announcements.', 'News | Özerman Ticaret', 'Stay informed with the latest from Özerman Ticaret.'),
-(6, 1, 'Gallery', 'Corporate media gallery.', 'Gallery | Özerman Ticaret', 'Events, showrooms, and team culture.'),
+(1, 1, 'Home', 'Özerman Ticaret — distinguished brands, a strong local structure.', 'Özerman Ticaret | Distribution and Trade', 'Özerman Ticaret is a distribution and trading company in Cyprus that connects brands with quality retail service.'),
+(2, 1, 'About Us', 'Local expertise, a long-term approach.', 'About Us | Özerman Ticaret', 'Özerman Ticaret was founded in 2020 by Emin Özerman in Cyprus.'),
+(3, 1, 'Areas of Work', 'Distribution, brand partnerships, and retail service in Cyprus.', 'Areas of Work | Özerman Ticaret', 'How Özerman Ticaret works: distribution, brand partnerships, and after-sales retail service.'),
+(4, 1, 'Projects', 'Özerman Ticaret publishes its brands and stores rather than a property portfolio.', 'Projects | Özerman Ticaret', 'Özerman Ticaret focuses on brands, stores, and distribution in Cyprus.'),
+(5, 1, 'Corporate', 'Milestones of Özerman Ticaret.', 'Corporate | Özerman Ticaret', 'From Bebecik Online and Daphne Baby to Özerman Ticaret in 2020.'),
+(6, 1, 'Gallery', 'Stores and brands.', 'Gallery | Özerman Ticaret', 'Moments from our stores and the brands we represent in Cyprus.'),
 (7, 1, 'Contact', 'Get in touch with our team.', 'Contact | Özerman Ticaret', 'Contact Özerman Ticaret — partnership and wholesale inquiries.');
 
 -- Sectors
 INSERT INTO sectors (icon, color, sort_order) VALUES
-('globe', '#1e3a5f', 0),
-('building', '#c9a227', 1),
-('home', '#2d6a4f', 2),
-('factory', '#6b4c9a', 3),
-('truck', '#e76f51', 4),
-('bolt', '#f4a261', 5);
+('globe', '#EA4C37', 0),
+('handshake', '#3A3A3C', 1),
+('store', '#EA4C37', 2);
 
-INSERT INTO sector_translations (sector_id, language_id, name, slug, overview) VALUES
-(1, 1, 'Trading', 'trading', 'Lorem ipsum dolor sit amet — international commodity trading and supply chain management.'),
-(2, 1, 'Construction', 'construction', 'Lorem ipsum dolor sit amet — large-scale infrastructure and building projects.'),
-(3, 1, 'Real Estate', 'real-estate', 'Lorem ipsum dolor sit amet — luxury residential and commercial property development.'),
-(4, 1, 'Manufacturing', 'manufacturing', 'Lorem ipsum dolor sit amet — state-of-the-art manufacturing facilities.'),
-(5, 1, 'Logistics', 'logistics', 'Lorem ipsum dolor sit amet — comprehensive logistics and distribution solutions.'),
-(6, 1, 'Energy', 'energy', 'Lorem ipsum dolor sit amet — renewable energy and sustainable power solutions.');
+INSERT INTO sector_translations (sector_id, language_id, name, slug, overview, services_text) VALUES
+(1, 1, 'Distribution & Trade', 'distribution-trade', 'We connect the brands we select with the Cyprus market and coordinate product supply and commercial processes.', '• Brand distribution in Cyprus\n• Product supply coordination\n• Commercial process management'),
+(1, 2, 'Distribütörlük ve Ticaret', 'distribution-trade-tr', 'Seçtiğimiz markaları Kıbrıs pazarıyla buluşturuyor, ürün tedariği ve ticari süreçleri koordineli biçimde yürütüyoruz.', '• Kıbrıs’ta marka distribütörlüğü\n• Ürün tedarik koordinasyonu\n• Ticari süreç yönetimi'),
+(1, 3, 'التوزيع والتجارة', 'distribution-trade-ar', 'نجمع العلامات التي نختارها مع سوق قبرص وننسّق توريد المنتجات والعمليات التجارية.', '• توزيع العلامات في قبرص\n• تنسيق توريد المنتجات\n• إدارة العمليات التجارية'),
+(2, 1, 'Brand Partnerships', 'brand-partnerships', 'We support brand positioning and local-market growth with a long-term partnership approach.', '• Long-term brand representation\n• Local positioning\n• Partner communication'),
+(2, 2, 'Marka İş Birlikleri', 'brand-partnerships-tr', 'Markaların konumlandırmasını ve yerel pazardaki gelişimini uzun vadeli iş ortaklığı anlayışıyla destekliyoruz.', '• Uzun vadeli marka temsilciliği\n• Yerel konumlandırma\n• İş ortağı iletişimi'),
+(2, 3, 'تعاونات العلامات', 'brand-partnerships-ar', 'ندعم تموضع العلامات ونموها في السوق المحلي بمنهج شراكة طويل الأمد.', '• تمثيل طويل الأمد للعلامات\n• التموضع المحلي\n• التواصل مع الشركاء'),
+(3, 1, 'Retail & After-Sales Service', 'retail-after-sales', 'We provide store retail, product consultancy, free island-wide delivery and installation, plus warranty and spare-parts support.', '• Stores in Nicosia and Famagusta\n• Free island-wide delivery and installation\n• Warranty and spare parts'),
+(3, 2, 'Perakende ve Satış Sonrası Hizmet', 'retail-after-sales-tr', 'Mağazacılık, ürün danışmanlığı, ücretsiz ada geneli teslimat ve kurulum ile garanti ve yedek parça desteği sunuyoruz.', '• Lefkoşa ve Gazimağusa mağazaları\n• Ücretsiz ada geneli teslimat ve kurulum\n• Garanti ve yedek parça'),
+(3, 3, 'التجزئة وخدمة ما بعد البيع', 'retail-after-sales-ar', 'نقدّم البيع بالتجزئة واستشارات المنتج والتوصيل والتركيب المجاني في الجزيرة ودعم الضمان وقطع الغيار.', '• متاجر نيقوسيا وفاماغوستا\n• توصيل وتركيب مجاني في الجزيرة\n• الضمان وقطع الغيار');
 
 -- Project categories
 INSERT INTO project_categories (sort_order) VALUES (0), (1), (2);
@@ -60,67 +60,54 @@ INSERT INTO project_category_translations (category_id, language_id, name, slug)
 (3, 1, 'Industrial', 'industrial');
 
 -- Projects
-INSERT INTO projects (category_id, status, location, delivery_date, start_price, currency, is_featured, is_active) VALUES
-(1, 'ongoing', 'Dubai, UAE', 'June 2027', 285000.00, 'GBP', 1, 1),
-(2, 'completed', 'London, UK', 'March 2025', NULL, 'GBP', 1, 1),
-(3, 'planning', 'Istanbul, Turkey', 'December 2028', NULL, 'GBP', 0, 1),
-(1, 'ongoing', 'Antalya, Turkey', 'September 2026', 425000.00, 'GBP', 1, 1);
-
-INSERT INTO project_translations (project_id, language_id, title, slug, description) VALUES
-(1, 1, 'Marina Heights Residences', 'marina-heights-residences', 'Lorem ipsum dolor sit amet — premium waterfront residential development with 420 luxury apartments.'),
-(2, 1, 'Central Business Tower', 'central-business-tower', 'Lorem ipsum dolor sit amet — 42-storey Grade A office tower in London financial district.'),
-(3, 1, 'Greenfield Industrial Park', 'greenfield-industrial-park', 'Lorem ipsum dolor sit amet — next-generation industrial park for advanced manufacturing.'),
-(4, 1, 'Seaside Villa Collection', 'seaside-villa-collection', 'Lorem ipsum dolor sit amet — exclusive collection of 68 Mediterranean-style villas.');
+-- No property projects. Özerman Ticaret publishes brands, stores, and milestones.
 
 -- News categories
 INSERT INTO news_categories (color, sort_order) VALUES
-('#1e3a5f', 0), ('#c9a227', 1), ('#2d6a4f', 2), ('#6b4c9a', 3);
+('#EA4C37', 0), ('#3A3A3C', 1), ('#EA4C37', 2);
 
 INSERT INTO news_category_translations (category_id, language_id, name, slug) VALUES
-(1, 1, 'Corporate', 'corporate'),
-(2, 1, 'Projects', 'projects'),
-(3, 1, 'Sustainability', 'sustainability'),
-(4, 1, 'Partnerships', 'partnerships');
+(1, 1, 'First step', 'first-step'),
+(1, 2, 'İlk Adım', 'ilk-adim'),
+(1, 3, 'الخطوة الأولى', 'first-step-ar'),
+(2, 1, '2018', 'year-2018'),
+(2, 2, '2018', 'year-2018-tr'),
+(2, 3, '2018', 'year-2018-ar'),
+(3, 1, '2020', 'year-2020'),
+(3, 2, '2020', 'year-2020-tr'),
+(3, 3, '2020', 'year-2020-ar');
 
--- News articles
+-- Corporate milestones
 INSERT INTO news (category_id, author_id, status, publish_date, is_featured) VALUES
-(1, 1, 'published', '2026-05-15', 1),
-(2, 1, 'published', '2026-04-22', 0),
-(3, 1, 'published', '2026-03-10', 0),
-(4, 1, 'published', '2026-02-18', 0);
+(1, 1, 'published', '2016-01-01', 1),
+(2, 1, 'published', '2018-01-01', 1),
+(3, 1, 'published', '2020-01-01', 1);
 
 INSERT INTO news_translations (news_id, language_id, title, slug, excerpt, content) VALUES
-(1, 1, 'Ozerman Ltd Expands into Renewable Energy Sector', 'ozerman-expands-into-renewable-energy',
- 'Lorem ipsum dolor sit amet — strategic investment in solar and wind energy projects.',
- '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. The group announces a strategic investment in solar and wind energy projects across the Middle East and Europe.</p>'),
-(2, 1, 'Groundbreaking Ceremony Held for Marina Heights Residences', 'marina-heights-groundbreaking-ceremony',
- 'Lorem ipsum dolor sit amet — ceremony marking the start of construction on this landmark Dubai development.',
- '<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Over 200 guests attended the groundbreaking ceremony.</p>'),
-(3, 1, 'Ozerman Publishes 2025 Sustainability Report', 'sustainability-report-2025',
- 'Lorem ipsum dolor sit amet — annual report highlights carbon reduction and community investment.',
- '<p>Ut enim ad minim veniam. Key highlights include a 23% reduction in carbon emissions.</p>'),
-(4, 1, 'Strategic Partnership Announced for Logistics Expansion', 'new-partnership-logistics-expansion',
- 'Lorem ipsum dolor sit amet — joint venture to strengthen logistics network across Central Asia.',
- '<p>Duis aute irure dolor in reprehenderit. New warehousing facilities in Poland, Kazakhstan, and Georgia.</p>');
+(1, 1, 'Bebecik Online', 'bebecik-online', 'The entrepreneurial journey that began with online sales in baby products.', '<p>Bebecik Online is the first step of the journey that later became Özerman Ticaret.</p>'),
+(1, 2, 'Bebecik Online', 'bebecik-online-tr', 'Bebek ürünleri alanında çevrim içi satışla başlayan girişimcilik yolculuğu.', '<p>Bebecik Online, bugün Özerman Ticaret’e dönüşen yolculuğun ilk adımıdır.</p>'),
+(1, 3, 'بيبيسيك أونلاين', 'bebecik-online-ar', 'رحلة ريادية بدأت بالبيع عبر الإنترنت في مجال منتجات الرضع.', '<p>بيبيسيك أونلاين هي الخطوة الأولى في الرحلة التي أصبحت أوزرمان للتجارة.</p>'),
+(2, 1, 'Daphne Baby', 'daphne-baby-2018', 'Daphne Baby opened its store in Famagusta.', '<p>In 2018 Daphne Baby opened in Famagusta and became the company’s own brand in baby products.</p>'),
+(2, 2, 'Daphne Baby', 'daphne-baby-2018-tr', 'Gazimağusa’da Daphne Baby mağazasının açılması.', '<p>2018 yılında Daphne Baby, Gazimağusa’da açıldı.</p>'),
+(2, 3, 'دافني بيبي', 'daphne-baby-2018-ar', 'افتتاح متجر دافني بيبي في فاماغوستا.', '<p>في عام 2018 افتُتحت دافني بيبي في فاماغوستا.</p>'),
+(3, 1, 'Özerman Ticaret', 'ozerman-ticaret-2020', 'Retail experience became a corporate trading and distribution structure.', '<p>Özerman Ticaret was founded in 2020 by Emin Özerman in Cyprus.</p>'),
+(3, 2, 'Özerman Ticaret', 'ozerman-ticaret-2020-tr', 'Perakende deneyiminin kurumsal ticaret ve distribütörlük yapısına dönüşmesi.', '<p>Özerman Ticaret, 2020 yılında Emin Özerman tarafından Kıbrıs’ta kuruldu.</p>'),
+(3, 3, 'أوزرمان للتجارة', 'ozerman-ticaret-2020-ar', 'تحوّل تجربة التجزئة إلى هيكل تجارة وتوزيع مؤسسي.', '<p>تأسست أوزرمان للتجارة عام 2020 على يد أمين أوزرمان في قبرص.</p>');
 
 -- Offices
 INSERT INTO offices (phone, email, is_headquarters, is_active) VALUES
-('+44 20 7946 0958', 'info@ozermanltd.com', 1, 1),
-('+971 4 123 4567', 'dubai@ozermanltd.com', 0, 1),
-('+90 212 123 4567', 'istanbul@ozermanltd.com', 0, 1);
+('', 'info@ozermanltd.com', 1, 1);
 
 INSERT INTO office_translations (office_id, language_id, label, address, city, country, working_hours) VALUES
-(1, 1, 'Head Office', '25 Canary Wharf, London E14 5AB', 'London', 'United Kingdom', 'Mon–Fri: 9:00 AM – 6:00 PM'),
-(2, 1, 'Middle East Office', 'Dubai International Financial Centre, Gate Village 3', 'Dubai', 'United Arab Emirates', 'Sun–Thu: 9:00 AM – 5:00 PM'),
-(3, 1, 'Turkey Office', 'Levent Business District, Büyükdere Cad. No: 185', 'Istanbul', 'Turkey', 'Mon–Fri: 9:00 AM – 6:00 PM');
+(1, 1, 'Head Office', 'Cyprus', 'Nicosia', 'Cyprus', 'Visiting hours will be added.'),
+(1, 2, 'Genel Merkez', 'Kıbrıs', 'Lefkoşa', 'Kıbrıs', 'Ziyaret saatleri eklenecek.'),
+(1, 3, 'المقر الرئيسي', 'قبرص', 'نيقوسيا', 'قبرص', 'ستُضاف ساعات الزيارة.');
 
 -- Settings
 INSERT INTO settings (`group`, `key`, value, type, label) VALUES
 ('general', 'site_name', 'Özerman Ticaret', 'text', 'Site Name'),
-('general', 'site_tagline', 'Import. Partner. Deliver.', 'text', 'Tagline'),
-('social', 'linkedin', 'https://linkedin.com/company/ozermanltd', 'text', 'LinkedIn URL'),
-('social', 'twitter', 'https://twitter.com/ozermanltd', 'text', 'Twitter URL'),
-('analytics', 'plausible_domain', 'ozermanltd.com', 'text', 'Plausible Analytics Domain'),
+('general', 'site_tagline', 'Distinguished brands. A strong local structure.', 'text', 'Tagline'),
+('analytics', 'plausible_domain', 'ozermanltd.com', 'text', 'Analytics domain'),
 ('system', 'maintenance_mode', '0', 'boolean', 'Maintenance Mode');
 
 -- Menus (aligned with DummyData / TR frontend reference)
@@ -139,15 +126,15 @@ INSERT INTO menu_item_translations (item_id, language_id, label) VALUES
 (1, 1, 'Home'), (1, 2, 'Ana Sayfa'), (1, 3, 'الرئيسية'),
 (2, 1, 'About Us'), (2, 2, 'Hakkımızda'), (2, 3, 'من نحن'),
 (3, 1, 'Our Stores'), (3, 2, 'Mağazalarımız'), (3, 3, 'متاجرنا'),
-(4, 1, 'Partnerships'), (4, 2, 'İş Ortaklıkları'), (4, 3, 'الشراكات'),
-(5, 1, 'News'), (5, 2, 'Haberler'), (5, 3, 'الأخبار'),
+(4, 1, 'Our Brands'), (4, 2, 'Markalarımız'), (4, 3, 'علاماتنا'),
+(5, 1, 'Corporate'), (5, 2, 'Kurumsal'), (5, 3, 'المؤسسي'),
 (6, 1, 'Gallery'), (6, 2, 'Galeri'), (6, 3, 'المعرض'),
 (7, 1, 'Contact'), (7, 2, 'İletişim'), (7, 3, 'اتصل بنا');
 
 -- Footer column titles
 INSERT INTO menu_translations (menu_id, language_id, title) VALUES
 (2, 1, 'Quick Links'), (2, 2, 'Hızlı Bağlantılar'), (2, 3, 'روابط سريعة'),
-(3, 1, 'Explore'), (3, 2, 'Keşfet'), (3, 3, 'استكشف'),
+(3, 1, 'Explore'), (3, 2, 'Keşfedin'), (3, 3, 'استكشف'),
 (4, 1, 'Legal'), (4, 2, 'Yasal'), (4, 3, 'قانوني');
 
 -- Footer column 1: Quick Links (items 8-12)
@@ -161,88 +148,87 @@ INSERT INTO menu_items (menu_id, url, sort_order) VALUES
 INSERT INTO menu_item_translations (item_id, language_id, label) VALUES
 (8, 1, 'About Us'), (8, 2, 'Hakkımızda'), (8, 3, 'من نحن'),
 (9, 1, 'Our Stores'), (9, 2, 'Mağazalarımız'), (9, 3, 'متاجرنا'),
-(10, 1, 'Partnerships'), (10, 2, 'İş Ortaklıkları'), (10, 3, 'الشراكات'),
-(11, 1, 'News'), (11, 2, 'Haberler'), (11, 3, 'الأخبار'),
+(10, 1, 'Our Brands'), (10, 2, 'Markalarımız'), (10, 3, 'علاماتنا'),
+(11, 1, 'Corporate'), (11, 2, 'Kurumsal'), (11, 3, 'المؤسسي'),
 (12, 1, 'Gallery'), (12, 2, 'Galeri'), (12, 3, 'المعرض');
 
 -- Footer column 2: Explore (items 13-16)
 INSERT INTO menu_items (menu_id, url, sort_order) VALUES
 (3, '/partnerships', 0),
 (3, '/our-stores', 1),
-(3, '/contact', 2),
-(3, '/gallery', 3);
+(3, '/contact', 2);
 
 INSERT INTO menu_item_translations (item_id, language_id, label) VALUES
-(13, 1, 'Represented Brands'), (13, 2, 'Temsil Edilen Markalar'), (13, 3, 'العلامات الممثلة'),
-(14, 1, 'Showrooms'), (14, 2, 'Showroomlar'), (14, 3, 'صالات العرض'),
-(15, 1, 'Partnership Inquiries'), (15, 2, 'Ortaklık Talepleri'), (15, 3, 'استفسارات الشراكة'),
-(16, 1, 'Media Gallery'), (16, 2, 'Medya Galerisi'), (16, 3, 'معرض الوسائط');
+(13, 1, 'Our Brand Portfolio'), (13, 2, 'Marka Portföyümüz'), (13, 3, 'محفظة العلامات'),
+(14, 1, 'Stores'), (14, 2, 'Mağazalar'), (14, 3, 'المتاجر'),
+(15, 1, 'Partnership Inquiries'), (15, 2, 'İş Birliği Talepleri'), (15, 3, 'طلبات التعاون');
 
--- Footer column 3: Legal (items 17-19)
+-- Footer column 3: Legal (items 16-18). Gallery links stay in the menu but hidden.
 INSERT INTO menu_items (menu_id, url, sort_order) VALUES
 (4, '/privacy-policy', 0),
 (4, '/cookie-policy', 1),
 (4, '/cookie-settings', 2);
 
 INSERT INTO menu_item_translations (item_id, language_id, label) VALUES
-(17, 1, 'Privacy Policy'), (17, 2, 'Gizlilik Politikası'), (17, 3, 'سياسة الخصوصية'),
-(18, 1, 'Cookie Policy'), (18, 2, 'Çerez Politikası'), (18, 3, 'سياسة ملفات تعريف الارتباط'),
-(19, 1, 'Cookie Settings'), (19, 2, 'Çerez Ayarları'), (19, 3, 'إعدادات ملفات تعريف الارتباط');
+(16, 1, 'Privacy Policy'), (16, 2, 'Gizlilik Politikası'), (16, 3, 'سياسة الخصوصية'),
+(17, 1, 'Cookie Policy'), (17, 2, 'Çerez Politikası'), (17, 3, 'سياسة ملفات تعريف الارتباط'),
+(18, 1, 'Cookie Settings'), (18, 2, 'Çerez Ayarları'), (18, 3, 'إعدادات ملفات تعريف الارتباط');
+
+UPDATE menu_items SET is_active = 0 WHERE id IN (6, 12);
 
 -- Stat counters (homepage) — all locales
 INSERT INTO stat_counters (page_id, language_id, label, value, suffix, sort_order) VALUES
-(1, 1, 'Years in Trade', '20+', 'Years', 0),
-(1, 1, 'Brand Partners', '12+', 'Partners', 1),
-(1, 1, 'Retail Points', '8', 'Stores', 2),
-(1, 1, 'SKU Portfolio', '1,200+', 'SKUs', 3),
-(1, 2, 'Yıllık Ticaret', '20+', 'Yıl', 0),
-(1, 2, 'Marka Ortağı', '12+', 'Ortak', 1),
-(1, 2, 'Satış Noktası', '8', 'Mağaza', 2),
-(1, 2, 'Ürün Çeşidi', '1,200+', 'SKU', 3),
-(1, 3, 'سنوات في التجارة', '20+', '', 0),
-(1, 3, 'شركاء علامات', '12+', '', 1),
-(1, 3, 'نقاط بيع', '8', '', 2),
-(1, 3, 'تنوع المنتجات', '1,200+', '', 3);
+(1, 1, 'Year Founded', '2020', '', 0),
+(1, 1, 'Customers Reached', '3.000+', '', 1),
+(1, 1, 'Store Count', '2', '', 2),
+(1, 1, 'Team Members', '10', '', 3),
+(1, 2, 'Kuruluş Yılı', '2020', '', 0),
+(1, 2, 'Ulaşılan Müşteri', '3.000+', '', 1),
+(1, 2, 'Mağaza Sayısı', '2', '', 2),
+(1, 2, 'Ekip Üyesi', '10', '', 3),
+(1, 3, 'سنة التأسيس', '2020', '', 0),
+(1, 3, 'عملاء تم الوصول إليهم', '3.000+', '', 1),
+(1, 3, 'عدد المتاجر', '2', '', 2),
+(1, 3, 'أعضاء الفريق', '10', '', 3);
 
 -- Team members
 INSERT INTO team_members (type, sort_order, is_active) VALUES
-('founder', 0, 1), ('management', 1, 1), ('management', 2, 1), ('management', 3, 1);
+('founder', 0, 1);
 
 INSERT INTO team_member_translations (member_id, language_id, full_name, position, bio) VALUES
-(1, 1, 'James Ozerman', 'Founder & Chairman', 'Lorem ipsum dolor sit amet — 35+ years of international business experience.'),
-(2, 1, 'Sarah Mitchell', 'Chief Executive Officer', 'Lorem ipsum dolor sit amet — 20 years in construction and real estate leadership.'),
-(3, 1, 'Ahmet Yılmaz', 'Chief Financial Officer', 'Lorem ipsum dolor sit amet — oversees financial strategy across 28 countries.'),
-(4, 1, 'Fatima Al-Rashid', 'Director of International Trade', 'Lorem ipsum dolor sit amet — leads trading division across Middle East, Africa, and Asia.');
+(1, 1, 'Emin Özerman', 'Founder', 'Founded Özerman Ticaret in Cyprus in 2020, building on the Daphne Baby retail journey that began in Famagusta in 2018.'),
+(1, 2, 'Emin Özerman', 'Kurucu', 'Özerman Ticaret’i 2020 yılında Kıbrıs’ta kurdu. 2018’de Gazimağusa’da başlayan Daphne Baby perakende yolculuğunu kurumsal yapıya taşıdı.'),
+(1, 3, 'أمين أوزرمان', 'المؤسس', 'أسس أوزرمان للتجارة في قبرص عام 2020، انطلاقًا من تجربة دافني بيبي التي بدأت في فاماغوستا عام 2018.');
 
 -- Brands (partnerships)
 INSERT INTO brands (slug, logo, website_url, sort_order, is_active) VALUES
 ('lajivert', 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80', 'https://www.lajivert.com.tr', 0, 1),
-('aymini', 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80', 'https://www.aymini.com', 1, 1);
+('aymini', 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80', 'https://www.aymini.com', 1, 1),
+('daphne-baby', 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80', '', 2, 1);
 
 INSERT INTO brand_translations (brand_id, language_id, name, tagline, description) VALUES
-(1, 1, 'Lajivert', 'Youth & kids room collections', 'Lajivert is among the brands we import and present through our retail network — contemporary youth and children’s furniture for growing households.'),
-(1, 2, 'Lajivert', 'Genç ve çocuk odası koleksiyonları', 'Lajivert, ithal ettiğimiz ve perakende ağımızda sunduğumuz markalardandır — büyüyen aileler için çağdaş genç ve çocuk mobilyaları.'),
-(1, 3, 'Lajivert', 'مجموعات غرف الشباب والأطفال', 'لاجيڤيرت من العلامات التي نستوردها ونعرضها عبر شبكة التجزئة — أثاث معاصر للشباب والأطفال.'),
-(2, 1, 'Aymini', 'Baby furniture designed with care', 'Aymini baby furniture is part of our current import portfolio, combining design quality with materials chosen for safer nursery environments.'),
-(2, 2, 'Aymini', 'Özenle tasarlanmış bebek mobilyaları', 'Aymini bebek mobilyaları mevcut ithalat portföyümüzün bir parçasıdır; tasarım kalitesini daha güvenli bebek odası malzemeleriyle birleştirir.'),
-(2, 3, 'Aymini', 'أثاث أطفال مصمم بعناية', 'أثاث أيميني للرضع جزء من محفظة الاستيراد الحالية، يجمع جودة التصميم ومواد مختارة لبيئات أكثر أمانًا.');
+(1, 1, 'Lajivert', 'Baby, kids and youth rooms', 'As Lajivert’s Cyprus distributor, we bring collections for children’s and youth living spaces to our customers.'),
+(1, 2, 'Lajivert', 'Bebek, Çocuk ve Genç Odaları', 'Lajivert’in Kıbrıs distribütörlüğünü üstlenerek çocuk ve genç yaşam alanlarına yönelik koleksiyonları müşterilerimizle buluşturuyoruz.'),
+(1, 3, 'Lajivert', 'غرف الرضع والأطفال والشباب', 'بصفتنا موزّع لاجيڤيرت في قبرص، نقدّم مجموعات مساحات معيشة الأطفال والشباب لعملائنا.'),
+(2, 1, 'Aymini', 'Baby furniture', 'Through the Aymini Cyprus distributorship, we bring baby-room furniture to the local market.'),
+(2, 2, 'Aymini', 'Bebek Mobilyaları', 'Aymini markasının Kıbrıs distribütörlüğüyle bebek odası mobilyalarını yerel pazara sunuyoruz.'),
+(2, 3, 'Aymini', 'أثاث الرضع', 'من خلال وكالة أيميني في قبرص نقدّم أثاث غرف الرضع للسوق المحلي.'),
+(3, 1, 'Daphne Baby', 'Özerman Ticaret’s own brand', 'The original brand of our retail journey in baby products.'),
+(3, 2, 'Daphne Baby', 'Özerman Ticaret''in kendi markası', 'Bebek ürünleri alanında başlayan perakende deneyimimizin özgün markası.'),
+(3, 3, 'Daphne Baby', 'العلامة الخاصة بأوزرمان للتجارة', 'العلامة الأصيلة لتجربتنا في تجزئة منتجات الرضع.');
 
 -- Stores
 INSERT INTO stores (phone, email, sort_order, is_active) VALUES
-('+90 212 000 00 01', 'istanbul@ozermanltd.com', 0, 1),
-('+90 312 000 00 02', 'ankara@ozermanltd.com', 1, 1),
-('+90 232 000 00 03', 'izmir@ozermanltd.com', 2, 1);
+('', 'info@ozermanltd.com', 0, 1),
+('', 'info@ozermanltd.com', 1, 1);
 
 INSERT INTO store_translations (store_id, language_id, name, slug, city, address, working_hours) VALUES
-(1, 1, 'Istanbul Flagship Showroom', 'istanbul-showroom', 'Istanbul', 'Lorem Cad. No:42, Dummy Mah., Kadıköy', 'Mon–Sat: 10:00 – 20:00'),
-(1, 2, 'İstanbul Merkez Showroom', 'istanbul-showroom', 'İstanbul', 'Lorem Cad. No:42, Dummy Mah., Kadıköy', 'Pzt–Cmt: 10:00 – 20:00'),
-(1, 3, 'صالة عرض إسطنبول الرئيسية', 'istanbul-showroom', 'إسطنبول', 'شارع لوريم رقم 42، حي دامّي، كاديكوي', 'الإثنين–السبت: 10:00 – 20:00'),
-(2, 1, 'Ankara Retail Store', 'ankara-store', 'Ankara', 'Ipsum Bulvarı 18/B, Placeholder Plaza', 'Mon–Sat: 10:00 – 19:00'),
-(2, 2, 'Ankara Perakende Mağaza', 'ankara-store', 'Ankara', 'Ipsum Bulvarı 18/B, Placeholder Plaza', 'Pzt–Cmt: 10:00 – 19:00'),
-(2, 3, 'متجر أنقرة للتجزئة', 'ankara-store', 'أنقرة', 'شارع إيبسوم 18/ب، بلازا مؤقتة', 'الإثنين–السبت: 10:00 – 19:00'),
-(3, 1, 'Izmir Concept Corner', 'izmir-corner', 'Izmir', 'Dolor Sok. 7, Gibberish AVM Kat:2', 'Daily: 11:00 – 21:00'),
-(3, 2, 'İzmir Konsept Köşe', 'izmir-corner', 'İzmir', 'Dolor Sok. 7, Gibberish AVM Kat:2', 'Her gün: 11:00 – 21:00'),
-(3, 3, 'ركن إزمير المفاهيمي', 'izmir-corner', 'إزمير', 'شارع دولور 7، مجمع جيبريش الطابق 2', 'يوميًا: 11:00 – 21:00');
+(1, 1, 'Nicosia Store', 'lefkosa-store', 'Cyprus', 'Current address and visiting details will be added.', 'Visiting hours will be added.'),
+(1, 2, 'Lefkoşa Mağazası', 'lefkosa-store', 'Kıbrıs', 'Güncel adres ve ziyaret bilgileri eklenecek.', 'Ziyaret saatleri eklenecek.'),
+(1, 3, 'متجر نيقوسيا', 'lefkosa-store', 'قبرص', 'سيتم إضافة العنوان الحالي وتفاصيل الزيارة.', 'ستُضاف ساعات الزيارة.'),
+(2, 1, 'Famagusta Store', 'gazimagusa-store', 'Cyprus', 'Current address and visiting details will be added.', 'Visiting hours will be added.'),
+(2, 2, 'Gazimağusa Mağazası', 'gazimagusa-store', 'Kıbrıs', 'Güncel adres ve ziyaret bilgileri eklenecek.', 'Ziyaret saatleri eklenecek.'),
+(2, 3, 'متجر فاماغوستا', 'gazimagusa-store', 'قبرص', 'سيتم إضافة العنوان الحالي وتفاصيل الزيارة.', 'ستُضاف ساعات الزيارة.');
 
 -- Content blocks: home operations, about values, vision, mission
 INSERT INTO content_blocks (area, icon, sort_order, is_active) VALUES
@@ -257,33 +243,33 @@ INSERT INTO content_blocks (area, icon, sort_order, is_active) VALUES
 ('about_mission', NULL, 0, 1);
 
 INSERT INTO content_block_translations (block_id, language_id, title, body) VALUES
-(1, 1, 'Import & Trade', 'We source and import selected goods with disciplined procurement, logistics coordination, and reliable wholesale pathways.'),
-(1, 2, 'İthalat ve Ticaret', 'Seçili ürünleri disiplinli tedarik, lojistik koordinasyon ve güvenilir toptan satış kanallarıyla ithal ederiz.'),
-(1, 3, 'الاستيراد والتجارة', 'نستورد سلعًا مختارة عبر مشتريات منضبطة وتنسيق لوجستي ومسارات جملة موثوقة.'),
-(2, 1, 'Brand Partnerships', 'We represent and grow brand relationships across categories — furniture today, with room to expand the portfolio tomorrow.'),
-(2, 2, 'Marka Ortaklıkları', 'Kategoriler arasında marka ilişkilerini temsil eder ve büyütürüz — bugün mobilya, yarın genişleyen bir portföy.'),
-(2, 3, 'شراكات العلامات', 'نمثل وننمي علاقات العلامات عبر الفئات — الأثاث اليوم، ومحفظة قابلة للتوسع غدًا.'),
-(3, 1, 'Retail & Stores', 'Through our showrooms and retail points, customers meet imported collections with local service and guidance.'),
-(3, 2, 'Perakende ve Mağazalar', 'Showroom ve satış noktalarımızda müşteriler ithal koleksiyonlarla yerel hizmet ve rehberlik bulur.'),
-(3, 3, 'التجزئة والمتاجر', 'عبر صالات العرض ونقاط البيع يلتقي العملاء بالمجموعات المستوردة مع خدمة محلية وإرشاد.'),
-(4, 1, 'Integrity', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. We conduct business with transparency, honesty, and ethical standards in every market we serve.'),
-(4, 2, 'Dürüstlük', 'Lorem ipsum dolor sit amet. Hizmet verdiğimiz her pazarda şeffaflık, dürüstlük ve etik standartlarla iş yapıyoruz.'),
-(4, 3, 'النزاهة', 'نمارس الأعمال بشفافية وأمانة ومعايير أخلاقية في كل سوق نخدمه.'),
-(5, 1, 'Innovation', 'Sed do eiusmod tempor incididunt ut labore. We embrace new technologies and creative solutions to deliver exceptional value to our clients and communities.'),
-(5, 2, 'Yenilik', 'Sed do eiusmod tempor. Müşterilerimize ve topluluklarımıza olağanüstü değer sunmak için yeni teknolojileri ve yaratıcı çözümleri benimsiyoruz.'),
-(5, 3, 'الابتكار', 'نتبنى التقنيات الجديدة والحلول الإبداعية لتقديم قيمة استثنائية لعملائنا ومجتمعاتنا.'),
-(6, 1, 'Excellence', 'Ut enim ad minim veniam, quis nostrud exercitation. We pursue the highest standards of quality in every project, product, and service we deliver.'),
-(6, 2, 'Mükemmellik', 'Ut enim ad minim veniam. Sunduğumuz her proje, ürün ve hizmette en yüksek kalite standartlarını hedefliyoruz.'),
-(6, 3, 'التميز', 'نسعى لتحقيق أعلى معايير الجودة في كل مشروع ومنتج وخدمة نقدمها.'),
-(7, 1, 'Sustainability', 'Duis aute irure dolor in reprehenderit. We are committed to environmentally responsible practices and creating lasting positive impact for future generations.'),
-(7, 2, 'Sürdürülebilirlik', 'Duis aute irure dolor. Çevreye duyarlı uygulamalara ve gelecek nesiller için kalıcı olumlu etki yaratmaya kararlıyız.'),
-(7, 3, 'الاستدامة', 'نلتزم بممارسات مسؤولة بيئيًا وخلق تأثير إيجابي دائم للأجيال القادمة.'),
-(8, 1, 'Vision', 'To be a trusted importer and retail partner — connecting quality brands with customers through integrity and local service.'),
-(8, 2, 'Vizyon', 'Kaliteli markaları dürüstlük ve yerel hizmetle müşterilere bağlayan, güvenilir bir ithalatçı ve perakende ortağı olmak.'),
-(8, 3, 'الرؤية', 'أن نكون مستوردًا وشريك تجزئة موثوقًا — نربط العلامات الجيدة بالعملاء عبر النزاهة والخدمة المحلية.'),
-(9, 1, 'Mission', 'To import with care, represent brands responsibly, and deliver a clear retail experience across our stores and partner channels.'),
-(9, 2, 'Misyon', 'Özenle ithal etmek, markaları sorumlu şekilde temsil etmek ve mağazalarımız ile iş ortaklığı kanallarımızda net bir perakende deneyimi sunmak.'),
-(9, 3, 'المهمة', 'الاستيراد بعناية، وتمثيل العلامات بمسؤولية، وتقديم تجربة تجزئة واضحة عبر متاجرنا وقنوات الشركاء.');
+(1, 1, 'Distribution & Trade', 'We connect the brands we select with the Cyprus market and coordinate product supply and commercial processes.'),
+(1, 2, 'Distribütörlük ve Ticaret', 'Seçtiğimiz markaları Kıbrıs pazarıyla buluşturuyor, ürün tedariği ve ticari süreçleri koordineli biçimde yürütüyoruz.'),
+(1, 3, 'التوزيع والتجارة', 'نجمع العلامات التي نختارها مع سوق قبرص وننسّق توريد المنتجات والعمليات التجارية.'),
+(2, 1, 'Brand Partnerships', 'We support brand positioning and local-market growth with a long-term partnership approach.'),
+(2, 2, 'Marka İş Birlikleri', 'Markaların konumlandırmasını ve yerel pazardaki gelişimini uzun vadeli iş ortaklığı anlayışıyla destekliyoruz.'),
+(2, 3, 'تعاونات العلامات', 'ندعم تموضع العلامات ونموها في السوق المحلي بمنهج شراكة طويل الأمد.'),
+(3, 1, 'Retail & After-Sales Service', 'We provide store retail, product consultancy, free island-wide delivery and installation, plus warranty and spare-parts support.'),
+(3, 2, 'Perakende ve Satış Sonrası Hizmet', 'Mağazacılık, ürün danışmanlığı, ücretsiz ada geneli teslimat ve kurulum ile garanti ve yedek parça desteği sunuyoruz.'),
+(3, 3, 'التجزئة وخدمة ما بعد البيع', 'نقدّم البيع بالتجزئة واستشارات المنتج والتوصيل والتركيب المجاني في الجزيرة ودعم الضمان وقطع الغيار.'),
+(4, 1, 'Care', 'We are careful in the products and services we choose, and we take responsibility at every stage of the shopping experience.'),
+(4, 2, 'Özen', 'Ürün ve hizmet seçiminde titizlik gösterir, alışverişin her aşamasında sorumluluk üstleniriz.'),
+(4, 3, 'العناية', 'نختار المنتجات والخدمات بعناية ونتحمّل المسؤولية في كل مرحلة من تجربة التسوق.'),
+(5, 1, 'Partnership', 'We protect the values of the brands we represent and build stable, transparent relationships with partners and customers.'),
+(5, 2, 'İş Birliği', 'Temsil ettiğimiz markaların değerlerini korur, iş ortaklarımız ve müşterilerimizle istikrarlı ve şeffaf ilişkiler kurarız.'),
+(5, 3, 'الشراكة', 'نحمي قيم العلامات التي نمثلها ونبني علاقات مستقرة وشفافة مع الشركاء والعملاء.'),
+(6, 1, 'Service', 'Product consultancy, free island-wide delivery and installation, warranty work, and spare parts are handled together.'),
+(6, 2, 'Hizmet', 'Ürün danışmanlığı, ücretsiz ada geneli teslimat ve kurulum, garanti işlemleri ve yedek parça desteğini birlikte yürütürüz.'),
+(6, 3, 'الخدمة', 'نقدّم استشارات المنتج والتوصيل والتركيب المجاني في الجزيرة وإجراءات الضمان وقطع الغيار معًا.'),
+(7, 1, 'Local focus', 'We work in Cyprus with a long-term view, from our stores in Nicosia and Famagusta.'),
+(7, 2, 'Yerel Odak', 'Lefkoşa ve Gazimağusa mağazalarımızla Kıbrıs’ta uzun vadeli bir bakışla çalışırız.'),
+(7, 3, 'التركيز المحلي', 'نعمل في قبرص بنظرة طويلة الأمد، من متاجرنا في نيقوسيا وفاماغوستا.'),
+(8, 1, 'Vision', '<p>To be one of the reference companies in retail and distribution in Cyprus, distinguished by a strong brand portfolio and corporate structure.</p><p>To carry the partnerships we build with national and international brands into different sectors and categories, support the growth of the brands we represent in the island market, and raise retail service standards in Cyprus.</p>'),
+(8, 2, 'Vizyon', '<p>Kıbrıs’ta perakende ve distribütörlük alanında referans gösterilen, güçlü marka portföyü ve kurumsal yapısıyla öne çıkan şirketlerden biri olmak.</p><p>Ulusal ve uluslararası markalarla geliştirdiğimiz iş birliklerini farklı sektör ve kategorilere taşıyarak, temsil ettiğimiz markaların ada pazarındaki gelişimine katkı sağlamak ve Kıbrıs’ta perakendeciliğin hizmet standartlarını ileriye taşımak.</p>'),
+(8, 3, 'الرؤية', '<p>أن نكون من الشركات المرجعية في التجزئة والتوزيع في قبرص، بفضل محفظة علامات قوية وهيكل مؤسسي متين.</p><p>نقل التعاونات التي نبنيها مع العلامات الوطنية والدولية إلى قطاعات وفئات مختلفة، ودعم نمو العلامات التي نمثلها في سوق الجزيرة، والارتقاء بمعايير خدمة التجزئة في قبرص.</p>'),
+(9, 1, 'Mission', '<p>To work with an approach that understands customer expectations, is careful in product and service selection, and takes responsibility at every stage of shopping.</p><p>To deliver product consultancy, free island-wide delivery and installation, warranty procedures, and spare-parts support in a coordinated way with our professional team.</p><p>To protect the values of the brands we represent and to build stable, transparent, and sustainable commercial relationships for our partners and customers.</p>'),
+(9, 2, 'Misyon', '<p>Müşterilerimizin beklentilerini doğru anlayan, ürün ve hizmet seçiminde titizlik gösteren, alışverişin her aşamasında sorumluluk üstlenen bir çalışma anlayışı benimsemek.</p><p>Profesyonel ekibimizle ürün danışmanlığı, ada genelinde ücretsiz teslimat ve kurulum, garanti kapsamındaki işlemler ve yedek parça desteğini koordineli biçimde yürütmek.</p><p>Temsil ettiğimiz markaların değerlerini koruyarak, iş ortaklarımız ve müşterilerimiz için istikrarlı, şeffaf ve sürdürülebilir ticari ilişkiler geliştirmek.</p>'),
+(9, 3, 'المهمة', '<p>تبنّي أسلوب عمل يفهم توقعات عملائنا بدقة، ويختار المنتجات والخدمات بعناية، ويتحمّل المسؤولية في كل مرحلة من مراحل التسوق.</p><p>تقديم استشارات المنتج والتوصيل والتركيب المجاني في الجزيرة وإجراءات الضمان ودعم قطع الغيار بتنسيق مع فريقنا المهني.</p><p>حماية قيم العلامات التي نمثلها وبناء علاقات تجارية مستقرة وشفافة ومستدامة لشركائنا وعملائنا.</p>');
 
 -- Site banners (page headers + home extras)
 INSERT INTO site_banners (location, fallback_url) VALUES

@@ -40,8 +40,4 @@ interface ContentProviderInterface
     public function operations(string $locale): array;
 
     public function banner(string $location): string;
-
-    public function newsComments(int $newsId): array;
-
-    public function addNewsComment(int $newsId, string $name, string $email, string $content): void;
 }

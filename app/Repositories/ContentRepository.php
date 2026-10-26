@@ -111,16 +111,6 @@ class ContentRepository implements ContentProviderInterface
         return $this->resolve()->banner($location);
     }
 
-    public function newsComments(int $newsId): array
-    {
-        return $this->resolve()->newsComments($newsId);
-    }
-
-    public function addNewsComment(int $newsId, string $name, string $email, string $content): void
-    {
-        $this->resolve()->addNewsComment($newsId, $name, $email, $content);
-    }
-
     public function usingDatabase(): bool
     {
         return $this->shouldUseDatabase();

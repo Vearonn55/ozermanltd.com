@@ -1,4 +1,4 @@
-<section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
+<section class="page-banner bg-brand-900">
     <div class="absolute inset-0 opacity-20">
         <img src="<?= e(content()->banner('contact')) ?>" alt="" class="w-full h-full object-cover">
     </div>
@@ -8,9 +8,9 @@
         </h1>
         <p class="text-brand-300/90 text-lg max-w-2xl font-light">
             <?= e(t([
-                'en' => 'Reach out for import partnerships, wholesale supply, store inquiries, or general questions.',
-                'tr' => 'İthalat ortaklıkları, toptan tedarik, mağaza soruları veya genel konular için bize ulaşın.',
-                'ar' => 'تواصل معنا لشراكات الاستيراد أو الجملة أو استفسارات المتاجر أو الأسئلة العامة.',
+                'en' => 'You can contact us to discuss brand representation and commercial partnerships.',
+                'tr' => 'Marka temsilciliği ve ticari iş birlikleri hakkında görüşmek için bizimle bağlantı kurabilirsiniz.',
+                'ar' => 'يمكنكم التواصل معنا لمناقشة تمثيل العلامات والتعاونات التجارية.',
             ])) ?>
         </p>
     </div>
@@ -32,11 +32,19 @@
                 <?php endif; ?>
                 <?php if (isset($_GET['error'])): ?>
                 <div class="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-sm mb-8">
+                    <?php if (($_GET['error'] ?? '') === 'submit'): ?>
                     <?= e(t([
-                        'en' => 'Please accept the privacy policy and ensure cookies are enabled to submit the form.',
-                        'tr' => 'Lütfen gizlilik politikasını kabul edin ve formu göndermek için çerezlerin etkin olduğundan emin olun.',
-                        'ar' => 'يرجى قبول سياسة الخصوصية والتأكد من تفعيل ملفات تعريف الارتباط لإرسال النموذج.',
+                        'en' => 'We could not send your message just now. Please wait a moment and try again.',
+                        'tr' => 'Mesajınız şu anda gönderilemedi. Lütfen kısa bir süre sonra yeniden deneyin.',
+                        'ar' => 'تعذّر إرسال رسالتك الآن. يرجى الانتظار قليلًا ثم المحاولة مرة أخرى.',
                     ])) ?>
+                    <?php else: ?>
+                    <?= e(t([
+                        'en' => 'Please accept the privacy policy, fill in the required fields, and make sure cookies are enabled.',
+                        'tr' => 'Lütfen gizlilik politikasını kabul edin, zorunlu alanları doldurun ve çerezlerin etkin olduğundan emin olun.',
+                        'ar' => 'يرجى قبول سياسة الخصوصية وملء الحقول المطلوبة والتأكد من تفعيل ملفات تعريف الارتباط.',
+                    ])) ?>
+                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
 
@@ -44,7 +52,12 @@
                     <?= e(t(['en' => 'Send Us a Message', 'tr' => 'Bize Mesaj Gönderin', 'ar' => 'أرسل لنا رسالة'])) ?>
                 </h2>
                 <form action="<?= url('contact') ?>" method="POST" class="space-y-5" data-track-form="contact">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="visitor_uuid" id="visitor_uuid" value="">
+                    <div class="hp-field" aria-hidden="true">
+                        <label for="company_website">Website</label>
+                        <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="grid sm:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-sm font-medium text-brand-700 mb-1.5">
@@ -77,10 +90,10 @@
                             </label>
                             <select name="subject"
                                     class="w-full px-4 py-3 border border-brand-200 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent">
-                                <option><?= e(t(['en' => 'General Inquiry', 'tr' => 'Genel Soru', 'ar' => 'استفسار عام'])) ?></option>
-                                <option><?= e(t(['en' => 'Project Inquiry', 'tr' => 'Proje Sorusu', 'ar' => 'استفسار عن مشروع'])) ?></option>
-                                <option><?= e(t(['en' => 'Partnership', 'tr' => 'Ortaklık', 'ar' => 'شراكة'])) ?></option>
-                                <option><?= e(t(['en' => 'Media & Press', 'tr' => 'Medya ve Basın', 'ar' => 'الإعلام والصحافة'])) ?></option>
+                                <option><?= e(t(['en' => 'General inquiry', 'tr' => 'Genel soru', 'ar' => 'استفسار عام'])) ?></option>
+                                <option><?= e(t(['en' => 'Brand partnership', 'tr' => 'Marka iş birliği', 'ar' => 'تعاون علامة'])) ?></option>
+                                <option><?= e(t(['en' => 'Store visit', 'tr' => 'Mağaza ziyareti', 'ar' => 'زيارة المتجر'])) ?></option>
+                                <option><?= e(t(['en' => 'After-sales support', 'tr' => 'Satış sonrası destek', 'ar' => 'دعم ما بعد البيع'])) ?></option>
                             </select>
                         </div>
                     </div>
@@ -106,7 +119,7 @@
                         </label>
                         <label class="flex items-start gap-3 text-sm text-brand-700">
                             <input type="checkbox" name="consent_marketing" class="mt-1">
-                            <span><?= e(t(['en' => 'I agree to receive marketing communications from Ozerman Ltd.', 'tr' => 'Ozerman Ltd\'den pazarlama iletişimleri almayı kabul ediyorum.', 'ar' => 'أوافق على تلقي اتصالات تسويقية من Ozerman Ltd.'])) ?></span>
+                            <span><?= e(t(['en' => 'I agree to receive messages from Özerman Ticaret.', 'tr' => 'Özerman Ticaret’ten ileti almayı kabul ediyorum.', 'ar' => 'أوافق على تلقي رسائل من أوزرمان للتجارة.'])) ?></span>
                         </label>
                     </div>
                     <button type="submit"
@@ -135,10 +148,12 @@
                                 <svg class="w-4 h-4 mt-0.5 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
                                 <?= e(t($office['address'])) ?>, <?= e($office['city']) ?>, <?= e(t($office['country'])) ?>
                             </li>
+                            <?php if (!empty($office['phone'])): ?>
                             <li class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                                 <a href="tel:<?= e($office['phone']) ?>" class="hover:text-orange-600 transition-colors"><?= e($office['phone']) ?></a>
                             </li>
+                            <?php endif; ?>
                             <li class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                                 <a href="mailto:<?= e($office['email']) ?>" class="hover:text-orange-600 transition-colors"><?= e($office['email']) ?></a>
@@ -147,14 +162,6 @@
                         </ul>
                     </div>
                     <?php endforeach; ?>
-                </div>
-
-                <!-- Map placeholder -->
-                <div class="mt-8 bg-brand-100 rounded-sm overflow-hidden h-64 flex items-center justify-center">
-                    <div class="text-center text-brand-400">
-                        <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-                        <p class="text-sm"><?= e(t(['en' => 'Google Maps Integration', 'tr' => 'Google Haritalar Entegrasyonu', 'ar' => 'تكامل خرائط جوجل'])) ?></p>
-                    </div>
                 </div>
             </div>
         </div>

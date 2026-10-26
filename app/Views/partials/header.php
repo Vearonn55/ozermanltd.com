@@ -17,10 +17,11 @@ $currentLocale = app_locale();
                      class="h-10 sm:h-11 w-auto object-contain transition-opacity group-hover:opacity-90">
             </a>
 
-            <nav class="hidden lg:flex items-center gap-0.5">
+            <nav class="nav-main hidden lg:flex items-center gap-0.5" data-nav-indicator>
+                <span class="nav-indicator" aria-hidden="true"></span>
                 <?php foreach ($nav as $item): ?>
                 <a href="<?= url($item['url']) ?>"
-                   class="px-3.5 py-2 text-sm font-medium rounded-sm transition-colors duration-200 <?= is_active($item['url']) ? 'text-brand-800 border-b-2 border-orange-500' : 'text-brand-500 hover:text-brand-800' ?>">
+                   class="nav-link px-3.5 py-2 text-sm font-medium rounded-sm <?= is_active($item['url']) ? 'is-active text-brand-800' : 'text-brand-500 hover:text-brand-800' ?>">
                     <?= e(t($item['label'])) ?>
                 </a>
                 <?php endforeach; ?>

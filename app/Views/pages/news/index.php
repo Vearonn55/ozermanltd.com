@@ -1,76 +1,54 @@
-<section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
+<section class="page-banner bg-brand-900">
     <div class="absolute inset-0 opacity-20">
         <img src="<?= e(content()->banner('news')) ?>" alt="" class="w-full h-full object-cover">
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
-            <?= e(t(['en' => 'News & Announcements', 'tr' => 'Haberler ve Duyurular', 'ar' => 'الأخبار والإعلانات'])) ?>
+            <?= e(t(['en' => 'Corporate', 'tr' => 'Kurumsal', 'ar' => 'المؤسسي'])) ?>
         </h1>
         <p class="text-brand-300 text-lg max-w-2xl font-light">
             <?= e(t([
-                'en' => 'News and announcements from Özerman Ticaret — partnerships, retail updates, and company notes.',
-                'tr' => 'Özerman Ticaret’ten haberler ve duyurular — ortaklıklar, perakende güncellemeleri ve şirket notları.',
-                'ar' => 'أخبار وإعلانات من أوزرمان للتجارة — الشراكات وتحديثات التجزئة وملاحظات الشركة.',
+                'en' => 'From Bebecik Online and Daphne Baby to Özerman Ticaret, founded in 2020.',
+                'tr' => 'Bebecik Online ve Daphne Baby’den 2020’de kurulan Özerman Ticaret’e.',
+                'ar' => 'من بيبيسيك أونلاين ودافني بيبي إلى أوزرمان للتجارة التي تأسست عام 2020.',
             ])) ?>
         </p>
     </div>
 </section>
 
 <section class="py-20 lg:py-28">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-3 gap-12">
-            <div class="lg:col-span-2 space-y-8">
-                <?php foreach ($articles as $i => $article): ?>
-                <article class="<?= $i === 0 ? 'grid md:grid-cols-2 gap-8 bg-brand-50 p-6 rounded-sm border border-brand-200' : 'flex gap-6 pb-8 border-b border-brand-200' ?> card-hover">
-                    <a href="<?= url('news/' . $article['slug']) ?>" class="<?= $i === 0 ? '' : 'w-48 shrink-0' ?> overflow-hidden rounded-sm">
-                        <img src="<?= e($article['image']) ?>" alt="<?= e(t($article['title'])) ?>"
-                             class="w-full <?= $i === 0 ? 'h-64' : 'h-32' ?> object-cover hover:scale-105 transition-transform duration-300" loading="lazy">
-                    </a>
-                    <div class="flex flex-col justify-center">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="text-xs font-semibold text-gold-600 uppercase"><?= e(t($article['category'])) ?></span>
-                            <span class="text-xs text-brand-400"><?= e(format_date($article['publish_date'])) ?></span>
-                        </div>
-                        <h2 class="font-display <?= $i === 0 ? 'text-2xl' : 'text-lg' ?> font-semibold text-brand-800 mb-2">
-                            <a href="<?= url('news/' . $article['slug']) ?>" class="hover:text-gold-600 transition-colors">
-                                <?= e(t($article['title'])) ?>
-                            </a>
-                        </h2>
-                        <p class="text-sm text-brand-500 <?= $i === 0 ? '' : 'line-clamp-2' ?>"><?= e(t($article['excerpt'])) ?></p>
-                        <?php if ($i === 0): ?>
-                        <a href="<?= url('news/' . $article['slug']) ?>" class="text-sm font-semibold text-brand-800 hover:text-gold-600 mt-4 transition-colors">
-                            <?= e(t(['en' => 'Read More →', 'tr' => 'Devamını Oku →', 'ar' => 'اقرأ المزيد ←'])) ?>
-                        </a>
-                        <?php endif; ?>
-                    </div>
-                </article>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Sidebar -->
-            <aside>
-                <div class="bg-brand-50 p-6 rounded-sm border border-brand-200 sticky top-28">
-                    <h3 class="font-display text-lg font-semibold text-brand-800 mb-4">
-                        <?= e(t(['en' => 'Search', 'tr' => 'Ara', 'ar' => 'بحث'])) ?>
-                    </h3>
-                    <form class="mb-8">
-                        <input type="text" placeholder="<?= e(t(['en' => 'Search articles...', 'tr' => 'Makale ara...', 'ar' => 'ابحث في المقالات...'])) ?>"
-                               class="w-full px-4 py-2.5 border border-brand-200 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent">
-                    </form>
-                    <h3 class="font-display text-lg font-semibold text-brand-800 mb-4">
-                        <?= e(t(['en' => 'Categories', 'tr' => 'Kategoriler', 'ar' => 'الفئات'])) ?>
-                    </h3>
-                    <ul class="space-y-2">
-                        <?php
-                        $categories = array_unique(array_map(fn($a) => t($a['category']), $articles));
-                        foreach ($categories as $cat): ?>
-                        <li>
-                            <a href="#" class="text-sm text-brand-600 hover:text-gold-600 transition-colors"><?= e($cat) ?></a>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <?php if ($articles === []): ?>
+        <p class="text-brand-500">
+            <?= e(t([
+                'en' => 'Milestones will appear here soon.',
+                'tr' => 'Kilometre taşları yakında burada yer alacaktır.',
+                'ar' => 'ستظهر المحطات هنا قريبًا.',
+            ])) ?>
+        </p>
+        <?php endif; ?>
+        <?php foreach ($articles as $i => $article): ?>
+        <article class="reveal grid lg:grid-cols-2 gap-10 items-center">
+            <a href="<?= url('news/' . $article['slug']) ?>" class="overflow-hidden border border-brand-200 <?= $i % 2 === 1 ? 'lg:order-2' : '' ?>">
+                <img src="<?= e($article['image']) ?>" alt="<?= e(t($article['title'])) ?>"
+                     class="w-full h-72 object-cover" loading="lazy">
+            </a>
+            <div class="<?= $i % 2 === 1 ? 'lg:order-1' : '' ?>">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="eyebrow"><?= e(t($article['category'])) ?></span>
+                    <span class="text-xs text-brand-400"><?= e(format_date($article['publish_date'])) ?></span>
                 </div>
-            </aside>
-        </div>
+                <h2 class="font-display text-3xl font-bold text-brand-800 mb-4 accent-line">
+                    <a href="<?= url('news/' . $article['slug']) ?>" class="hover:text-orange-600 transition-colors">
+                        <?= e(t($article['title'])) ?>
+                    </a>
+                </h2>
+                <p class="text-brand-600 leading-relaxed mb-6"><?= e(t($article['excerpt'])) ?></p>
+                <a href="<?= url('news/' . $article['slug']) ?>" class="inline-flex items-center gap-2 text-brand-800 font-semibold hover:text-orange-600 transition-colors duration-200">
+                    <?= e(t(['en' => 'Read More →', 'tr' => 'Devamını Oku →', 'ar' => 'اقرأ المزيد ←'])) ?>
+                </a>
+            </div>
+        </article>
+        <?php endforeach; ?>
     </div>
 </section>

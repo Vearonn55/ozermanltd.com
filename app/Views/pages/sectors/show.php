@@ -36,8 +36,8 @@
                     </h3>
                     <p class="text-sm text-brand-500 mb-6">
                         <?= e(t([
-                            'en' => 'Lorem ipsum dolor sit amet. Contact our team to discuss partnership opportunities.',
-                            'tr' => 'Lorem ipsum dolor sit amet. Ortaklık fırsatlarını görüşmek için ekibimizle iletişime geçin.',
+                            'en' => 'Contact us to talk about brand representation and commercial partnerships.',
+                            'tr' => 'Marka temsilciliği ve ticari iş birlikleri için bizimle iletişime geçin.',
                             'ar' => 'تواصل مع فريقنا لمناقشة فرص الشراكة.',
                         ])) ?>
                     </p>

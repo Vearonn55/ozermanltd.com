@@ -68,9 +68,9 @@ class DashboardController extends BaseAdminController
                 'drafts' => $drafts,
             ]);
         } catch (\Throwable $e) {
+            error_log('Dashboard failed: ' . $e->getMessage());
             throw new \RuntimeException(
-                'Dashboard failed: ' . $e->getMessage()
-                . ' — Import schema.sql + seed.sql (+ analytics_schema.sql) into ozermanl_MAIN via phpMyAdmin.',
+                'The dashboard could not load.',
                 0,
                 $e
             );

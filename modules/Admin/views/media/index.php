@@ -110,7 +110,7 @@
             </div>
 
             <?php if (!$items): ?>
-            <p class="text-sm text-slate-500">No media in this folder yet. Upload files above — do not use cPanel File Manager for routine media.</p>
+            <p class="text-sm text-slate-500">No files in this folder yet. Use the upload form above.</p>
             <?php endif; ?>
 
             <?php if (($pages ?? 1) > 1): ?>

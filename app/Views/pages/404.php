@@ -6,7 +6,7 @@
         </h1>
         <p class="text-brand-500 mb-8 max-w-md mx-auto">
             <?= e(t([
-                'en' => 'Lorem ipsum — the page you are looking for does not exist or has been moved.',
+                'en' => 'The page you are looking for does not exist or has been moved.',
                 'tr' => 'Aradığınız sayfa mevcut değil veya taşınmış olabilir.',
                 'ar' => 'الصفحة التي تبحث عنها غير موجودة أو تم نقلها.',
             ])) ?>

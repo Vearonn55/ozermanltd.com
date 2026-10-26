@@ -82,6 +82,10 @@ Then open `https://ozermanltd.com/admin` and sign in with that email/password.
 
 ## 4. Seed editable QR + catalogues pages
 
+No Terminal needed: after logging into Admin, open **Pages → All Pages** and click **Create QR & Catalogues pages** (shown when they are missing).
+
+Or CLI:
+
 ```bash
 cd ~
 php bin/seed-qr-landings.php
@@ -89,8 +93,8 @@ php bin/seed-qr-landings.php
 
 Creates/updates CMS pages for:
 
-- `/qr`
-- `/catalogues`
+- `/qr` → **LAJIVERT QR**
+- `/catalogues` → **Lajivert Catalogues**
 
 ## 5. Edit HTML / upload catalogues (staff workflow)
 

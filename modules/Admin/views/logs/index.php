@@ -1,9 +1,8 @@
 <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
     <div class="bg-white rounded-xl border border-slate-200 p-4 space-y-2">
         <h2 class="font-semibold text-sm">Log files</h2>
-        <p class="text-xs text-slate-500 break-all"><?= e($logDir) ?></p>
         <?php if (!$files): ?>
-        <p class="text-sm text-slate-500">No log files found. PHP/app logs written to <code>storage/logs/</code> will appear here.</p>
+        <p class="text-sm text-slate-500">No log files yet.</p>
         <?php endif; ?>
         <ul class="space-y-1">
             <?php foreach ($files as $file): ?>

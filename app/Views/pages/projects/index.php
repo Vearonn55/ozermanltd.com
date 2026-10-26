@@ -1,15 +1,15 @@
-<section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
+<section class="page-banner bg-brand-900">
     <div class="absolute inset-0 opacity-20">
         <img src="<?= e(content()->banner('projects')) ?>" alt="" class="w-full h-full object-cover">
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
-            <?= e(t(['en' => 'Our Projects', 'tr' => 'Projelerimiz', 'ar' => 'مشاريعنا'])) ?>
+            <?= e(t(['en' => 'Our Work', 'tr' => 'Çalışmalarımız', 'ar' => 'أعمالنا'])) ?>
         </h1>
         <p class="text-brand-300 text-lg max-w-2xl">
             <?= e(t([
-                'en' => 'Lorem ipsum dolor sit amet — browse our portfolio of residential, commercial, and industrial developments worldwide.',
-                'tr' => 'Lorem ipsum dolor sit amet — dünya çapında konut, ticari ve endüstriyel gelişmelerden oluşan portföyümüze göz atın.',
+                'en' => 'Özerman Ticaret publishes its brands and stores. There is no separate property portfolio.',
+                'tr' => 'Özerman Ticaret markalarını ve mağazalarını yayınlar. Ayrı bir gayrimenkul portföyü yoktur.',
                 'ar' => 'تصفح محفظتنا من التطويرات السكنية والتجارية والصناعية حول العالم.',
             ])) ?>
         </p>
@@ -36,6 +36,15 @@
             <?php endforeach; ?>
         </div>
 
+        <?php if ($projects === []): ?>
+        <p class="text-brand-600 max-w-2xl">
+            <?= e(t([
+                'en' => 'See our brands and stores for the work we do in Cyprus.',
+                'tr' => 'Kıbrıs’ta yaptığımız iş için markalarımıza ve mağazalarımıza bakın.',
+                'ar' => 'اطّلعوا على علاماتنا ومتاجرنا لمعرفة عملنا في قبرص.',
+            ])) ?>
+        </p>
+        <?php endif; ?>
         <div class="grid md:grid-cols-2 gap-8">
             <?php foreach ($projects as $project): ?>
             <div x-show="filter === 'all' || filter === '<?= e($project['status']) ?>'"
@@ -65,7 +74,7 @@
                         <?php if ($project['start_price']): ?>
                         <span class="font-semibold text-brand-800">
                             <?= e(t(['en' => 'From', 'tr' => 'Başlangıç', 'ar' => 'من'])) ?>
-                            £<?= number_format($project['start_price']) ?>
+                            <?= e((string) ($project['currency'] ?? '')) ?> <?= number_format((float) $project['start_price']) ?>
                         </span>
                         <?php endif; ?>
                         <span class="text-brand-400"><?= e($project['delivery_date']) ?></span>

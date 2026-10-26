@@ -174,7 +174,7 @@ class SeoService
     private function normalizeTitle(string $title, bool $appendSuffix): string
     {
         $title = trim($title);
-        $suffix = seo_config('title_suffix', ' | Ozerman Ltd');
+        $suffix = seo_config('title_suffix', ' | Özerman Ticaret');
 
         if ($appendSuffix && $suffix && !str_contains($title, config('name'))) {
             return $title . $suffix;

@@ -48,8 +48,7 @@ $systemLinks = [
        :class="sidebarOpen ? 'flex' : 'hidden md:flex'">
     <div class="cui-sidebar-brand">
         <div>
-            <a href="<?= admin_url() ?>"><?= e((string) admin_config('brand_name', 'CMS')) ?></a>
-            <div class="text-xs" style="color:var(--cui-muted)">CoreUI console</div>
+            <a href="<?= admin_url() ?>"><?= e((string) admin_config('brand_name', 'Dashboard')) ?></a>
         </div>
         <button type="button" @click="sidebarOpen = false" class="md:hidden btn btn-link" aria-label="Close menu">✕</button>
     </div>

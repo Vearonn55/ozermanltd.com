@@ -32,11 +32,6 @@ if ($method === 'POST' && $path === app_locale() . '/contact') {
     exit;
 }
 
-if ($method === 'POST' && preg_match('#^' . preg_quote(app_locale(), '#') . '/news/([^/]+)/review$#', $path, $m)) {
-    $controller->articleReviewSubmit($m[1]);
-    exit;
-}
-
 $relativePath = $path;
 $locale = app_locale();
 if (strpos($relativePath, $locale . '/') === 0) {

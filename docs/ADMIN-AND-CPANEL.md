@@ -23,7 +23,7 @@ If it needs a role → **not** cPanel. If it is about the box staying online →
 | DNS / Domains | Zone editor, subdomains, addon domains |
 | Cron | Trigger only → `php /path/to/bin/*.php` (e.g. analytics sync) |
 | Email | Mailboxes / SPF / DKIM in cPanel; app SMTP via `.env` if needed |
-| PHP | **8.3+**; raise `memory_limit`, `upload_max_filesize`, `post_max_size`, `max_execution_time` for Media Library |
+| PHP | **8.3+**; Media Library allows up to **1 GB** (`max_upload_bytes`). Also set cPanel MultiPHP INI: `upload_max_filesize=1024M`, `post_max_size=1024M` (deployed `public_html/.user.ini` helps; host may still cap lower). |
 | File access | SFTP for deploys; File Manager = emergency only |
 | phpMyAdmin | Developer-only; never routine content/media ops |
 | Writable paths | `storage/`, `public/uploads/` (media), `.env` outside web root when possible |

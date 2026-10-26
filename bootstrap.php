@@ -84,3 +84,9 @@ $config = require CONFIG_PATH . '/app.php';
 $dbConfig = require CONFIG_PATH . '/database.php';
 
 date_default_timezone_set('UTC');
+
+if ((getenv('APP_ENV') ?: 'development') === 'production') {
+    ini_set('display_errors', '0');
+    ini_set('display_startup_errors', '0');
+    ini_set('log_errors', '1');
+}

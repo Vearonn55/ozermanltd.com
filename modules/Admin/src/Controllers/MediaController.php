@@ -69,7 +69,7 @@ class MediaController extends BaseAdminController
 
         $file = $_FILES['file'];
         if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
-            flash('error', 'Upload failed. Check PHP upload limits in cPanel.');
+            flash('error', 'Upload failed. The file may be too large or is not an allowed type (image or PDF).');
             redirect(admin_url('media'));
         }
 

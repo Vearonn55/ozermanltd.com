@@ -102,14 +102,4 @@ class DummyContentProvider implements ContentProviderInterface
     {
         return DummyData::banner($location);
     }
-
-    public function newsComments(int $newsId): array
-    {
-        return [];
-    }
-
-    public function addNewsComment(int $newsId, string $name, string $email, string $content): void
-    {
-        // Dummy provider cannot persist comments.
-    }
 }

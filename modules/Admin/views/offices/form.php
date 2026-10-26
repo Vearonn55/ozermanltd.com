@@ -34,13 +34,14 @@
         </div>
     </div>
 
+    <p class="text-sm text-slate-500">Visiting hours are edited in each language below and shown on the Contact page.</p>
     <?php
     $fields = [
         'label' => 'text',
         'address' => 'textarea',
         'city' => 'text',
         'country' => 'text',
-        'working_hours' => 'text',
+        'working_hours' => ['type' => 'text', 'label' => 'Visiting hours'],
     ];
     admin_partial('lang-tabs', compact('languages', 'item', 'fields'));
     ?>

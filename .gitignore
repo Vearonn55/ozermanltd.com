@@ -19,5 +19,6 @@ public/uploads/*
 
 # Local previews / scratch (not part of the app)
 Ozerman-Ticaret-Frontend-Preview.html
+Ozerman-Ticaret-Copy-Template.html
 original-*.gif
 *.local.html

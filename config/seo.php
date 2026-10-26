@@ -2,7 +2,7 @@
 
 return [
     'default_robots' => 'index, follow',
-    'title_suffix' => ' | Ozerman Ltd',
+    'title_suffix' => ' | Özerman Ticaret',
     'default_og_image' => '/assets/images/og-default.jpg',
 
     'analytics' => [
@@ -32,22 +32,21 @@ return [
 
     'organization_schema' => [
         '@type' => 'Organization',
-        'name' => 'Ozerman Ltd',
+        'name' => 'Özerman Ticaret',
         'url' => 'https://ozermanltd.com',
-        'logo' => 'https://ozermanltd.com/assets/images/logo.svg',
-        'description' => 'A diversified international business group operating across trading, construction, real estate, manufacturing, logistics, and energy.',
+        'logo' => 'https://ozermanltd.com/assets/images/brand/logo-horizontal-dark.png',
+        'description' => 'Özerman Ticaret is a distribution and trading company in Cyprus that connects brands with quality retail service.',
         'address' => [
             '@type' => 'PostalAddress',
-            'streetAddress' => '25 Canary Wharf',
-            'addressLocality' => 'London',
-            'postalCode' => 'E14 5AB',
-            'addressCountry' => 'GB',
+            'addressLocality' => 'Kıbrıs',
+            'addressCountry' => 'CY',
         ],
         'contactPoint' => [
             '@type' => 'ContactPoint',
-            'telephone' => '+44-20-7946-0958',
             'contactType' => 'customer service',
             'email' => 'info@ozermanltd.com',
+            'areaServed' => 'Cyprus',
+            'availableLanguage' => ['Turkish', 'English', 'Arabic'],
         ],
     ],
 ];

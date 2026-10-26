@@ -29,13 +29,14 @@
         </label>
     </div>
 
+    <p class="text-sm text-slate-500">Visiting hours are edited in each language below and shown on the store card.</p>
     <?php
     $fields = [
         'name' => 'text',
         'slug' => 'text',
         'city' => 'text',
         'address' => 'textarea',
-        'working_hours' => 'text',
+        'working_hours' => ['type' => 'text', 'label' => 'Visiting hours'],
     ];
     admin_partial('lang-tabs', compact('languages', 'item', 'fields'));
     ?>

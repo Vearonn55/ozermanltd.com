@@ -1,5 +1,5 @@
 <!-- Page Header -->
-<section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
+<section class="page-banner bg-brand-900">
     <div class="absolute inset-0 opacity-20">
         <img src="<?= e(content()->banner('about')) ?>" alt="" class="w-full h-full object-cover">
     </div>
@@ -12,9 +12,9 @@
         </h1>
         <p class="text-brand-300/90 text-lg max-w-2xl font-light">
             <?= e(t([
-                'en' => 'Discover our story as an importer limited company — values, vision, and the people behind the trade.',
-                'tr' => 'İthalatçı limited şirket olarak hikâyemizi, değerlerimizi, vizyonumuzu ve ticaretin arkasındaki ekibi keşfedin.',
-                'ar' => 'اكتشف قصتنا كشركة استيراد محدودة — القيم والرؤية والفريق وراء التجارة.',
+                'en' => 'Local expertise, a long-term approach — our story, vision, and mission in Cyprus.',
+                'tr' => 'Yerel uzmanlık, uzun vadeli yaklaşım — Kıbrıs’taki hikâyemiz, vizyonumuz ve misyonumuz.',
+                'ar' => 'خبرة محلية ونهج طويل الأمد — قصتنا ورؤيتنا ومهمتنا في قبرص.',
             ])) ?>
         </p>
     </div>
@@ -55,7 +55,7 @@
                 <h3 class="font-display text-2xl font-bold text-brand-800 mb-4">
                     <?= e(t(['en' => 'Our Vision', 'tr' => 'Vizyonumuz', 'ar' => 'رؤيتنا'])) ?>
                 </h3>
-                <p class="text-brand-600 leading-relaxed"><?= e(t($content['vision'])) ?></p>
+                <div class="prose-ozerman text-brand-600 leading-relaxed"><?= t($content['vision']) ?></div>
             </div>
             <div class="reveal bg-brand-50 p-10 rounded-sm border border-brand-200">
                 <div class="w-12 h-12 bg-brand-900 rounded-sm flex items-center justify-center mb-6">
@@ -64,7 +64,7 @@
                 <h3 class="font-display text-2xl font-bold text-brand-800 mb-4">
                     <?= e(t(['en' => 'Our Mission', 'tr' => 'Misyonumuz', 'ar' => 'مهمتنا'])) ?>
                 </h3>
-                <p class="text-brand-600 leading-relaxed"><?= e(t($content['mission'])) ?></p>
+                <div class="prose-ozerman text-brand-600 leading-relaxed"><?= t($content['mission']) ?></div>
             </div>
         </div>
     </div>
@@ -92,6 +92,7 @@
     </div>
 </section>
 
+<?php if (!empty($team)): ?>
 <!-- Management Team -->
 <section class="py-20 lg:py-28 bg-brand-100/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,7 +104,7 @@
                 <?= e(t(['en' => 'Management Team', 'tr' => 'Yönetim Ekibi', 'ar' => 'فريق الإدارة'])) ?>
             </h2>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 <?= count($team) === 1 ? 'max-w-sm mx-auto lg:grid-cols-1' : '' ?>">
             <?php foreach ($team as $member): ?>
             <div class="reveal bg-brand-50 rounded-sm overflow-hidden border border-brand-200 text-center card-hover">
                 <img src="<?= e($member['image']) ?>" alt="<?= e(t($member['name'])) ?>"
@@ -118,3 +119,4 @@
         </div>
     </div>
 </section>
+<?php endif; ?>

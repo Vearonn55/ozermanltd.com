@@ -1,4 +1,4 @@
-<section class="bg-brand-900 py-20 lg:py-28 relative overflow-hidden">
+<section class="page-banner bg-brand-900">
     <div class="absolute inset-0 opacity-20">
         <img src="<?= e(content()->banner('gallery')) ?>" alt="" class="w-full h-full object-cover">
     </div>
@@ -18,6 +18,15 @@
 
 <section class="py-20 lg:py-28" x-data="{ activeTab: 0 }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <?php if ($collections === []): ?>
+        <p class="text-brand-500 text-center">
+            <?= e(t([
+                'en' => 'Gallery images will be published here soon.',
+                'tr' => 'Galeri görselleri yakında burada yayınlanacaktır.',
+                'ar' => 'ستُنشر صور المعرض هنا قريبًا.',
+            ])) ?>
+        </p>
+        <?php else: ?>
         <!-- Collection Tabs -->
         <div class="flex flex-wrap gap-3 mb-12 border-b border-brand-200 pb-4">
             <?php foreach ($collections as $i => $collection): ?>
@@ -61,5 +70,6 @@
             </div>
         </div>
         <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </section>

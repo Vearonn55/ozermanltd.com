@@ -17,31 +17,11 @@ class AuthService
     {
         $pdo = Database::connection(force: true);
         if ($pdo === null) {
-            $host = getenv('DB_HOST') ?: '127.0.0.1';
-            $db = getenv('DB_DATABASE') ?: '(default ozermanltd)';
-            $user = getenv('DB_USERNAME') ?: '(default root)';
-            $envPath = defined('BASE_PATH') ? BASE_PATH . '/.env' : '.env';
-            $envExists = defined('BASE_PATH') && is_file(BASE_PATH . '/.env');
-
-            // Always show loaded values (helps cPanel misconfig; brew hints hid the real problem).
             $detail = Database::lastError();
-            $hint = $detail !== null ? ' MySQL said: ' . $detail : '';
-            $prefixHint = '';
-            if (defined('BASE_PATH') && preg_match('#/home/([^/]+)$#', BASE_PATH, $m)) {
-                $acct = $m[1];
-                if ($user !== '' && !str_starts_with((string) $user, $acct . '_')) {
-                    $prefixHint = " Username should usually be {$acct}_… (copy exact name from cPanel → MySQL Databases → Current Users).";
-                }
-            }
+            error_log('Admin sign-in could not reach stored content'
+                . ($detail !== null ? ': ' . $detail : ''));
 
-            return 'Cannot connect to MySQL'
-                . " (host={$host}, database={$db}, user={$user}). "
-                . ($envExists
-                    ? "Edit DB_* in {$envPath}."
-                    : "Missing {$envPath}.")
-                . $hint
-                . $prefixHint
-                . ' Confirm user is added to the database with ALL PRIVILEGES; password must match.';
+            return 'Sign-in is unavailable right now. Please try again later.';
         }
 
         $stmt = $pdo->prepare(
@@ -50,16 +30,12 @@ class AuthService
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$user) {
-            return 'No account found with that email address.';
+        if (!$user || !password_verify($password, (string) $user['password_hash'])) {
+            return 'Email or password is incorrect.';
         }
 
         if ($user['status'] !== 'active') {
             return 'This account is inactive. Contact an administrator.';
-        }
-
-        if (!password_verify($password, $user['password_hash'])) {
-            return 'Incorrect password.';
         }
 
         $this->startSession();
@@ -159,8 +135,11 @@ class AuthService
     public function startSession(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
+            $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+                || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
             session_start([
                 'cookie_httponly' => true,
+                'cookie_secure' => $https,
                 'cookie_samesite' => 'Lax',
                 'use_strict_mode' => true,
             ]);
