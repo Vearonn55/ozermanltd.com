@@ -11,10 +11,10 @@ require dirname(__DIR__) . '/bootstrap.php';
 
 use App\Infrastructure\Database;
 
-$host = getenv('DB_HOST') ?: '(default 127.0.0.1)';
-$db = getenv('DB_DATABASE') ?: '(default ozermanltd)';
-$user = getenv('DB_USERNAME') ?: '(default root)';
-$passSet = getenv('DB_PASSWORD') !== false && getenv('DB_PASSWORD') !== '';
+$host = env('DB_HOST', '(default 127.0.0.1)');
+$db = env('DB_DATABASE', '(default ozermanltd)');
+$user = env('DB_USERNAME', '(default root)');
+$passSet = env('DB_PASSWORD', '') !== '';
 $envFile = BASE_PATH . '/.env';
 
 echo "BASE_PATH: " . BASE_PATH . "\n";

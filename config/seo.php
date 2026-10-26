@@ -6,8 +6,8 @@ return [
     'default_og_image' => '/assets/images/og-default.jpg',
 
     'analytics' => [
-        'plausible_domain' => getenv('PLAUSIBLE_DOMAIN') ?: 'ozermanltd.com',
-        'require_consent' => filter_var(getenv('ANALYTICS_REQUIRE_CONSENT') ?: 'true', FILTER_VALIDATE_BOOLEAN),
+        'plausible_domain' => env('PLAUSIBLE_DOMAIN', 'ozermanltd.com'),
+        'require_consent' => env_bool('ANALYTICS_REQUIRE_CONSENT', true),
     ],
 
     'consent' => [
@@ -17,7 +17,7 @@ return [
     ],
 
     'legacy_import' => [
-        'base_url' => rtrim(getenv('LEGACY_SITE_URL') ?: 'http://localhost:8080', '/'),
+        'base_url' => rtrim(env('LEGACY_SITE_URL', 'http://localhost:8080'), '/'),
         'locales' => ['en', 'tr', 'ar'],
         'paths' => [
             '',

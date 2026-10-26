@@ -21,7 +21,11 @@ class AuthService
             error_log('Admin sign-in could not reach stored content'
                 . ($detail !== null ? ': ' . $detail : ''));
 
-            return 'Sign-in is unavailable right now. Please try again later.';
+            $db = require CONFIG_PATH . '/database.php';
+            $where = ($db['database'] ?? '') . ' on ' . ($db['host'] ?? '');
+
+            return 'Sign-in is unavailable right now. Could not open ' . $where
+                . ($detail !== null ? ': ' . $detail : '.');
         }
 
         $stmt = $pdo->prepare(

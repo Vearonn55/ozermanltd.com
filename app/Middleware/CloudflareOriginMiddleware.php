@@ -38,7 +38,7 @@ class CloudflareOriginMiddleware
 
     private function shouldEnforce(): bool
     {
-        $env = strtolower((string) (getenv('APP_ENV') ?: config('env', 'development')));
+        $env = strtolower((string) config('env', 'development'));
         if ($env === 'development' || $env === 'local' || $env === 'testing') {
             return false;
         }

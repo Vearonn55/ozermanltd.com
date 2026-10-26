@@ -2,6 +2,38 @@
 
 declare(strict_types=1);
 
+/**
+ * Value from the .env file. The file wins over variables cPanel already set.
+ */
+function env(string $key, string $default = ''): string
+{
+    if (array_key_exists($key, $_ENV) && !is_array($_ENV[$key])) {
+        $value = trim((string) $_ENV[$key]);
+        if ($value !== '') {
+            return $value;
+        }
+    }
+
+    if (array_key_exists($key, $_SERVER) && !is_array($_SERVER[$key])) {
+        $value = trim((string) $_SERVER[$key]);
+        if ($value !== '') {
+            return $value;
+        }
+    }
+
+    $fromProcess = getenv($key);
+    if ($fromProcess !== false && trim($fromProcess) !== '') {
+        return trim($fromProcess);
+    }
+
+    return $default;
+}
+
+function env_bool(string $key, bool $default = false): bool
+{
+    return in_array(strtolower(env($key, $default ? 'true' : 'false')), ['1', 'true', 'yes', 'on'], true);
+}
+
 function config(string $key, $default = null)
 {
     static $appConfig = null;

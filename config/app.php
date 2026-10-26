@@ -6,8 +6,8 @@ return [
     'name' => 'Özerman Ticaret',
     'version' => 'V 1.0',
     'tagline' => 'Distinguished brands. A strong local structure.',
-    'url' => rtrim(getenv('APP_URL') ?: 'https://ozermanltd.com', '/'),
-    'env' => getenv('APP_ENV') ?: 'development',
+    'url' => rtrim(env('APP_URL', 'https://ozermanltd.com'), '/'),
+    'env' => env('APP_ENV', 'development'),
     'default_locale' => 'en',
     'locales' => [
         'en' => ['name' => 'English', 'dir' => 'ltr'],
@@ -20,8 +20,8 @@ return [
         'address' => 'Kıbrıs',
     ],
     'social' => [],
-    'under_construction' => filter_var(getenv('SITE_UNDER_CONSTRUCTION') ?: 'false', FILTER_VALIDATE_BOOLEAN),
+    'under_construction' => env_bool('SITE_UNDER_CONSTRUCTION', false),
     'cloudflare' => [
-        'enforce' => filter_var(getenv('CLOUDFLARE_ENFORCE') ?: 'false', FILTER_VALIDATE_BOOLEAN),
+        'enforce' => env_bool('CLOUDFLARE_ENFORCE', false),
     ],
 ];
