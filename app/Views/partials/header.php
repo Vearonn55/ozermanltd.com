@@ -18,9 +18,10 @@ $localeSwitch = [
     'extraActive' => $extraActive,
 ];
 ?>
-<header class="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        :class="scrolled ? 'bg-brand-50/95 backdrop-blur-md border-b border-brand-200 shadow-sm' : 'bg-brand-50/90 backdrop-blur-sm border-b border-transparent'">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<header class="site-header fixed top-0 left-0 right-0 z-50">
+    <div class="pointer-events-none absolute inset-0 transition-all duration-300"
+         :class="scrolled ? 'bg-brand-50/95 backdrop-blur-md border-b border-brand-200 shadow-sm' : 'bg-brand-50/90 backdrop-blur-sm border-b border-transparent'"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
             <a href="<?= url('') ?>" class="flex items-center shrink-0 group" aria-label="Özerman Ticaret">
                 <img src="<?= asset('images/brand/logo-horizontal-light.png') ?>"
@@ -44,7 +45,7 @@ $localeSwitch = [
 
             <div class="flex items-center gap-3">
                 <div class="hidden sm:flex items-center">
-                    <?php partial('locale-switch', $localeSwitch + ['openUp' => false]); ?>
+                    <?php partial('locale-switch', $localeSwitch + ['overlay' => true]); ?>
                 </div>
 
                 <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 rounded-sm text-brand-500 hover:bg-brand-100 transition-colors" aria-label="Toggle menu">
@@ -76,7 +77,7 @@ $localeSwitch = [
             </a>
             <?php endforeach; ?>
             <div class="px-4 pt-3 border-t border-brand-200 mt-3">
-                <?php partial('locale-switch', $localeSwitch + ['openUp' => true]); ?>
+                <?php partial('locale-switch', $localeSwitch); ?>
             </div>
         </nav>
     </div>

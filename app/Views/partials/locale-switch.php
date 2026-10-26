@@ -1,48 +1,55 @@
 <?php
 /**
- * Pinned locales read EN | TR, then + opens the rest.
+ * Same chip row as before: EN and TR stay visible, + opens the other locales.
  *
  * @var array<string, array{name: string, dir: string}> $primary
  * @var array<string, array{name: string, dir: string}> $extra
  * @var string $currentLocale
  * @var bool $extraActive
- * @var bool $openUp
+ * @var bool $overlay  Drop the menu below the fixed bar. The bar's blur would clip it otherwise.
  */
-$openUp = $openUp ?? false;
+$overlay = $overlay ?? false;
+$chip = 'px-2.5 py-1 text-xs font-semibold rounded-sm transition-colors duration-200';
+$chipOn = 'bg-brand-800 text-brand-50';
+$chipOff = 'text-brand-500 hover:text-brand-800';
 ?>
-<div class="locale-switch<?= $openUp ? ' locale-switch--up' : '' ?>"
-     x-data="{ open: false }"
-     @click.outside="open = false"
-     @keydown.escape.window="open = false">
-    <span class="locale-switch__sep" aria-hidden="true">|</span>
-    <?php foreach ($primary as $code => $info): ?>
-    <a href="<?= e(locale_path_for($code)) ?>"
-       class="locale-switch__link<?= $code === $currentLocale ? ' is-active' : '' ?>"
-       hreflang="<?= e($code) ?>"
-       lang="<?= e($code) ?>"
-       <?= $code === $currentLocale ? 'aria-current="true"' : '' ?>><?= strtoupper(e($code)) ?></a>
-    <span class="locale-switch__sep" aria-hidden="true">|</span>
-    <?php endforeach; ?>
-    <?php if ($extra !== []): ?>
-    <span class="locale-switch__more">
+<div class="relative"
+     x-data="{ open: false, close() { this.open = false }, toggle() { this.open = !this.open } }"
+     @click.outside="close()"
+     @keydown.escape.window="open && close()">
+    <div class="flex items-center gap-1 bg-brand-100 rounded-sm p-1">
+        <?php foreach ($primary as $code => $info): ?>
+        <a href="<?= e(locale_path_for($code)) ?>"
+           hreflang="<?= e($code) ?>"
+           lang="<?= e($code) ?>"
+           class="<?= $chip ?> <?= $code === $currentLocale ? $chipOn : $chipOff ?>"
+           <?= $code === $currentLocale ? 'aria-current="true"' : '' ?>><?= strtoupper(e($code)) ?></a>
+        <?php endforeach; ?>
+        <?php if ($extra !== []): ?>
         <button type="button"
-                class="locale-switch__link locale-switch__plus<?= $extraActive ? ' is-active' : '' ?>"
-                @click="open = !open"
+                class="<?= $chip ?> <?= $extraActive ? $chipOn : $chipOff ?>"
+                @click.stop="toggle()"
                 :aria-expanded="open ? 'true' : 'false'"
                 aria-haspopup="menu"
-                aria-label="<?= e($extraActive ? (string) ($extra[$currentLocale]['name'] ?? '+') : 'More languages') ?>">+</button>
-        <div class="locale-switch__menu" x-show="open" x-cloak role="menu">
+                aria-label="<?= e($extraActive ? (string) ($extra[$currentLocale]['name'] ?? 'More languages') : 'More languages') ?>">+</button>
+        <?php endif; ?>
+    </div>
+    <?php if ($extra !== []): ?>
+    <div x-show="open"
+         x-cloak
+         class="<?= $overlay ? 'absolute end-0 z-50 min-w-full top-[calc(100%+2.25rem)]' : 'mt-1' ?>"
+         role="menu">
+        <div class="flex flex-col gap-1 bg-brand-100 rounded-sm p-1 shadow-sm">
             <?php foreach ($extra as $code => $info): ?>
             <a href="<?= e(locale_path_for($code)) ?>"
                role="menuitem"
                hreflang="<?= e($code) ?>"
                lang="<?= e($code) ?>"
                dir="<?= e($info['dir'] ?? 'ltr') ?>"
-               class="locale-switch__option<?= $code === $currentLocale ? ' is-active' : '' ?>"
-               @click="open = false"><?= e($info['name']) ?></a>
+               class="<?= $chip ?> text-center whitespace-nowrap <?= $code === $currentLocale ? $chipOn : $chipOff ?>"
+               aria-label="<?= e($info['name']) ?>"><?= strtoupper(e($code)) ?></a>
             <?php endforeach; ?>
         </div>
-    </span>
-    <span class="locale-switch__sep" aria-hidden="true">|</span>
+    </div>
     <?php endif; ?>
 </div>
