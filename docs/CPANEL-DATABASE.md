@@ -54,7 +54,7 @@ cPanel MySQL users **cannot** run `CREATE DATABASE`. You already created `ozerma
 2. Top tab → **Import**.
 3. Choose `database/install.sql` and import it.
 
-That file creates every table, the English / Turkish / Arabic language rows, and one admin account. It does not insert pages or other content. Re-importing it drops and recreates the tables.
+That file creates every table, the English / Turkish / Arabic language rows, one admin account, and empty skeleton pages with header and footer menus. Page bodies stay blank. Re-importing it drops and recreates the tables.
 
 Or Terminal:
 

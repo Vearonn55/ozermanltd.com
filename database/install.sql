@@ -2,6 +2,7 @@
 -- In phpMyAdmin, select the existing database (ozermanl_MAIN), then Import this file.
 -- Do not create a database from this file. Re-import replaces every table.
 -- Login: admin@ozermanltd.com
+-- Also inserts empty skeleton pages and the header/footer menus. No articles or page body copy.
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -920,5 +921,83 @@ INSERT INTO languages (code, name, is_default, is_active, sort_order) VALUES
 
 INSERT INTO users (name, email, password_hash, role, status) VALUES
 ('Admin', 'admin@ozermanltd.com', '$2y$12$MDloDizn.QxjgmyMO4Kp6.KA0ZHnSzDdXEgS.cq1d7bN1hvDoDLkS', 'super_admin', 'active');
+
+-- Empty page shells for the public routes. Titles only; content is filled in Admin.
+INSERT INTO pages (slug, template, status, show_in_nav, sort_order, published_at) VALUES
+('home', 'home', 'published', 1, 0, NOW()),
+('about-us', 'default', 'published', 1, 1, NOW()),
+('our-stores', 'default', 'published', 1, 2, NOW()),
+('partnerships', 'default', 'published', 1, 3, NOW()),
+('news', 'default', 'published', 1, 4, NOW()),
+('contact', 'contact', 'published', 1, 5, NOW()),
+('privacy-policy', 'default', 'published', 0, 6, NOW()),
+('cookie-policy', 'default', 'published', 0, 7, NOW()),
+('cookie-settings', 'default', 'published', 0, 8, NOW()),
+('gallery', 'default', 'published', 0, 9, NOW()),
+('sectors', 'sector', 'published', 0, 10, NOW()),
+('projects', 'project', 'published', 0, 11, NOW());
+
+INSERT INTO page_translations (page_id, language_id, title) VALUES
+(1, 1, 'Home'), (1, 2, 'Ana Sayfa'), (1, 3, 'الرئيسية'),
+(2, 1, 'About Us'), (2, 2, 'Hakkımızda'), (2, 3, 'من نحن'),
+(3, 1, 'Our Stores'), (3, 2, 'Mağazalarımız'), (3, 3, 'متاجرنا'),
+(4, 1, 'Our Brands'), (4, 2, 'Markalarımız'), (4, 3, 'علاماتنا'),
+(5, 1, 'Corporate'), (5, 2, 'Kurumsal'), (5, 3, 'المؤسسي'),
+(6, 1, 'Contact'), (6, 2, 'İletişim'), (6, 3, 'اتصل بنا'),
+(7, 1, 'Privacy Policy'), (7, 2, 'Gizlilik Politikası'), (7, 3, 'سياسة الخصوصية'),
+(8, 1, 'Cookie Policy'), (8, 2, 'Çerez Politikası'), (8, 3, 'سياسة ملفات تعريف الارتباط'),
+(9, 1, 'Cookie Settings'), (9, 2, 'Çerez Ayarları'), (9, 3, 'إعدادات ملفات تعريف الارتباط'),
+(10, 1, 'Gallery'), (10, 2, 'Galeri'), (10, 3, 'المعرض'),
+(11, 1, 'Areas of Work'), (11, 2, 'Çalışma Alanları'), (11, 3, 'مجالات العمل'),
+(12, 1, 'Projects'), (12, 2, 'Projeler'), (12, 3, 'المشاريع');
+
+INSERT INTO menus (location) VALUES
+('header'),
+('footer_col1'),
+('footer_col2'),
+('footer_col3');
+
+INSERT INTO menu_translations (menu_id, language_id, title) VALUES
+(2, 1, 'Quick Links'), (2, 2, 'Hızlı Bağlantılar'), (2, 3, 'روابط سريعة'),
+(3, 1, 'Explore'), (3, 2, 'Keşfedin'), (3, 3, 'استكشف'),
+(4, 1, 'Legal'), (4, 2, 'Yasal'), (4, 3, 'قانوني');
+
+INSERT INTO menu_items (menu_id, url, sort_order, is_active) VALUES
+(1, '/', 0, 1),
+(1, '/about-us', 1, 1),
+(1, '/our-stores', 2, 1),
+(1, '/partnerships', 3, 1),
+(1, '/news', 4, 1),
+(1, '/contact', 5, 1),
+(1, '/gallery', 6, 0),
+(2, '/about-us', 0, 1),
+(2, '/our-stores', 1, 1),
+(2, '/partnerships', 2, 1),
+(2, '/news', 3, 1),
+(3, '/partnerships', 0, 1),
+(3, '/our-stores', 1, 1),
+(3, '/contact', 2, 1),
+(4, '/privacy-policy', 0, 1),
+(4, '/cookie-policy', 1, 1),
+(4, '/cookie-settings', 2, 1);
+
+INSERT INTO menu_item_translations (item_id, language_id, label) VALUES
+(1, 1, 'Home'), (1, 2, 'Ana Sayfa'), (1, 3, 'الرئيسية'),
+(2, 1, 'About Us'), (2, 2, 'Hakkımızda'), (2, 3, 'من نحن'),
+(3, 1, 'Our Stores'), (3, 2, 'Mağazalarımız'), (3, 3, 'متاجرنا'),
+(4, 1, 'Our Brands'), (4, 2, 'Markalarımız'), (4, 3, 'علاماتنا'),
+(5, 1, 'Corporate'), (5, 2, 'Kurumsal'), (5, 3, 'المؤسسي'),
+(6, 1, 'Contact'), (6, 2, 'İletişim'), (6, 3, 'اتصل بنا'),
+(7, 1, 'Gallery'), (7, 2, 'Galeri'), (7, 3, 'المعرض'),
+(8, 1, 'About Us'), (8, 2, 'Hakkımızda'), (8, 3, 'من نحن'),
+(9, 1, 'Our Stores'), (9, 2, 'Mağazalarımız'), (9, 3, 'متاجرنا'),
+(10, 1, 'Our Brands'), (10, 2, 'Markalarımız'), (10, 3, 'علاماتنا'),
+(11, 1, 'Corporate'), (11, 2, 'Kurumsal'), (11, 3, 'المؤسسي'),
+(12, 1, 'Our Brand Portfolio'), (12, 2, 'Marka Portföyümüz'), (12, 3, 'محفظة العلامات'),
+(13, 1, 'Stores'), (13, 2, 'Mağazalar'), (13, 3, 'المتاجر'),
+(14, 1, 'Partnership Inquiries'), (14, 2, 'İş Birliği Talepleri'), (14, 3, 'طلبات التعاون'),
+(15, 1, 'Privacy Policy'), (15, 2, 'Gizlilik Politikası'), (15, 3, 'سياسة الخصوصية'),
+(16, 1, 'Cookie Policy'), (16, 2, 'Çerez Politikası'), (16, 3, 'سياسة ملفات تعريف الارتباط'),
+(17, 1, 'Cookie Settings'), (17, 2, 'Çerez Ayarları'), (17, 3, 'إعدادات ملفات تعريف الارتباط');
 
 SET FOREIGN_KEY_CHECKS = 1;
