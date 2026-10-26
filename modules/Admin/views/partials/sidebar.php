@@ -92,5 +92,6 @@ $systemLinks = [
 
     <div class="cui-sidebar-footer">
         <a href="<?= e((string) admin_config('view_site_url', '/')) ?>" target="_blank">View site ↗</a>
+        <span><?= e((string) config('version', 'V 1.0')) ?></span>
     </div>
 </aside>

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'policy_version' => getenv('PRIVACY_POLICY_VERSION') ?: '1.0',
+    'policy_version' => 'V 1.0',
 
     'visitor_cookie' => 'ozerman_visitor_id',
     'consent_storage_key' => 'ozerman_consent',

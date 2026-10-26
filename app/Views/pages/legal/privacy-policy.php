@@ -3,7 +3,7 @@
         <h1 class="font-display text-4xl font-bold text-white mb-4">
             <?= e(t(['en' => 'Privacy Policy', 'tr' => 'Gizlilik Politikası', 'ar' => 'سياسة الخصوصية'])) ?>
         </h1>
-        <p class="text-brand-300"><?= e(t(['en' => 'Last updated: June 2026', 'tr' => 'Son güncelleme: Haziran 2026', 'ar' => 'آخر تحديث: يونيو 2026'])) ?> · v<?= e(analytics_config('policy_version')) ?></p>
+        <p class="text-brand-300"><?= e(t(['en' => 'Last updated: June 2026', 'tr' => 'Son güncelleme: Haziran 2026', 'ar' => 'آخر تحديث: يونيو 2026'])) ?> · <?= e((string) config('version', 'V 1.0')) ?></p>
     </div>
 </section>
 

@@ -83,7 +83,7 @@ $footerHref = static function (array $link): string {
 
         <div class="border-t border-brand-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p class="text-sm text-brand-500">
-                &copy; <?= date('Y') ?> Özerman Ticaret.
+                &copy; <?= date('Y') ?> Özerman Ticaret · <?= e((string) config('version', 'V 1.0')) ?>.
                 <?= e(t(['en' => 'All rights reserved.', 'tr' => 'Tüm hakları saklıdır.', 'ar' => 'جميع الحقوق محفوظة.'])) ?>
             </p>
             <div class="flex flex-wrap gap-6 text-sm text-brand-500">
