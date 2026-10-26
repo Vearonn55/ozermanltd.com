@@ -1,18 +1,74 @@
--- ============================================================
--- CORPORATE WEBSITE DATABASE SCHEMA — MySQL 8.0+
--- Converted from DBML for: ozermanltd.com
---
--- cPanel: do NOT run CREATE DATABASE here. In phpMyAdmin, select
--- your existing database (e.g. ozermanl_MAIN), then Import this file.
--- Local: mysql -u root -p YOUR_DB_NAME < database/schema.sql
--- ============================================================
+-- Özerman Ticaret — single phpMyAdmin import
+-- In phpMyAdmin, select the existing database (ozermanl_MAIN), then Import this file.
+-- Do not create a database from this file. Re-import replaces every table.
+-- Login: admin@ozermanltd.com
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ============================================================
--- GROUP 1 — USERS & AUTHENTICATION
--- ============================================================
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user_sessions`;
+DROP TABLE IF EXISTS `user_activity_log`;
+DROP TABLE IF EXISTS `languages`;
+DROP TABLE IF EXISTS `pages`;
+DROP TABLE IF EXISTS `page_translations`;
+DROP TABLE IF EXISTS `media_folders`;
+DROP TABLE IF EXISTS `media`;
+DROP TABLE IF EXISTS `site_banners`;
+DROP TABLE IF EXISTS `hero_slides`;
+DROP TABLE IF EXISTS `stat_counters`;
+DROP TABLE IF EXISTS `menus`;
+DROP TABLE IF EXISTS `menu_items`;
+DROP TABLE IF EXISTS `menu_translations`;
+DROP TABLE IF EXISTS `menu_item_translations`;
+DROP TABLE IF EXISTS `sectors`;
+DROP TABLE IF EXISTS `sector_translations`;
+DROP TABLE IF EXISTS `subsidiaries`;
+DROP TABLE IF EXISTS `subsidiary_translations`;
+DROP TABLE IF EXISTS `brands`;
+DROP TABLE IF EXISTS `brand_translations`;
+DROP TABLE IF EXISTS `stores`;
+DROP TABLE IF EXISTS `store_translations`;
+DROP TABLE IF EXISTS `content_blocks`;
+DROP TABLE IF EXISTS `content_block_translations`;
+DROP TABLE IF EXISTS `team_members`;
+DROP TABLE IF EXISTS `team_member_translations`;
+DROP TABLE IF EXISTS `awards`;
+DROP TABLE IF EXISTS `award_translations`;
+DROP TABLE IF EXISTS `project_categories`;
+DROP TABLE IF EXISTS `project_category_translations`;
+DROP TABLE IF EXISTS `projects`;
+DROP TABLE IF EXISTS `project_translations`;
+DROP TABLE IF EXISTS `project_galleries`;
+DROP TABLE IF EXISTS `project_virtual_tours`;
+DROP TABLE IF EXISTS `project_unit_types`;
+DROP TABLE IF EXISTS `news_categories`;
+DROP TABLE IF EXISTS `news_category_translations`;
+DROP TABLE IF EXISTS `news_tags`;
+DROP TABLE IF EXISTS `news_tag_translations`;
+DROP TABLE IF EXISTS `news`;
+DROP TABLE IF EXISTS `news_translations`;
+DROP TABLE IF EXISTS `news_tag_pivot`;
+DROP TABLE IF EXISTS `news_comments`;
+DROP TABLE IF EXISTS `gallery_collections`;
+DROP TABLE IF EXISTS `gallery_collection_translations`;
+DROP TABLE IF EXISTS `gallery_items`;
+DROP TABLE IF EXISTS `offices`;
+DROP TABLE IF EXISTS `office_translations`;
+DROP TABLE IF EXISTS `contact_messages`;
+DROP TABLE IF EXISTS `job_departments`;
+DROP TABLE IF EXISTS `job_department_translations`;
+DROP TABLE IF EXISTS `job_listings`;
+DROP TABLE IF EXISTS `job_listing_translations`;
+DROP TABLE IF EXISTS `job_applications`;
+DROP TABLE IF EXISTS `seo_meta`;
+DROP TABLE IF EXISTS `redirects`;
+DROP TABLE IF EXISTS `sitemaps`;
+DROP TABLE IF EXISTS `content_revisions`;
+DROP TABLE IF EXISTS `settings`;
+DROP TABLE IF EXISTS `visitor_profiles`;
+DROP TABLE IF EXISTS `consent_records`;
+DROP TABLE IF EXISTS `visitor_events`;
+DROP TABLE IF EXISTS `analytics_sync_queue`;
 
 CREATE TABLE users (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -52,9 +108,6 @@ CREATE TABLE user_activity_log (
   CONSTRAINT fk_user_activity_log_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 2 — LANGUAGES
--- ============================================================
 
 CREATE TABLE languages (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -66,9 +119,6 @@ CREATE TABLE languages (
   sort_order  INT          NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 3 — PAGES & CONTENT
--- ============================================================
 
 CREATE TABLE pages (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -106,9 +156,6 @@ CREATE TABLE page_translations (
   CONSTRAINT fk_page_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 5 — MEDIA (created before hero_slides FK)
--- ============================================================
 
 CREATE TABLE media_folders (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -184,9 +231,6 @@ CREATE TABLE stat_counters (
   CONSTRAINT fk_stat_counters_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 4 — MENUS
--- ============================================================
 
 CREATE TABLE menus (
   id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -227,9 +271,6 @@ CREATE TABLE menu_item_translations (
   CONSTRAINT fk_menu_item_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 6 — BUSINESS STRUCTURE
--- ============================================================
 
 CREATE TABLE sectors (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -336,8 +377,6 @@ CREATE TABLE store_translations (
   CONSTRAINT fk_store_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Reusable localized content blocks for fixed page sections
--- (area examples: home_operations, about_values, about_vision, about_mission)
 CREATE TABLE content_blocks (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   area        VARCHAR(60)  NOT NULL,
@@ -408,9 +447,6 @@ CREATE TABLE award_translations (
   CONSTRAINT fk_award_translations_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 7 — PROJECTS
--- ============================================================
 
 CREATE TABLE project_categories (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -504,9 +540,6 @@ CREATE TABLE project_unit_types (
   CONSTRAINT fk_project_unit_types_project FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 8 — NEWS & BLOG
--- ============================================================
 
 CREATE TABLE news_categories (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -596,9 +629,6 @@ CREATE TABLE news_comments (
   CONSTRAINT fk_news_comments_news FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 9 — GALLERY COLLECTIONS
--- ============================================================
 
 CREATE TABLE gallery_collections (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -633,9 +663,6 @@ CREATE TABLE gallery_items (
   CONSTRAINT fk_gallery_items_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 10 — OFFICES & CONTACT
--- ============================================================
 
 CREATE TABLE offices (
   id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -686,9 +713,6 @@ CREATE TABLE contact_messages (
   CONSTRAINT fk_contact_messages_project FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 11 — CAREERS
--- ============================================================
 
 CREATE TABLE job_departments (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -755,9 +779,6 @@ CREATE TABLE job_applications (
   CONSTRAINT fk_job_applications_job FOREIGN KEY (job_id) REFERENCES job_listings(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 12 — SEO
--- ============================================================
 
 CREATE TABLE seo_meta (
   id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -797,9 +818,6 @@ CREATE TABLE sitemaps (
   is_active   TINYINT(1)   NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 12b — CONTENT REVISIONS (autosave + history)
--- ============================================================
 
 CREATE TABLE content_revisions (
   id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -813,9 +831,6 @@ CREATE TABLE content_revisions (
   CONSTRAINT fk_content_revisions_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- GROUP 13 — SETTINGS
--- ============================================================
 
 CREATE TABLE settings (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -829,5 +844,81 @@ CREATE TABLE settings (
   UNIQUE KEY uq_settings_group_key (`group`, `key`),
   CONSTRAINT fk_settings_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS visitor_profiles (
+  id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  visitor_uuid      CHAR(36)     NOT NULL UNIQUE,
+  name              VARCHAR(200) NULL,
+  email             VARCHAR(255) NULL,
+  phone             VARCHAR(60)  NULL,
+  locale            VARCHAR(10)  NULL,
+  marketing_opt_in  TINYINT(1)   NOT NULL DEFAULT 0,
+  analytics_opt_in  TINYINT(1)   NOT NULL DEFAULT 0,
+  essential_opt_in  TINYINT(1)   NOT NULL DEFAULT 1,
+  policy_version    VARCHAR(20)  NULL,
+  first_seen_at     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_seen_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  last_ip_hash      VARCHAR(64)  NULL,
+  user_agent        VARCHAR(500) NULL,
+  synced_at         TIMESTAMP    NULL,
+  INDEX idx_visitor_email (email),
+  INDEX idx_visitor_last_seen (last_seen_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS consent_records (
+  id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  visitor_uuid      CHAR(36)     NOT NULL,
+  policy_version    VARCHAR(20)  NOT NULL,
+  essential         TINYINT(1)   NOT NULL DEFAULT 1,
+  analytics         TINYINT(1)   NOT NULL DEFAULT 0,
+  marketing         TINYINT(1)   NOT NULL DEFAULT 0,
+  source            VARCHAR(40)  NOT NULL DEFAULT 'banner',
+  ip_hash           VARCHAR(64)  NULL,
+  user_agent        VARCHAR(500) NULL,
+  locale            VARCHAR(10)  NULL,
+  created_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  synced_at         TIMESTAMP    NULL,
+  INDEX idx_consent_visitor (visitor_uuid),
+  INDEX idx_consent_created (created_at),
+  CONSTRAINT fk_consent_visitor FOREIGN KEY (visitor_uuid) REFERENCES visitor_profiles(visitor_uuid) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS visitor_events (
+  id                BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  visitor_uuid      CHAR(36)     NOT NULL,
+  event_name        VARCHAR(80)  NOT NULL,
+  page_path         VARCHAR(500) NULL,
+  page_url          VARCHAR(1000) NULL,
+  referrer          VARCHAR(1000) NULL,
+  locale            VARCHAR(10)  NULL,
+  properties        JSON         NULL,
+  created_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  synced_at         TIMESTAMP    NULL,
+  INDEX idx_events_visitor (visitor_uuid),
+  INDEX idx_events_name (event_name),
+  INDEX idx_events_created (created_at),
+  CONSTRAINT fk_events_visitor FOREIGN KEY (visitor_uuid) REFERENCES visitor_profiles(visitor_uuid) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS analytics_sync_queue (
+  id                BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  payload_type      VARCHAR(40)  NOT NULL,
+  payload_json      JSON         NOT NULL,
+  status            VARCHAR(20)  NOT NULL DEFAULT 'pending',
+  attempts          INT UNSIGNED NOT NULL DEFAULT 0,
+  last_error        TEXT         NULL,
+  created_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  synced_at         TIMESTAMP    NULL,
+  INDEX idx_sync_status (status),
+  INDEX idx_sync_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO languages (code, name, is_default, is_active, sort_order) VALUES
+('en', 'English', 1, 1, 0),
+('tr', 'Türkçe', 0, 1, 1),
+('ar', 'العربية', 0, 1, 2);
+
+INSERT INTO users (name, email, password_hash, role, status) VALUES
+('Admin', 'admin@ozermanltd.com', '$2y$12$MDloDizn.QxjgmyMO4Kp6.KA0ZHnSzDdXEgS.cq1d7bN1hvDoDLkS', 'super_admin', 'active');
 
 SET FOREIGN_KEY_CHECKS = 1;

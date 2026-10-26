@@ -121,12 +121,6 @@ function json_response(array $data, int $status = 200): void
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
-function db_fallback_to_dummy(): bool
-{
-    $config = require CONFIG_PATH . '/database.php';
-    return !empty($config['fallback_to_dummy']);
-}
-
 function content(): \App\Repositories\ContentRepository
 {
     static $repository = null;

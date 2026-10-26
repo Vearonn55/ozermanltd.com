@@ -25,23 +25,13 @@ for i in $(seq 1 30); do
   sleep 2
 done
 
-echo "Creating database schema..."
-$COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" < database/schema.sql
-
-echo "Inserting seed data..."
-$COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" < database/seed.sql
-$COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" < database/content_seed.sql
-
-echo "Creating analytics tables..."
-$COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" < database/analytics_schema.sql
-
-echo "Resetting admin password..."
-DB_PASSWORD="$DB_PASS" /opt/homebrew/opt/php/bin/php bin/reset-admin-password.php 2>/dev/null \
-  || DB_PASSWORD="$DB_PASS" php bin/reset-admin-password.php
+echo "Importing database/install.sql..."
+$COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+$COMPOSE exec -T "$MYSQL_SERVICE" mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" < database/install.sql
 
 echo ""
 echo "Docker MySQL is ready on 127.0.0.1:3306"
 echo "  Database: ${DB_NAME}"
 echo "  User:     ${DB_USER}"
 echo "  Password: ${DB_PASS}"
-echo "  Admin:    admin@ozermanltd.com / admin123"
+echo "  Admin:    admin@ozermanltd.com"

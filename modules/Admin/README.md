@@ -18,7 +18,7 @@ if ($requestUri === '/admin' || str_starts_with($requestUri, '/admin/')) {
 ```
 
 6. Ensure `upload_path` is writable and PHP upload limits are set (cPanel MultiPHP).
-7. Import schema matching `schema/admin_contract.sql` (full DDL in host `database/schema.sql`).
+7. Import the host file `database/install.sql` (select the existing database in phpMyAdmin first).
 
 ## Host config keys
 

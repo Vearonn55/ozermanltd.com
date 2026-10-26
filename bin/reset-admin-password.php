@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 /**
- * Reset the seeded admin password to admin123.
- * Usage: php bin/reset-admin-password.php
+ * Create or update an admin password.
+ * Usage: php bin/reset-admin-password.php admin@ozermanltd.com 'new-password'
  */
 
 require dirname(__DIR__) . '/bootstrap.php';
@@ -18,8 +18,12 @@ if ($pdo === null) {
     exit(1);
 }
 
-$email = $argv[1] ?? 'admin@ozermanltd.com';
-$password = $argv[2] ?? 'admin123';
+$email = $argv[1] ?? '';
+$password = $argv[2] ?? '';
+if ($email === '' || $password === '') {
+    fwrite(STDERR, "Usage: php bin/reset-admin-password.php email password\n");
+    exit(1);
+}
 $hash = password_hash($password, PASSWORD_BCRYPT);
 
 $stmt = $pdo->prepare('UPDATE users SET password_hash = :hash WHERE email = :email');

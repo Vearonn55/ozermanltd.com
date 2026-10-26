@@ -36,7 +36,7 @@ Follow [`ADMIN-AND-CPANEL.md`](ADMIN-AND-CPANEL.md). Summary:
    - Web files → `$HOME/public_html/` (from repo `public/`)
    - Does **not** overwrite an existing `$HOME/.env` or files already in `public_html/uploads/`
 3. You do **not** need to change the domain document root.
-4. Create MySQL DB + user; import `database/schema.sql` (+ analytics if used) and seeds as needed.
+4. Create MySQL DB + user; in phpMyAdmin select that database and import `database/install.sql`.
 5. Edit `$HOME/.env` (File Manager → home directory, not inside `public_html`). First deploy only auto-creates `.env` from the example if missing:
 
 ```env
@@ -44,8 +44,6 @@ APP_ENV=production
 APP_URL=https://ozermanltd.com
 SITE_UNDER_CONSTRUCTION=true
 CLOUDFLARE_ENFORCE=false
-DB_USE_DUMMY_DATA=false
-DB_FALLBACK_DUMMY=false
 # + real DB_* credentials
 # + strong APP_KEY
 ```

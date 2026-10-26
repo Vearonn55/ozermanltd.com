@@ -9,7 +9,7 @@ DB_USER  ?= root
 DB_PASS  ?=
 DB_NAME  ?= ozermanltd
 
-.PHONY: help dev setup db-create db-seed db-setup db-reset db-analytics db-up db-down db-docker-setup open stop import-seo sync-analytics reset-admin-password assets-install assets-build assets-watch
+.PHONY: help dev setup db-setup db-reset db-up db-down db-docker-setup open stop import-seo sync-analytics reset-admin-password assets-install assets-build assets-watch
 
 help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
@@ -32,20 +32,10 @@ setup: ## Copy .env.example to .env
 
 MYSQL_FLAGS := -u $(DB_USER) $(if $(DB_PASS),-p$(DB_PASS),) --default-character-set=utf8mb4
 
-db-create: ## Create database and tables (schema.sql)
-	$(MYSQL) $(MYSQL_FLAGS) < database/schema.sql
-	@echo "Database schema created."
-
-db-seed: ## Insert dummy seed data (seed.sql + content_seed.sql)
-	$(MYSQL) $(MYSQL_FLAGS) $(DB_NAME) < database/seed.sql
-	$(MYSQL) $(MYSQL_FLAGS) $(DB_NAME) < database/content_seed.sql
-	@echo "Seed data inserted."
-
-db-setup: db-create db-seed db-analytics ## Create database + all seed data + analytics tables
-
-db-analytics: ## Create analytics/consent tables
-	$(MYSQL) $(MYSQL_FLAGS) $(DB_NAME) < database/analytics_schema.sql
-	@echo "Analytics schema created."
+db-setup: ## Create the local database and import database/install.sql
+	$(MYSQL) $(MYSQL_FLAGS) -e "CREATE DATABASE IF NOT EXISTS $(DB_NAME) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+	$(MYSQL) $(MYSQL_FLAGS) $(DB_NAME) < database/install.sql
+	@echo "Imported database/install.sql into $(DB_NAME)."
 
 db-reset: ## Drop and recreate database (destructive)
 	$(MYSQL) $(MYSQL_FLAGS) -e "DROP DATABASE IF EXISTS $(DB_NAME);"
@@ -72,8 +62,8 @@ import-seo: ## Scrape legacy/local site SEO into storage/seo/
 sync-analytics: ## Push queued analytics to external API (if configured)
 	$(PHP) bin/sync-analytics-queue.php
 
-reset-admin-password: ## Reset admin password to admin123 (creates user if missing)
-	$(PHP) bin/reset-admin-password.php
+reset-admin-password: ## Reset an admin password: make reset-admin-password EMAIL=you@example.com PASS='secret'
+	$(PHP) bin/reset-admin-password.php "$(EMAIL)" "$(PASS)"
 
 assets-install: ## Download Tailwind standalone CLI + vendor Alpine/Quill (no Node)
 	@mkdir -p bin public/assets/vendor/alpinejs public/assets/vendor/quill

@@ -27,21 +27,20 @@ If it needs a role → **not** cPanel. If it is about the box staying online →
 | File access | SFTP for deploys; File Manager = emergency only |
 | phpMyAdmin | Developer-only; never routine content/media ops |
 | Writable paths | `storage/`, `public/uploads/` (media), `.env` outside web root when possible |
-| Production env | `DB_USE_DUMMY_DATA=false`, prefer `DB_FALLBACK_DUMMY=false` |
+| Production env | Real `DB_*` credentials in `$HOME/.env` |
 
 ### cPanel production cutover checklist
 
 1. Deploy code; set document root to `public/`
-2. Create MySQL database + user; import `database/schema.sql` (+ analytics schema if used) and seeds
+2. Create MySQL database + user; import `database/install.sql` in phpMyAdmin with that database selected
 3. Place `.env` from `.env.example`; set production DB credentials and `APP_URL`
-4. Set `DB_USE_DUMMY_DATA=false` and `DB_FALLBACK_DUMMY=false`
-5. Soft launch: `SITE_UNDER_CONSTRUCTION=true`, `CLOUDFLARE_ENFORCE=true` (see [`PRODUCTION-LAUNCH.md`](PRODUCTION-LAUNCH.md))
-6. Ensure `storage/` and `public/uploads/` are writable by the PHP user
-7. MultiPHP **8.3+**; set upload limits large enough for staff media (e.g. 20–64M)
-8. Enable AutoSSL; force HTTPS (prefer Cloudflare Full strict + Always Use HTTPS)
-9. Schedule cron for `bin/sync-analytics-queue.php` (and any future `bin/` jobs)
-10. Rotate default admin password (`make reset-admin-password` or Admin → Users)
-11. Smoke-test: `/qr`, `/catalogues`, under-construction on `/en`, `/admin` login, Media Library upload
+4. Soft launch: `SITE_UNDER_CONSTRUCTION=true`, `CLOUDFLARE_ENFORCE=true` (see [`PRODUCTION-LAUNCH.md`](PRODUCTION-LAUNCH.md))
+5. Ensure `storage/` and `public/uploads/` are writable by the PHP user
+6. MultiPHP **8.3+**; set upload limits large enough for staff media (e.g. 20–64M)
+7. Enable AutoSSL; force HTTPS (prefer Cloudflare Full strict + Always Use HTTPS)
+8. Schedule cron for `bin/sync-analytics-queue.php` (and any future `bin/` jobs)
+9. Sign in at `/admin` with `admin@ozermanltd.com`
+10. Smoke-test: `/qr`, `/catalogues`, under-construction on `/en`, `/admin` login, Media Library upload
 
 ## Portable Admin module
 
@@ -57,7 +56,7 @@ modules/Admin/
   routes.php             # admin router
   src/                   # Controllers, Repositories, Auth, Middleware, Support
   views/                 # layouts, partials, entity UIs
-  schema/admin_contract.sql
+  database/install.sql       # single phpMyAdmin import (host repo)
   README.md              # host integration
 ```
 
@@ -90,7 +89,7 @@ if ($requestUri === '/admin' || str_starts_with($requestUri, '/admin/')) {
 
 ### Schema contract
 
-See [`modules/Admin/schema/admin_contract.sql`](../modules/Admin/schema/admin_contract.sql):
+Tables live in [`database/install.sql`](../database/install.sql):
 
 - Auth: `users`, `user_sessions`, `user_activity_log`
 - i18n: `languages`
@@ -147,7 +146,7 @@ cPanel only supplies capacity (disk, PHP limits).
 5. Security: CSRF, escaping, PDO, bcrypt, roles, upload allowlists, login rate limit.
 6. Routine files go through Media Library — never File Manager.
 7. No Composer required for the module.
-8. Public may use DummyData in dev; Admin always forces DB.
+8. Public pages and Admin both read MySQL. An empty table stays empty.
 
 ## Roadmap status
 

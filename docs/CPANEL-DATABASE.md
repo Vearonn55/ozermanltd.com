@@ -21,9 +21,6 @@ DB_DATABASE=ozermanl_MAIN
 DB_USERNAME=ozermanl_SYSADMIN
 DB_PASSWORD=YOUR_MYSQL_PASSWORD_HERE
 
-DB_USE_DUMMY_DATA=false
-DB_FALLBACK_DUMMY=false
-
 APP_ENV=production
 APP_URL=https://ozermanltd.com
 SITE_UNDER_CONSTRUCTION=true
@@ -47,7 +44,7 @@ php bin/check-db.php
 
 You want `RESULT: connection OK`. If `.env exists: NO` or `DB_HOST: 127.0.0.1`, fix the file path/contents and run again.
 
-## 2. Import schema
+## 2. Import the database
 
 cPanel MySQL users **cannot** run `CREATE DATABASE`. You already created `ozermanl_MAIN` — use that.
 
@@ -55,32 +52,20 @@ cPanel MySQL users **cannot** run `CREATE DATABASE`. You already created `ozerma
 
 1. Left sidebar → click **`ozermanl_MAIN`** (must be selected / bold).
 2. Top tab → **Import**.
-3. Choose file → Import in order:
-   1. `database/schema.sql` (tables only — no CREATE DATABASE)
-   2. `database/seed.sql`
-   3. Optional: `database/content_seed.sql`, `database/analytics_schema.sql`
+3. Choose `database/install.sql` and import it.
 
-If Import still errors, open the SQL file and confirm there is **no** `CREATE DATABASE` / `USE ozermanltd` line (current `main` branch already removed those).
+That file creates every table, the English / Turkish / Arabic language rows, and one admin account. It does not insert pages or other content. Re-importing it drops and recreates the tables.
 
 Or Terminal:
 
 ```bash
 cd ~
-mysql -u ozermanl_SYSADMIN -p ozermanl_MAIN < database/schema.sql
-mysql -u ozermanl_SYSADMIN -p ozermanl_MAIN < database/seed.sql
+mysql -u ozermanl_SYSADMIN -p ozermanl_MAIN < database/install.sql
 ```
 
+Sign in at `https://ozermanltd.com/admin` with `admin@ozermanltd.com` and the password from the install.
 
-## 3. Reset admin password
-
-```bash
-cd ~
-php bin/reset-admin-password.php admin@ozermanltd.com 'ChooseAStrongPassword'
-```
-
-Then open `https://ozermanltd.com/admin` and sign in with that email/password.
-
-## 4. Seed editable QR + catalogues pages
+## 3. Create the QR and catalogues pages
 
 No Terminal needed: after logging into Admin, open **Pages → All Pages** and click **Create QR & Catalogues pages** (shown when they are missing).
 
@@ -96,7 +81,7 @@ Creates/updates CMS pages for:
 - `/qr` → **LAJIVERT QR**
 - `/catalogues` → **Lajivert Catalogues**
 
-## 5. Edit HTML / upload catalogues (staff workflow)
+## 4. Edit HTML / upload catalogues (staff workflow)
 
 1. **Admin → Media Library** — upload PDF (and images if needed).
 2. **Admin → Pages → All Pages** — open **Lajivert Catalogues** (or **LAJIVERT QR**).
@@ -114,8 +99,8 @@ The public `/qr` and `/catalogues` routes load these CMS pages when published; o
 | “Cannot connect… host=localhost… ozermanl_MAIN” | Wrong username spelling (must be `ozermanl_SYSADMIN`, not `ozerman_SYSADMIN`), password mismatch, or user not added to DB. Copy exact names from MySQL Databases. |
 | “Access denied” in error detail | Reset MySQL user password in cPanel and paste the same value into `.env` (quote if it has `#` or spaces). |
 | “Unknown database” | Database name typo — must match cPanel exactly (e.g. `ozermanl_MAIN`). |
-| “No account found” | Import `seed.sql` or run `reset-admin-password.php` |
-| “Incorrect password” | Re-run reset script |
-| Blank white `/admin` after login | PHP fatal (often missing tables). Deploy latest; you should see an error card. Import `schema.sql`, `seed.sql`, `analytics_schema.sql` into `ozermanl_MAIN`. |
+| “No account found” | Import `database/install.sql`, or run `php bin/reset-admin-password.php admin@ozermanltd.com 'a-new-password'` |
+| “Incorrect password” | Re-run the reset script |
+| Blank white `/admin` after login | PHP fatal (often missing tables). Deploy latest; you should see an error card. Import `database/install.sql` into `ozermanl_MAIN`. |
 | Changes not visible | Hard refresh; confirm page is **Published** |
 

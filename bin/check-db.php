@@ -42,6 +42,6 @@ try {
     $n = (int) $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
     echo "users table rows: {$n}\n";
 } catch (Throwable $e) {
-    echo "Connected, but tables missing? Import schema.sql + seed.sql. Error: " . $e->getMessage() . "\n";
+    echo "Connected, but tables missing? Import database/install.sql. Error: " . $e->getMessage() . "\n";
     exit(1);
 }

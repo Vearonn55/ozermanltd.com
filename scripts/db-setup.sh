@@ -31,10 +31,9 @@ if [ -n "$DB_PASS" ]; then
   MYSQL_ARGS+=(-p"$DB_PASS")
 fi
 
-echo "Creating database schema..."
-"$MYSQL" "${MYSQL_ARGS[@]}" < "$ROOT/database/schema.sql"
-
-echo "Inserting seed data..."
-"$MYSQL" "${MYSQL_ARGS[@]}" "$DB_NAME" < "$ROOT/database/seed.sql"
+echo "Importing database/install.sql into ${DB_NAME}..."
+"$MYSQL" "${MYSQL_ARGS[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+"$MYSQL" "${MYSQL_ARGS[@]}" "$DB_NAME" < "$ROOT/database/install.sql"
 
 echo "Done. Database '${DB_NAME}' is ready."
+echo "Admin: admin@ozermanltd.com"

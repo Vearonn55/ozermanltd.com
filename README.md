@@ -58,8 +58,6 @@ Copy [`.env.example`](.env.example) to `.env`. Important flags (see example file
 | `SITE_UNDER_CONSTRUCTION` | Soft-launch gate |
 | `CLOUDFLARE_ENFORCE` | Origin-only-via-Cloudflare (production) |
 | `DB_*` | Database connection |
-| `DB_USE_DUMMY_DATA` | Prefer `false` when MySQL is available |
-| `DB_FALLBACK_DUMMY` | Prefer `false` in production |
 
 Never commit `.env`, API keys, or real passwords. Keep secrets in the host environment / cPanel only.
 
@@ -76,7 +74,7 @@ Never commit `.env`, API keys, or real passwords. Keep secrets in the host envir
 app/                 # Public app (controllers, views, middleware, SEO)
 modules/Admin/       # Portable CMS
 config/              # App, DB, SEO, Cloudflare IP ranges
-database/            # Schema and seeds
+database/            # install.sql — the only phpMyAdmin import
 public/              # Document root (index.php, assets, uploads)
 docs/                # Deploy and admin docs
 bin/                 # CLI helpers

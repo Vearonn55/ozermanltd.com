@@ -19,7 +19,7 @@ class Database
     }
 
     /**
-     * @param bool $force When true, connect even if use_dummy_data is enabled (required for admin/auth).
+     * @param bool $force When true, use the admin connection cache.
      */
     public static function connection(bool $force = false): ?PDO
     {
@@ -32,10 +32,6 @@ class Database
         }
 
         $config = require CONFIG_PATH . '/database.php';
-
-        if (!$force && !empty($config['use_dummy_data'])) {
-            return null;
-        }
 
         $dsn = sprintf(
             '%s:host=%s;port=%s;dbname=%s;charset=%s',

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Data\DummyData;
 use App\Infrastructure\Database;
 use PDO;
 
@@ -40,18 +39,15 @@ class DatabaseContentProvider implements ContentProviderInterface
             $grouped[$id]['label'][$row['lang']] = $row['label'];
         }
 
-        $dummyNav = DummyData::nav();
         $nav = [];
-        $i = 0;
         foreach ($grouped as $item) {
             $nav[] = [
-                'label' => $this->mergeTranslations($item['label'], $dummyNav[$i]['label'] ?? []),
+                'label' => $item['label'],
                 'url' => $item['url'],
             ];
-            $i++;
         }
 
-        return $nav !== [] ? $nav : DummyData::nav();
+        return $nav;
     }
 
     public function footerMenus(string $locale): array
@@ -90,14 +86,12 @@ class DatabaseContentProvider implements ContentProviderInterface
             }
         }
 
-        $dummy = DummyData::footerMenus();
         $menus = [];
 
         foreach (['footer_col1', 'footer_col2', 'footer_col3'] as $location) {
             $column = $columns[$location] ?? null;
 
             if ($column === null || $column['items'] === []) {
-                $menus[$location] = $dummy[$location];
                 continue;
             }
 
@@ -113,9 +107,13 @@ class DatabaseContentProvider implements ContentProviderInterface
                 ];
             }
 
+            if ($links === []) {
+                continue;
+            }
+
             $menus[$location] = [
-                'title' => $this->mergeTranslations($column['title'], $dummy[$location]['title'] ?? []),
-                'links' => $links !== [] ? $links : ($dummy[$location]['links'] ?? []),
+                'title' => $column['title'],
+                'links' => $links,
             ];
         }
 
@@ -136,20 +134,14 @@ class DatabaseContentProvider implements ContentProviderInterface
         $stmt->execute(['language_id' => $languageId]);
         $rows = $stmt->fetchAll();
 
-        if ($rows === []) {
-            return DummyData::heroSlides();
-        }
-
-        $dummySlides = DummyData::heroSlides();
         $slides = [];
-        foreach ($rows as $index => $row) {
-            $dummy = $dummySlides[$index] ?? [];
+        foreach ($rows as $row) {
             $slides[] = [
-                'title' => $this->mergeScalarTranslation($row['title'], $dummy['title'] ?? [], $locale),
-                'subtitle' => $this->mergeScalarTranslation($row['subtitle'], $dummy['subtitle'] ?? [], $locale),
-                'cta_text' => $this->mergeScalarTranslation($row['cta_text'], $dummy['cta_text'] ?? [], $locale),
+                'title' => $this->mergeScalarTranslation($row['title'], [], $locale),
+                'subtitle' => $this->mergeScalarTranslation($row['subtitle'], [], $locale),
+                'cta_text' => $this->mergeScalarTranslation($row['cta_text'], [], $locale),
                 'cta_url' => $this->normalizeInternalPath($row['cta_url'] ?? ''),
-                'image' => $this->resolveMediaUrl($row['image'] ?: null, $dummy['image'] ?? ''),
+                'image' => $this->resolveMediaUrl($row['image'] ?: null),
             ];
         }
 
@@ -170,10 +162,6 @@ class DatabaseContentProvider implements ContentProviderInterface
         $stmt->execute(['language_id' => $languageId]);
         $rows = $stmt->fetchAll();
 
-        if ($rows === []) {
-            return DummyData::stats();
-        }
-
         $grouped = [];
         foreach ($rows as $row) {
             $sort = (int) $row['sort_order'];
@@ -182,15 +170,12 @@ class DatabaseContentProvider implements ContentProviderInterface
         }
 
         ksort($grouped);
-        $dummyStats = DummyData::stats();
         $stats = [];
-        $i = 0;
         foreach ($grouped as $item) {
             $stats[] = [
                 'value' => $item['value'],
-                'label' => $this->mergeTranslations($item['label'], $dummyStats[$i]['label'] ?? []),
+                'label' => $item['label'],
             ];
-            $i++;
         }
 
         return $stats;
@@ -275,15 +260,8 @@ class DatabaseContentProvider implements ContentProviderInterface
             $collections[$id]['description'][$row['lang']] = $row['description'];
         }
 
-        if ($collections === []) {
-            return DummyData::gallery();
-        }
-
-        $dummyGallery = DummyData::gallery();
         $result = [];
-        $i = 0;
         foreach ($collections as $id => $collection) {
-            $dummy = DummyData::findBySlug($dummyGallery, $collection['slug']) ?? ($dummyGallery[$i] ?? []);
             $itemsStmt = $this->pdo->prepare(
                 'SELECT gi.caption, m.file_path AS image
                  FROM gallery_items gi
@@ -293,26 +271,20 @@ class DatabaseContentProvider implements ContentProviderInterface
             );
             $itemsStmt->execute(['collection_id' => $id]);
             $items = [];
-            foreach ($itemsStmt->fetchAll() as $itemIndex => $item) {
-                $dummyItem = $dummy['items'][$itemIndex] ?? [];
+            foreach ($itemsStmt->fetchAll() as $item) {
                 $items[] = [
-                    'image' => $this->resolveMediaUrl($item['image'] ?: null, $dummyItem['image'] ?? ''),
-                    'caption' => $this->mergeScalarTranslation(
-                        $item['caption'],
-                        $dummyItem['caption'] ?? [],
-                        $locale
-                    ),
+                    'image' => $this->resolveMediaUrl($item['image'] ?: null),
+                    'caption' => $this->mergeScalarTranslation($item['caption'], [], $locale),
                 ];
             }
 
             $result[] = [
                 'slug' => $collection['slug'],
-                'title' => $this->mergeTranslations($collection['title'], $dummy['title'] ?? []),
-                'description' => $this->mergeTranslations($collection['description'], $dummy['description'] ?? []),
-                'cover' => $collection['cover'] ?: ($dummy['cover'] ?? ''),
-                'items' => $items !== [] ? $items : ($dummy['items'] ?? []),
+                'title' => $collection['title'],
+                'description' => $collection['description'],
+                'cover' => $collection['cover'],
+                'items' => $items,
             ];
-            $i++;
         }
 
         return $result;
@@ -342,26 +314,18 @@ class DatabaseContentProvider implements ContentProviderInterface
             $offices[$id]['hours'][$row['lang']] = $row['working_hours'];
         }
 
-        if ($offices === []) {
-            return DummyData::offices();
-        }
-
-        $dummyOffices = DummyData::offices();
         $result = [];
-        $i = 0;
         foreach ($offices as $office) {
-            $dummy = $dummyOffices[$i] ?? [];
             $result[] = [
-                'label' => $this->mergeTranslations($office['label'], $dummy['label'] ?? []),
-                'address' => $this->mergeTranslations($office['address'], $dummy['address'] ?? []),
-                'city' => $office['city'] ?: ($dummy['city'] ?? ''),
-                'country' => $this->mergeTranslations($office['country'], $dummy['country'] ?? []),
-                'phone' => $office['phone'] ?: ($dummy['phone'] ?? ''),
-                'email' => $office['email'] ?: ($dummy['email'] ?? ''),
-                'hours' => $this->mergeTranslations($office['hours'], $dummy['hours'] ?? []),
+                'label' => $office['label'],
+                'address' => $office['address'],
+                'city' => $office['city'],
+                'country' => $office['country'],
+                'phone' => $office['phone'],
+                'email' => $office['email'],
+                'hours' => $office['hours'],
                 'is_headquarters' => $office['is_headquarters'],
             ];
-            $i++;
         }
 
         return $result;
@@ -381,20 +345,14 @@ class DatabaseContentProvider implements ContentProviderInterface
         $stmt->execute(['language_id' => $languageId]);
         $rows = $stmt->fetchAll();
 
-        if ($rows === []) {
-            return DummyData::team();
-        }
-
-        $dummyTeam = DummyData::team();
         $team = [];
-        foreach ($rows as $index => $row) {
-            $dummy = $dummyTeam[$index] ?? [];
+        foreach ($rows as $row) {
             $team[] = [
-                'name' => $this->mergeScalarTranslation($row['full_name'], $dummy['name'] ?? [], $locale),
-                'position' => $this->mergeScalarTranslation($row['position'], $dummy['position'] ?? [], $locale),
-                'bio' => $this->mergeScalarTranslation($row['bio'], $dummy['bio'] ?? [], $locale),
+                'name' => $this->mergeScalarTranslation($row['full_name'], [], $locale),
+                'position' => $this->mergeScalarTranslation($row['position'], [], $locale),
+                'bio' => $this->mergeScalarTranslation($row['bio'], [], $locale),
                 'type' => $row['type'],
-                'image' => $this->resolveMediaUrl($row['image'] ?: null, $dummy['image'] ?? ''),
+                'image' => $this->resolveMediaUrl($row['image'] ?: null),
             ];
         }
 
@@ -403,40 +361,30 @@ class DatabaseContentProvider implements ContentProviderInterface
 
     public function aboutContent(string $locale): array
     {
-        $dummy = DummyData::aboutContent();
+        $empty = ['history' => [], 'vision' => [], 'mission' => []];
         $row = $this->fetchAboutContentRow($locale);
 
-        // EN seed may store a multilingual JSON payload — reuse it for other locales.
         if ((!$row || empty($row['content'])) && $locale !== 'en') {
             $row = $this->fetchAboutContentRow('en');
         }
 
         if (!$row || empty($row['content'])) {
-            $content = $dummy;
+            $content = $empty;
         } else {
             $raw = trim((string) $row['content']);
             $decoded = json_decode($raw, true);
 
             if (!is_array($decoded)) {
                 $content = [
-                    'history' => $this->mergeTranslations([$locale => $raw], $dummy['history']),
-                    'vision' => $dummy['vision'],
-                    'mission' => $dummy['mission'],
+                    'history' => [$locale => $raw],
+                    'vision' => [],
+                    'mission' => [],
                 ];
             } else {
                 $content = [
-                    'history' => $this->mergeTranslations(
-                        is_array($decoded['history'] ?? null) ? $decoded['history'] : [$locale => $decoded['history'] ?? ''],
-                        $dummy['history']
-                    ),
-                    'vision' => $this->mergeTranslations(
-                        is_array($decoded['vision'] ?? null) ? $decoded['vision'] : [$locale => $decoded['vision'] ?? ''],
-                        $dummy['vision']
-                    ),
-                    'mission' => $this->mergeTranslations(
-                        is_array($decoded['mission'] ?? null) ? $decoded['mission'] : [$locale => $decoded['mission'] ?? ''],
-                        $dummy['mission']
-                    ),
+                    'history' => is_array($decoded['history'] ?? null) ? $decoded['history'] : [$locale => (string) ($decoded['history'] ?? '')],
+                    'vision' => is_array($decoded['vision'] ?? null) ? $decoded['vision'] : [$locale => (string) ($decoded['vision'] ?? '')],
+                    'mission' => is_array($decoded['mission'] ?? null) ? $decoded['mission'] : [$locale => (string) ($decoded['mission'] ?? '')],
                 ];
             }
         }
@@ -473,18 +421,12 @@ class DatabaseContentProvider implements ContentProviderInterface
     public function values(string $locale): array
     {
         $blocks = $this->loadContentBlocks('about_values');
-        if ($blocks === []) {
-            return DummyData::values();
-        }
-
-        $dummy = DummyData::values();
         $values = [];
-        foreach ($blocks as $index => $block) {
-            $fallback = $dummy[$index] ?? [];
+        foreach ($blocks as $block) {
             $values[] = [
-                'title' => $this->mergeTranslations($block['title'] ?? [], $fallback['title'] ?? []),
-                'description' => $this->mergeTranslations($block['body'] ?? [], $fallback['description'] ?? []),
-                'icon' => $block['icon'] ?: ($fallback['icon'] ?? 'star'),
+                'title' => $block['title'] ?? [],
+                'description' => $block['body'] ?? [],
+                'icon' => $block['icon'] ?: 'star',
             ];
         }
 
@@ -527,22 +469,10 @@ class DatabaseContentProvider implements ContentProviderInterface
             'image' => 'image',
         ]);
 
-        if ($grouped === []) {
-            return DummyData::stores();
-        }
-
-        $dummy = DummyData::stores();
-        foreach ($grouped as $index => &$store) {
-            $fallback = $dummy[$index] ?? [];
-            if ($store['image'] === '' || $store['image'] === null) {
-                $store['image'] = $fallback['image'] ?? '';
-            } else {
-                $store['image'] = $this->resolveMediaUrl((string) $store['image'], $fallback['image'] ?? '');
-            }
-            $store['name'] = $this->mergeTranslations($store['name'] ?? [], $fallback['name'] ?? []);
-            $store['city'] = $this->mergeTranslations($store['city'] ?? [], $fallback['city'] ?? []);
-            $store['address'] = $this->mergeTranslations($store['address'] ?? [], $fallback['address'] ?? []);
-            $store['hours'] = $this->mergeTranslations($store['hours'] ?? [], $fallback['hours'] ?? []);
+        foreach ($grouped as &$store) {
+            $store['image'] = $this->resolveMediaUrl(
+                ($store['image'] === '' || $store['image'] === null) ? null : (string) $store['image']
+            );
         }
         unset($store);
 
@@ -584,26 +514,10 @@ class DatabaseContentProvider implements ContentProviderInterface
             'image' => 'image',
         ]);
 
-        if ($grouped === []) {
-            return DummyData::partnerships();
-        }
-
-        $dummy = DummyData::partnerships();
-        foreach ($grouped as $index => &$partner) {
-            $fallback = $dummy[$index] ?? [];
-            if ($partner['image'] === '' || $partner['image'] === null) {
-                $partner['image'] = $fallback['image'] ?? '';
-            } elseif (!str_starts_with((string) $partner['image'], 'http')) {
-                $partner['image'] = $this->resolveMediaUrl((string) $partner['image'], $fallback['image'] ?? '');
+        foreach ($grouped as &$partner) {
+            if ($partner['image'] !== '' && $partner['image'] !== null && !str_starts_with((string) $partner['image'], 'http')) {
+                $partner['image'] = $this->resolveMediaUrl((string) $partner['image']);
             }
-            if ($partner['url'] === '') {
-                $partner['url'] = $fallback['url'] ?? '';
-            }
-            if ($partner['name'] === '') {
-                $partner['name'] = $fallback['name'] ?? '';
-            }
-            $partner['tagline'] = $this->mergeTranslations($partner['tagline'] ?? [], $fallback['tagline'] ?? []);
-            $partner['description'] = $this->mergeTranslations($partner['description'] ?? [], $fallback['description'] ?? []);
         }
         unset($partner);
 
@@ -613,17 +527,11 @@ class DatabaseContentProvider implements ContentProviderInterface
     public function operations(string $locale): array
     {
         $blocks = $this->loadContentBlocks('home_operations');
-        if ($blocks === []) {
-            return DummyData::operations();
-        }
-
-        $dummy = DummyData::operations();
         $operations = [];
-        foreach ($blocks as $index => $block) {
-            $fallback = $dummy[$index] ?? [];
+        foreach ($blocks as $block) {
             $operations[] = [
-                'title' => $this->mergeTranslations($block['title'] ?? [], $fallback['title'] ?? []),
-                'description' => $this->mergeTranslations($block['body'] ?? [], $fallback['description'] ?? []),
+                'title' => $block['title'] ?? [],
+                'description' => $block['body'] ?? [],
             ];
         }
 
@@ -797,10 +705,10 @@ class DatabaseContentProvider implements ContentProviderInterface
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) {
-            return DummyData::banner($location);
+            return '';
         }
 
-        return $this->resolveMediaUrl($row['file_path'] ?: null, (string) ($row['fallback_url'] ?: DummyData::banner($location)));
+        return $this->resolveMediaUrl($row['file_path'] ?: null, (string) ($row['fallback_url'] ?: ''));
     }
 
     /**
@@ -871,8 +779,6 @@ class DatabaseContentProvider implements ContentProviderInterface
 
     private function formatSector(array $sector, string $locale): array
     {
-        $dummy = DummyData::findBySlug(DummyData::sectors(), $sector['slug']) ?? [];
-
         return [
             'slug' => $sector['slug'],
             'icon' => $sector['icon'],
@@ -880,14 +786,12 @@ class DatabaseContentProvider implements ContentProviderInterface
             'name' => $sector['name'],
             'overview' => $sector['overview'],
             'services' => $sector['services'] ?? [],
-            'image' => $this->resolveMediaUrl($sector['image'] ?? null, $dummy['image'] ?? ''),
+            'image' => $this->resolveMediaUrl($sector['image'] ?? null),
         ];
     }
 
     private function formatProject(array $project, string $locale): array
     {
-        $dummy = DummyData::findBySlug(DummyData::projects(), $project['slug']) ?? [];
-
         return [
             'slug' => $project['slug'],
             'category' => $project['category'] ?? [],
@@ -900,14 +804,12 @@ class DatabaseContentProvider implements ContentProviderInterface
             'title' => $project['title'],
             'description' => $project['description'],
             'features' => $project['features'] ?? [],
-            'image' => $this->resolveMediaUrl($project['image'] ?? null, $dummy['image'] ?? ''),
+            'image' => $this->resolveMediaUrl($project['image'] ?? null),
         ];
     }
 
     private function formatNews(array $article, string $locale): array
     {
-        $dummy = DummyData::findBySlug(DummyData::news(), $article['slug']) ?? [];
-
         return [
             'slug' => $article['slug'],
             'category' => $article['category'] ?? [],
@@ -916,7 +818,7 @@ class DatabaseContentProvider implements ContentProviderInterface
             'title' => $article['title'],
             'excerpt' => $article['excerpt'],
             'content' => $article['content'],
-            'image' => $this->resolveMediaUrl($article['image'] ?? null, $dummy['image'] ?? ''),
+            'image' => $this->resolveMediaUrl($article['image'] ?? null),
             'id' => $article['id'] ?? null,
         ];
     }

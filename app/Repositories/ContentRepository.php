@@ -8,13 +8,7 @@ use App\Infrastructure\Database;
 
 class ContentRepository implements ContentProviderInterface
 {
-    private DummyContentProvider $dummy;
     private ?DatabaseContentProvider $database = null;
-
-    public function __construct()
-    {
-        $this->dummy = new DummyContentProvider();
-    }
 
     public function nav(string $locale): array
     {
@@ -113,21 +107,14 @@ class ContentRepository implements ContentProviderInterface
 
     public function usingDatabase(): bool
     {
-        return $this->shouldUseDatabase();
+        return Database::connection(force: true) !== null;
     }
 
     /** @return array<string, mixed>|null */
     public function cmsPageByPath(string $path, string $locale): ?array
     {
-        if (!$this->shouldUseDatabase()) {
-            return null;
-        }
-
         try {
-            $provider = $this->database ??= new DatabaseContentProvider(
-                Database::connection(force: true)
-            );
-            return $provider->cmsPageByPath($path, $locale);
+            return $this->provider()->cmsPageByPath($path, $locale);
         } catch (\Throwable) {
             return null;
         }
@@ -135,31 +122,20 @@ class ContentRepository implements ContentProviderInterface
 
     private function resolve(): ContentProviderInterface
     {
-        if (!$this->shouldUseDatabase()) {
-            return $this->dummy;
-        }
-
-        try {
-            return $this->database ??= new DatabaseContentProvider(
-                Database::connection(force: true)
-            );
-        } catch (\Throwable $e) {
-            if (db_fallback_to_dummy()) {
-                return $this->dummy;
-            }
-
-            throw new \RuntimeException('Database content is required but unavailable.', 0, $e);
-        }
+        return $this->provider();
     }
 
-    private function shouldUseDatabase(): bool
+    private function provider(): DatabaseContentProvider
     {
-        $config = require CONFIG_PATH . '/database.php';
-
-        if (!empty($config['use_dummy_data'])) {
-            return false;
+        if ($this->database !== null) {
+            return $this->database;
         }
 
-        return Database::connection(force: true) !== null;
+        $pdo = Database::connection(force: true);
+        if ($pdo === null) {
+            throw new \RuntimeException('Database content is required but unavailable.');
+        }
+
+        return $this->database = new DatabaseContentProvider($pdo);
     }
 }
