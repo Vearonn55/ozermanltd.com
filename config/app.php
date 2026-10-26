@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     'name' => 'Özerman Ticaret',
+    // V 1.0
     'version' => 'V 1.0',
     'tagline' => 'Distinguished brands. A strong local structure.',
     'url' => rtrim(env('APP_URL', 'https://ozermanltd.com'), '/'),
