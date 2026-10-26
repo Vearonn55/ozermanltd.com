@@ -19,8 +19,12 @@ use App\Middleware\UnderConstructionMiddleware;
 $requestUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $requestUri = rtrim($requestUri, '/') ?: '/';
 
-// Locale-free QR landings: never serve under /en|/tr|/ar.
-if (preg_match('#^/(en|tr|ar)/(qr|catalogues)$#', $requestUri, $m) === 1) {
+// Locale-free QR landings: never serve under a language prefix.
+$localePattern = implode('|', array_map(
+    static fn(string $code): string => preg_quote($code, '#'),
+    array_keys(config('locales', []))
+));
+if ($localePattern !== '' && preg_match('#^/(' . $localePattern . ')/(qr|catalogues)$#', $requestUri, $m) === 1) {
     header('Location: /' . $m[2], true, 301);
     exit;
 }

@@ -2,11 +2,18 @@
 $nav = content()->nav(app_locale());
 $locales = config('locales', []);
 $currentLocale = app_locale();
-$primaryCodes = ['en', 'tr'];
 $primary = [];
-foreach ($primaryCodes as $code) {
+foreach (['en', 'tr'] as $code) {
     if (isset($locales[$code])) {
         $primary[$code] = $locales[$code];
+    }
+}
+foreach ($locales as $code => $info) {
+    if (count($primary) >= 2) {
+        break;
+    }
+    if (!isset($primary[$code])) {
+        $primary[$code] = $info;
     }
 }
 $extra = array_diff_key($locales, $primary);

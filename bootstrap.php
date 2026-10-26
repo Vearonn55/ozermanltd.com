@@ -85,6 +85,8 @@ $dbConfig = require CONFIG_PATH . '/database.php';
 
 date_default_timezone_set('UTC');
 
+apply_database_locales();
+
 if (env('APP_ENV', 'development') === 'production') {
     ini_set('display_errors', '0');
     ini_set('display_startup_errors', '0');

@@ -114,6 +114,7 @@ CREATE TABLE languages (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   code        VARCHAR(5)   NOT NULL UNIQUE COMMENT 'en | tr | ar',
   name        VARCHAR(60)  NOT NULL,
+  dir         VARCHAR(3)   NOT NULL DEFAULT 'ltr',
   flag_icon   VARCHAR(100) NULL,
   is_default  TINYINT(1)   NOT NULL DEFAULT 0,
   is_active   TINYINT(1)   NOT NULL DEFAULT 1,
@@ -914,10 +915,10 @@ CREATE TABLE IF NOT EXISTS analytics_sync_queue (
   INDEX idx_sync_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO languages (code, name, is_default, is_active, sort_order) VALUES
-('en', 'English', 0, 1, 1),
-('tr', 'Türkçe', 1, 1, 0),
-('ar', 'العربية', 0, 1, 2);
+INSERT INTO languages (code, name, dir, is_default, is_active, sort_order) VALUES
+('en', 'English', 'ltr', 0, 1, 1),
+('tr', 'Türkçe', 'ltr', 1, 1, 0),
+('ar', 'العربية', 'rtl', 0, 1, 2);
 
 INSERT INTO users (name, email, password_hash, role, status) VALUES
 ('Admin', 'admin@ozermanltd.com', '$2y$12$MDloDizn.QxjgmyMO4Kp6.KA0ZHnSzDdXEgS.cq1d7bN1hvDoDLkS', 'super_admin', 'active');

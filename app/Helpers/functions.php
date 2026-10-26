@@ -73,6 +73,12 @@ function config(string $key, $default = null)
         $appConfig = require CONFIG_PATH . '/app.php';
     }
 
+    if (isset($GLOBALS['app_config_overrides']) && is_array($GLOBALS['app_config_overrides'])) {
+        foreach ($GLOBALS['app_config_overrides'] as $overrideKey => $overrideValue) {
+            $appConfig[$overrideKey] = $overrideValue;
+        }
+    }
+
     if (!str_contains($key, '.')) {
         return $appConfig[$key] ?? $default;
     }
@@ -205,6 +211,131 @@ function media_url(?string $filePath, string $fallback = ''): string
     $uploadUrl = rtrim((string) config('admin.upload_url', '/uploads'), '/');
 
     return $uploadUrl . '/' . ltrim($filePath, '/');
+}
+
+function config_set(string $key, mixed $value): void
+{
+    $GLOBALS['app_config_overrides'][$key] = $value;
+}
+
+function locale_default_synced(\PDO $pdo): bool
+{
+    try {
+        $stmt = $pdo->prepare(
+            'SELECT value FROM settings WHERE `group` = :group AND `key` = :key LIMIT 1'
+        );
+        $stmt->execute(['group' => 'system', 'key' => 'locales_synced']);
+
+        return $stmt->fetchColumn() === '1';
+    } catch (\Throwable) {
+        return true;
+    }
+}
+
+function locale_mark_default_synced(\PDO $pdo): void
+{
+    $stmt = $pdo->prepare(
+        'INSERT INTO settings (`group`, `key`, value, type, label)
+         VALUES (:group, :key, :value, :type, :label)
+         ON DUPLICATE KEY UPDATE value = VALUES(value)'
+    );
+    $stmt->execute([
+        'group' => 'system',
+        'key' => 'locales_synced',
+        'value' => '1',
+        'type' => 'text',
+        'label' => 'Locales synced',
+    ]);
+}
+
+/**
+ * Active languages in the database replace the file list, so the admin
+ * can add, hide, or remove a locale without a code change.
+ */
+function apply_database_locales(): void
+{
+    static $applied = false;
+    if ($applied) {
+        return;
+    }
+    $applied = true;
+
+    $pdo = \App\Infrastructure\Database::connection(true);
+    if ($pdo === null) {
+        return;
+    }
+
+    try {
+        $rows = $pdo->query(
+            'SELECT code, name, is_default, is_active, sort_order, dir
+             FROM languages
+             ORDER BY sort_order, id'
+        )->fetchAll();
+        $hasDir = true;
+    } catch (\Throwable) {
+        try {
+            $rows = $pdo->query(
+                'SELECT code, name, is_default, is_active, sort_order
+                 FROM languages
+                 ORDER BY sort_order, id'
+            )->fetchAll();
+            $hasDir = false;
+        } catch (\Throwable) {
+            return;
+        }
+    }
+
+    $fileDefault = strtolower((string) config('default_locale', 'tr'));
+    if (!locale_default_synced($pdo)) {
+        $codes = array_map(static fn(array $row): string => strtolower((string) $row['code']), $rows);
+        if (in_array($fileDefault, $codes, true)) {
+            $clear = $pdo->prepare('UPDATE languages SET is_default = 0');
+            $clear->execute();
+            $mark = $pdo->prepare('UPDATE languages SET is_default = 1, is_active = 1 WHERE code = :code');
+            $mark->execute(['code' => $fileDefault]);
+            foreach ($rows as &$row) {
+                $row['is_default'] = strtolower((string) $row['code']) === $fileDefault ? 1 : 0;
+                if (strtolower((string) $row['code']) === $fileDefault) {
+                    $row['is_active'] = 1;
+                }
+            }
+            unset($row);
+        }
+        locale_mark_default_synced($pdo);
+    }
+
+    $locales = [];
+    $default = null;
+    foreach ($rows as $row) {
+        if ((int) ($row['is_active'] ?? 0) !== 1) {
+            continue;
+        }
+        $code = strtolower(trim((string) $row['code']));
+        if ($code === '') {
+            continue;
+        }
+        $dir = $hasDir ? (string) ($row['dir'] ?? '') : '';
+        if ($dir !== 'rtl' && $dir !== 'ltr') {
+            $dir = $code === 'ar' ? 'rtl' : 'ltr';
+        }
+        $locales[$code] = [
+            'name' => (string) $row['name'],
+            'dir' => $dir,
+        ];
+        if ((int) ($row['is_default'] ?? 0) === 1) {
+            $default = $code;
+        }
+    }
+
+    if ($locales === []) {
+        return;
+    }
+    if ($default === null || !isset($locales[$default])) {
+        $default = (string) array_key_first($locales);
+    }
+
+    config_set('locales', $locales);
+    config_set('default_locale', $default);
 }
 
 function app_locale(): string

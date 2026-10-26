@@ -50,6 +50,7 @@ return [
         'media' => true,
         'seo' => true,
         'settings' => true,
+        'locales' => true,
         'users' => true,
         'activity' => true,
         'logs' => true,

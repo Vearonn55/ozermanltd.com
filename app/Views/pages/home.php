@@ -148,7 +148,7 @@
                 <?= e(t(['en' => 'View all brands →', 'tr' => 'Tüm markaları gör →', 'ar' => 'عرض كل العلامات ←'])) ?>
             </a>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             <?php foreach ($partnerships as $partner): ?>
             <?php partial('brand-card', ['partner' => $partner]); ?>
             <?php endforeach; ?>
@@ -177,7 +177,7 @@
                 <?= e(t(['en' => 'All locations →', 'tr' => 'Tüm mağazalar →', 'ar' => 'كل المتاجر ←'])) ?>
             </a>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             <?php foreach (array_slice($stores, 0, 3) as $store): ?>
             <?php partial('store-card', ['store' => $store]); ?>
             <?php endforeach; ?>

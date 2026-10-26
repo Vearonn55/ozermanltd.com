@@ -253,10 +253,13 @@ html.oz-loading body > *:not(#oz-loader) {
 
 /* Store and brand cards: thin orange glow, then a 180ms rise and thumbnail play */
 .oz-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
     background: var(--oz-canvas);
     border: 1px solid rgba(234, 76, 55, 0.55);
     box-shadow: 0 0 0 1px rgba(234, 76, 55, 0.35), 0 0 10px -6px rgba(234, 76, 55, 0.9);
-    overflow: hidden;
     transition: transform 180ms ease, box-shadow 180ms ease;
 }
 .oz-card:hover {
@@ -264,14 +267,31 @@ html.oz-loading body > *:not(#oz-loader) {
     box-shadow: 0 0 0 1px rgba(234, 76, 55, 0.8), 0 0 14px -4px rgba(234, 76, 55, 0.7);
 }
 .oz-card__media {
+    height: 12rem;
+    flex: none;
     overflow: hidden;
+    background: #f5f5f4;
 }
 .oz-card__media img {
+    display: block;
     width: 100%;
     height: 100%;
+    max-width: 100%;
     object-fit: cover;
     transform: scale(1);
     transition: transform 180ms ease;
+}
+.oz-card__body,
+.oz-card li,
+.oz-card p,
+.oz-card h2 {
+    min-width: 0;
+}
+.oz-card li > span,
+.oz-card li > a,
+.oz-card p,
+.oz-card h2 {
+    overflow-wrap: anywhere;
 }
 .oz-card:hover .oz-card__media img {
     transform: scale(1.08);

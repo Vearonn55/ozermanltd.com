@@ -13,6 +13,7 @@ use Admin\Controllers\ContentBlockController;
 use Admin\Controllers\DashboardController;
 use Admin\Controllers\GalleryController;
 use Admin\Controllers\HeroSlideController;
+use Admin\Controllers\LanguageController;
 use Admin\Controllers\LogController;
 use Admin\Controllers\MediaController;
 use Admin\Controllers\MenuController;
@@ -78,6 +79,7 @@ $resources = [
     'menus' => MenuController::class,
     'categories' => CategoryController::class,
     'users' => UserController::class,
+    'locales' => LanguageController::class,
     'seo' => SeoController::class,
 ];
 

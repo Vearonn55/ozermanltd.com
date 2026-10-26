@@ -6,17 +6,23 @@ $phone = trim((string) ($store['phone'] ?? ''));
 $email = trim((string) ($store['email'] ?? ''));
 ?>
 <article class="oz-card reveal">
-    <div class="oz-card__media h-48">
+    <div class="oz-card__media">
+        <?php if (trim((string) ($store['image'] ?? '')) !== ''): ?>
         <img src="<?= e($store['image']) ?>" alt="<?= e(t($store['name'])) ?>" loading="lazy">
+        <?php endif; ?>
     </div>
-    <div class="p-6">
+    <div class="oz-card__body p-6">
         <p class="text-xs uppercase tracking-[0.16em] text-orange-600 mb-2"><?= e(t($store['city'])) ?></p>
         <h2 class="font-display text-xl font-bold text-brand-800 mb-3"><?= e(t($store['name'])) ?></h2>
         <ul class="space-y-2.5 text-sm text-brand-600">
             <?php if ($address !== ''): ?>
-            <li class="flex gap-2">
+            <li class="flex gap-2 min-w-0">
                 <svg class="w-4 h-4 mt-0.5 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span><?= e($address) ?></span>
+                <?php if (preg_match('#^https?://#i', $address) === 1): ?>
+                <a href="<?= e($address) ?>" class="min-w-0 break-all hover:text-orange-600 transition-colors" target="_blank" rel="noopener"><?= e($address) ?></a>
+                <?php else: ?>
+                <span class="min-w-0"><?= e($address) ?></span>
+                <?php endif; ?>
             </li>
             <?php endif; ?>
             <?php if ($phone !== ''): ?>

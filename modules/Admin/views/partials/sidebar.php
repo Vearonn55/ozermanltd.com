@@ -38,6 +38,7 @@ $systemLinks = [
     ['path' => 'seo', 'label' => 'SEO', 'min' => 'editor', 'feature' => 'seo'],
     ['path' => 'analytics', 'label' => 'Analytics', 'min' => 'editor', 'feature' => 'analytics'],
     ['path' => 'settings', 'label' => 'Settings', 'min' => 'content_manager', 'feature' => 'settings'],
+    ['path' => 'locales', 'label' => 'Languages', 'min' => 'content_manager', 'feature' => 'locales'],
     ['path' => 'users', 'label' => 'Users', 'min' => 'super_admin', 'feature' => 'users'],
     ['path' => 'activity', 'label' => 'Audit Log', 'min' => 'content_manager', 'feature' => 'activity'],
     ['path' => 'logs', 'label' => 'App Logs', 'min' => 'super_admin', 'feature' => 'logs'],

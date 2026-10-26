@@ -2,15 +2,17 @@
 /** @var array $partner */
 ?>
 <article class="oz-card reveal">
-    <div class="oz-card__media h-48">
+    <div class="oz-card__media">
+        <?php if (trim((string) ($partner['image'] ?? '')) !== ''): ?>
         <img src="<?= e($partner['image']) ?>" alt="<?= e($partner['name']) ?>" loading="lazy">
+        <?php endif; ?>
     </div>
-    <div class="p-6">
+    <div class="oz-card__body p-6">
         <?php if (t($partner['tagline'] ?? []) !== ''): ?>
         <p class="text-xs uppercase tracking-[0.16em] text-orange-600 mb-2"><?= e(t($partner['tagline'])) ?></p>
         <?php endif; ?>
-        <h2 class="font-display text-xl font-bold text-brand-800 mb-3"><?= e($partner['name']) ?></h2>
-        <p class="text-sm text-brand-600 leading-relaxed"><?= e(t($partner['description'] ?? [])) ?></p>
+        <h2 class="font-display text-xl font-bold text-brand-800 mb-3 break-words"><?= e($partner['name']) ?></h2>
+        <p class="text-sm text-brand-600 leading-relaxed break-words"><?= e(t($partner['description'] ?? [])) ?></p>
         <?php if (!empty($partner['url'])): ?>
         <a href="<?= e($partner['url']) ?>" target="_blank" rel="noopener"
            class="inline-flex items-center gap-2 mt-4 text-brand-800 font-semibold hover:text-orange-600 transition-colors duration-200">
