@@ -293,7 +293,7 @@ class DatabaseContentProvider implements ContentProviderInterface
     public function offices(string $locale): array
     {
         $stmt = $this->pdo->query(
-            'SELECT o.id, o.phone, o.email, o.is_headquarters, ot.label, ot.address, ot.city, ot.country, ot.working_hours, l.code AS lang
+            'SELECT o.id, o.phone, o.email, o.whatsapp, o.is_headquarters, ot.label, ot.address, ot.city, ot.country, ot.working_hours, l.code AS lang
              FROM offices o
              INNER JOIN office_translations ot ON ot.office_id = o.id
              INNER JOIN languages l ON l.id = ot.language_id
@@ -306,10 +306,11 @@ class DatabaseContentProvider implements ContentProviderInterface
             $id = (int) $row['id'];
             $offices[$id]['phone'] = $row['phone'];
             $offices[$id]['email'] = $row['email'];
-            $offices[$id]['city'] = $row['city'];
+            $offices[$id]['whatsapp'] = $row['whatsapp'] ?? '';
             $offices[$id]['is_headquarters'] = (bool) $row['is_headquarters'];
             $offices[$id]['label'][$row['lang']] = $row['label'];
             $offices[$id]['address'][$row['lang']] = $row['address'];
+            $offices[$id]['city'][$row['lang']] = $row['city'];
             $offices[$id]['country'][$row['lang']] = $row['country'];
             $offices[$id]['hours'][$row['lang']] = $row['working_hours'];
         }
@@ -323,6 +324,7 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'country' => $office['country'],
                 'phone' => $office['phone'],
                 'email' => $office['email'],
+                'whatsapp' => $office['whatsapp'] ?? '',
                 'hours' => $office['hours'],
                 'is_headquarters' => $office['is_headquarters'],
             ];
@@ -335,7 +337,7 @@ class DatabaseContentProvider implements ContentProviderInterface
     {
         $languageId = $this->languageId($locale);
         $stmt = $this->pdo->prepare(
-            'SELECT tm.type, tm.sort_order, tmt.full_name, tmt.position, tmt.bio, m.file_path AS image
+            'SELECT tm.type, tm.sort_order, tm.phone, tm.email, tmt.full_name, tmt.position, tmt.bio, m.file_path AS image
              FROM team_members tm
              INNER JOIN team_member_translations tmt ON tmt.member_id = tm.id
              LEFT JOIN media m ON m.id = tm.media_id
@@ -352,6 +354,8 @@ class DatabaseContentProvider implements ContentProviderInterface
                 'position' => $this->mergeScalarTranslation($row['position'], [], $locale),
                 'bio' => $this->mergeScalarTranslation($row['bio'], [], $locale),
                 'type' => $row['type'],
+                'phone' => $row['phone'] ?? '',
+                'email' => $row['email'] ?? '',
                 'image' => $this->resolveMediaUrl($row['image'] ?: null),
             ];
         }

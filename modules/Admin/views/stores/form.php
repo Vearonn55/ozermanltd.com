@@ -1,5 +1,5 @@
 <?php $isEdit = $item !== null; ?>
-<?php admin_partial('visibility-notice', ['message' => 'Stores appear on the public Stores page when Active is enabled.']); ?>
+<?php admin_partial('visibility-notice', ['message' => 'A store appears on the website only while Active is on. Phone and email are shared across languages. Address and visiting hours are shown from the Turkish tab.']); ?>
 <form method="POST" action="<?= $isEdit ? admin_url('stores/' . $item['id']) : admin_url('stores') ?>" class="space-y-6 max-w-4xl">
     <?= csrf_field() ?>
 

@@ -1,5 +1,51 @@
 <?php
 $footerMenus = content()->footerMenus(app_locale());
+$footerOffices = content()->offices(app_locale());
+$footerStores = content()->stores(app_locale());
+$footerOffice = null;
+foreach ($footerOffices as $office) {
+    if (!empty($office['is_headquarters'])) {
+        $footerOffice = $office;
+        break;
+    }
+}
+$footerOffice = $footerOffice ?? ($footerOffices[0] ?? null);
+$footerPhone = trim((string) ($footerOffice['phone'] ?? ''));
+$footerEmail = trim((string) ($footerOffice['email'] ?? ''));
+$footerHours = $footerOffice ? t_filled($footerOffice['hours'] ?? []) : '';
+$footerAddress = $footerOffice
+    ? trim(implode(', ', array_filter([
+        t_filled($footerOffice['address'] ?? []),
+        t_filled($footerOffice['city'] ?? []),
+        t_filled($footerOffice['country'] ?? []),
+    ], static fn(string $part): bool => $part !== '')))
+    : '';
+if ($footerPhone === '') {
+    foreach ($footerStores as $store) {
+        if (trim((string) ($store['phone'] ?? '')) !== '') {
+            $footerPhone = trim((string) $store['phone']);
+            break;
+        }
+    }
+}
+if ($footerAddress === '') {
+    foreach ($footerStores as $store) {
+        $storeAddress = t_filled($store['address'] ?? []);
+        if ($storeAddress !== '') {
+            $footerAddress = trim($storeAddress . (t_filled($store['city'] ?? []) !== '' ? ', ' . t_filled($store['city']) : ''));
+            if ($footerHours === '') {
+                $footerHours = t_filled($store['hours'] ?? []);
+            }
+            break;
+        }
+    }
+}
+if ($footerAddress === '') {
+    $footerAddress = (string) config('contact.address', '');
+}
+if ($footerEmail === '') {
+    $footerEmail = (string) config('contact.email', '');
+}
 $footerHref = static function (array $link): string {
     $url = (string) ($link['url'] ?? '');
     return preg_match('#^https?://#', $url) === 1 ? $url : url($url);
@@ -63,20 +109,30 @@ $footerHref = static function (array $link): string {
                     <?= e(t(['en' => 'Contact', 'tr' => 'İletişim', 'ar' => 'اتصل بنا'])) ?>
                 </h4>
                 <ul class="space-y-3 text-sm text-brand-400">
+                    <?php if ($footerAddress !== ''): ?>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <span><?= e(config('contact.address')) ?></span>
-                    </li>
-                    <?php if (config('contact.phone')): ?>
-                    <li class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        <a href="tel:<?= e(config('contact.phone')) ?>" class="hover:text-orange-400 transition-colors"><?= e(config('contact.phone')) ?></a>
+                        <span><?= e($footerAddress) ?></span>
                     </li>
                     <?php endif; ?>
+                    <?php if ($footerPhone !== ''): ?>
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <a href="tel:<?= e($footerPhone) ?>" class="hover:text-orange-400 transition-colors"><?= e($footerPhone) ?></a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if ($footerHours !== ''): ?>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 mt-0.5 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span><?= e($footerHours) ?></span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if ($footerEmail !== ''): ?>
                     <li class="flex items-center gap-2">
                         <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        <a href="mailto:<?= e(config('contact.email')) ?>" class="hover:text-orange-400 transition-colors"><?= e(config('contact.email')) ?></a>
+                        <a href="mailto:<?= e($footerEmail) ?>" class="hover:text-orange-400 transition-colors"><?= e($footerEmail) ?></a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

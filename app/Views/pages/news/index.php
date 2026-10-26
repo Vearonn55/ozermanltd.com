@@ -27,13 +27,13 @@
             ])) ?>
         </p>
         <?php endif; ?>
-        <?php foreach ($articles as $i => $article): ?>
-        <article class="reveal grid lg:grid-cols-2 gap-10 items-center">
-            <a href="<?= url('news/' . $article['slug']) ?>" class="overflow-hidden border border-brand-200 <?= $i % 2 === 1 ? 'lg:order-2' : '' ?>">
+        <?php foreach ($articles as $article): ?>
+        <article class="reveal corp-row">
+            <a href="<?= url('news/' . $article['slug']) ?>" class="corp-row__media overflow-hidden border border-brand-200">
                 <img src="<?= e($article['image']) ?>" alt="<?= e(t($article['title'])) ?>"
                      class="w-full h-72 object-cover" loading="lazy">
             </a>
-            <div class="<?= $i % 2 === 1 ? 'lg:order-1' : '' ?>">
+            <div class="corp-row__copy">
                 <div class="flex items-center gap-3 mb-3">
                     <span class="eyebrow"><?= e(t($article['category'])) ?></span>
                     <span class="text-xs text-brand-400"><?= e(format_date($article['publish_date'])) ?></span>

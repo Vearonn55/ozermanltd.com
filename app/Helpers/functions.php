@@ -227,8 +227,66 @@ function t(array $translations, ?string $locale = null): string
 {
     $locale = $locale ?? app_locale();
     $fallback = (string) config('default_locale', 'tr');
+    $order = [$locale, $fallback, 'en'];
 
-    return $translations[$locale] ?? $translations[$fallback] ?? $translations['en'] ?? '';
+    foreach ($order as $code) {
+        $value = $translations[$code] ?? null;
+        if (is_string($value) && trim($value) !== '') {
+            return $value;
+        }
+    }
+
+    foreach ($translations as $value) {
+        if (is_string($value) && trim($value) !== '') {
+            return $value;
+        }
+    }
+
+    return '';
+}
+
+/**
+ * Contact lines: prefer the current language, and skip leftover placeholder
+ * copy when another language already has a real address or visiting hours.
+ */
+function t_filled(array $translations, ?string $locale = null): string
+{
+    $placeholders = [
+        'current address and visiting details will be added.',
+        'güncel adres ve ziyaret bilgileri eklenecek.',
+        'سيتم إضافة العنوان الحالي وتفاصيل الزيارة.',
+        'visiting hours will be added.',
+        'ziyaret saatleri eklenecek.',
+        'ستُضاف ساعات الزيارة.',
+    ];
+    $usable = static function (mixed $value) use ($placeholders): ?string {
+        if (!is_string($value)) {
+            return null;
+        }
+        $value = trim($value);
+        if ($value === '' || in_array(mb_strtolower($value), $placeholders, true)) {
+            return null;
+        }
+
+        return $value;
+    };
+
+    $locale = $locale ?? app_locale();
+    $fallback = (string) config('default_locale', 'tr');
+    foreach ([$locale, $fallback, 'en'] as $code) {
+        $value = $usable($translations[$code] ?? null);
+        if ($value !== null) {
+            return $value;
+        }
+    }
+    foreach ($translations as $value) {
+        $value = $usable($value);
+        if ($value !== null) {
+            return $value;
+        }
+    }
+
+    return t($translations, $locale);
 }
 
 function view(string $name, array $data = []): void

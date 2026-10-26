@@ -146,7 +146,7 @@
                         <ul class="space-y-2 text-sm text-brand-600">
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 mt-0.5 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                                <?= e(t($office['address'])) ?>, <?= e($office['city']) ?>, <?= e(t($office['country'])) ?>
+                                <?= e(trim(implode(', ', array_filter([t_filled($office['address']), t_filled($office['city']), t_filled($office['country'])], static fn(string $part): bool => $part !== '')))) ?>
                             </li>
                             <?php if (!empty($office['phone'])): ?>
                             <li class="flex items-center gap-2">
@@ -154,11 +154,19 @@
                                 <a href="tel:<?= e($office['phone']) ?>" class="hover:text-orange-600 transition-colors"><?= e($office['phone']) ?></a>
                             </li>
                             <?php endif; ?>
+                            <?php if (!empty($office['whatsapp'])): ?>
+                            <li class="flex items-center gap-2">
+                                <span class="w-4 text-center text-orange-500 shrink-0 text-xs font-bold">W</span>
+                                <a href="https://wa.me/<?= e(preg_replace('/\D+/', '', (string) $office['whatsapp'])) ?>" class="hover:text-orange-600 transition-colors" target="_blank" rel="noopener"><?= e($office['whatsapp']) ?></a>
+                            </li>
+                            <?php endif; ?>
                             <li class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                                 <a href="mailto:<?= e($office['email']) ?>" class="hover:text-orange-600 transition-colors"><?= e($office['email']) ?></a>
                             </li>
-                            <li class="text-brand-400 text-xs mt-2"><?= e(t($office['hours'])) ?></li>
+                            <?php if (t_filled($office['hours']) !== ''): ?>
+                            <li class="text-brand-400 text-xs mt-2"><?= e(t_filled($office['hours'])) ?></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                     <?php endforeach; ?>

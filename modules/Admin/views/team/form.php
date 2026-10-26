@@ -1,5 +1,5 @@
 <?php $isEdit = $item !== null; ?>
-<?php admin_partial('visibility-notice', ['message' => 'Team members appear on the public About page when Active is enabled.']); ?>
+<?php admin_partial('visibility-notice', ['message' => 'A team member appears on the About page only while Active is on. Phone and email are shown there when filled in.']); ?>
 <form method="POST" action="<?= $isEdit ? admin_url('team/' . $item['id']) : admin_url('team') ?>" class="space-y-6 max-w-4xl">
     <?= csrf_field() ?>
 

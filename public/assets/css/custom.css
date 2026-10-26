@@ -14,6 +14,20 @@
 }
 
 [x-cloak] { display: none !important; }
+#mobile-menu {
+    position: fixed;
+    inset-inline: 0;
+    top: 5rem;
+    z-index: 60;
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+    background: #fafaf9;
+    border-top: 1px solid #e7e5e4;
+    box-shadow: 0 12px 28px -18px rgba(28, 27, 26, 0.35);
+}
+@media (min-width: 1024px) {
+    #mobile-menu { display: none !important; }
+}
 
 html {
     scroll-behavior: smooth;
@@ -237,6 +251,47 @@ html.oz-loading body > *:not(#oz-loader) {
     box-shadow: 0 14px 28px -16px rgba(28, 27, 26, 0.14);
 }
 
+/* Store and brand cards: thin orange glow, then a 180ms rise and thumbnail play */
+.oz-card {
+    background: var(--oz-canvas);
+    border: 1px solid rgba(234, 76, 55, 0.55);
+    box-shadow: 0 0 0 1px rgba(234, 76, 55, 0.35), 0 0 10px -6px rgba(234, 76, 55, 0.9);
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.oz-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 0 1px rgba(234, 76, 55, 0.8), 0 0 14px -4px rgba(234, 76, 55, 0.7);
+}
+.oz-card__media {
+    overflow: hidden;
+}
+.oz-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 180ms ease;
+}
+.oz-card:hover .oz-card__media img {
+    transform: scale(1.08);
+}
+
+.corp-row {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+}
+@media (min-width: 1024px) {
+    .corp-row {
+        grid-template-columns: 1fr 1fr;
+    }
+    .corp-row__media { order: 1; }
+    .corp-row__copy { order: 2; }
+    [dir="rtl"] .corp-row__media { order: 2; }
+    [dir="rtl"] .corp-row__copy { order: 1; }
+}
+
 /* Soft orange accent line */
 .accent-line::after {
     content: '';
@@ -305,6 +360,15 @@ img:not([loading="lazy"]) {
     opacity: 1;
     transform: translateY(0);
 }
+.oz-card.reveal {
+    transition: opacity 0.65s ease-out, transform 180ms ease, box-shadow 180ms ease;
+}
+.oz-card.reveal.is-visible:hover {
+    transform: translateY(-6px);
+}
+.oz-card__media img[loading="lazy"] {
+    transition: opacity 0.4s ease, transform 180ms ease;
+}
 
 /* No full-page view-transition morph — it caused footer/chrome flicker */
 
@@ -328,7 +392,11 @@ img:not([loading="lazy"]) {
         transform: none;
     }
     .card-hover,
-    .card-hover:hover {
+    .card-hover:hover,
+    .oz-card,
+    .oz-card:hover,
+    .oz-card.reveal.is-visible:hover,
+    .oz-card__media img {
         transition: none;
         transform: none;
     }

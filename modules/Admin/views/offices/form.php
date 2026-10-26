@@ -1,5 +1,5 @@
 <?php $isEdit = $item !== null; ?>
-<?php admin_partial('visibility-notice', ['message' => 'Offices appear on the public Contact page when Active is enabled.']); ?>
+<?php admin_partial('visibility-notice', ['message' => 'An office appears on the Contact page and in the footer only while Active is on. Phone, email, and WhatsApp are shared across languages. Address, city, and visiting hours are shown from the Turkish tab.']); ?>
 <form method="POST" action="<?= $isEdit ? admin_url('offices/' . $item['id']) : admin_url('offices') ?>" class="space-y-6 max-w-4xl">
     <?= csrf_field() ?>
 

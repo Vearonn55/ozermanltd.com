@@ -30,8 +30,20 @@ abstract class BaseAdminRepository
         $stmt = $this->pdo->query(
             'SELECT id, code, name FROM languages WHERE is_active = 1 ORDER BY sort_order, id'
         );
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $preferred = (string) config('default_locale', 'tr');
+        usort($rows, static function (array $a, array $b) use ($preferred): int {
+            if ($a['code'] === $preferred) {
+                return -1;
+            }
+            if ($b['code'] === $preferred) {
+                return 1;
+            }
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return 0;
+        });
+
+        return $rows;
     }
 
     public function languageId(string $code): int

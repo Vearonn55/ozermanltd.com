@@ -148,19 +148,9 @@
                 <?= e(t(['en' => 'View all brands →', 'tr' => 'Tüm markaları gör →', 'ar' => 'عرض كل العلامات ←'])) ?>
             </a>
         </div>
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php foreach ($partnerships as $partner): ?>
-            <a href="<?= url('partnerships') ?>" class="group reveal card-hover block border border-brand-200 bg-brand-50 overflow-hidden">
-                <div class="h-52 overflow-hidden">
-                    <img src="<?= e($partner['image']) ?>" alt="<?= e($partner['name']) ?>"
-                         class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="p-6">
-                    <h3 class="font-display text-xl font-bold text-brand-800 group-hover:text-orange-600 transition-colors"><?= e($partner['name']) ?></h3>
-                    <p class="text-xs uppercase tracking-[0.16em] text-brand-500 mt-1"><?= e(t($partner['tagline'])) ?></p>
-                    <p class="text-sm text-brand-600 mt-3 line-clamp-2"><?= e(t($partner['description'])) ?></p>
-                </div>
-            </a>
+            <?php partial('brand-card', ['partner' => $partner]); ?>
             <?php endforeach; ?>
         </div>
         <p class="text-center text-sm text-brand-500 mt-10 reveal">
@@ -187,19 +177,9 @@
                 <?= e(t(['en' => 'All locations →', 'tr' => 'Tüm mağazalar →', 'ar' => 'كل المتاجر ←'])) ?>
             </a>
         </div>
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php foreach (array_slice($stores, 0, 3) as $store): ?>
-            <a href="<?= url('our-stores') ?>" class="reveal group block bg-brand-50 border border-brand-200 overflow-hidden card-hover">
-                <div class="h-40 overflow-hidden">
-                    <img src="<?= e($store['image']) ?>" alt="<?= e(t($store['name'])) ?>"
-                         class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="p-5">
-                    <p class="text-xs uppercase tracking-[0.16em] text-orange-600 mb-1"><?= e(t($store['city'])) ?></p>
-                    <h3 class="font-semibold text-brand-800 group-hover:text-orange-600 transition-colors"><?= e(t($store['name'])) ?></h3>
-                    <p class="text-sm text-brand-500 mt-2"><?= e(t($store['address'])) ?></p>
-                </div>
-            </a>
+            <?php partial('store-card', ['store' => $store]); ?>
             <?php endforeach; ?>
         </div>
     </div>

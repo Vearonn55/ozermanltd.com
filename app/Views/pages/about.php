@@ -112,6 +112,12 @@
                 <div class="p-6">
                     <h3 class="font-display text-lg font-semibold text-brand-800"><?= e(t($member['name'])) ?></h3>
                     <p class="text-sm text-orange-600 font-medium mt-1"><?= e(t($member['position'])) ?></p>
+                    <?php if (!empty($member['phone'])): ?>
+                    <a href="tel:<?= e($member['phone']) ?>" class="block text-sm text-brand-600 mt-2 hover:text-orange-600"><?= e($member['phone']) ?></a>
+                    <?php endif; ?>
+                    <?php if (!empty($member['email'])): ?>
+                    <a href="mailto:<?= e($member['email']) ?>" class="block text-sm text-brand-600 mt-1 hover:text-orange-600"><?= e($member['email']) ?></a>
+                    <?php endif; ?>
                     <p class="text-xs text-brand-500 mt-3 leading-relaxed line-clamp-3"><?= e(t($member['bio'])) ?></p>
                 </div>
             </div>
